@@ -208,40 +208,10 @@
   .luce-paper{background-color:#f1e8a1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E"),linear-gradient(90deg,transparent calc(50% - 1px),rgba(150,138,74,.10) 50%,transparent calc(50% + 1px)),linear-gradient(0deg,transparent calc(33.3% - 1px),rgba(150,138,74,.09) 33.3%,transparent calc(33.3% + 1px)),linear-gradient(0deg,transparent calc(66.6% - 1px),rgba(150,138,74,.09) 66.6%,transparent calc(66.6% + 1px))}
   .luce-paper .inv-map{filter:grayscale(.15)}
   .inv .mono{font-family:var(--mono)}
-  /* Luce 톤 통일: 섹션 라벨(mono) · RSVP/입력요소 Pretendard·샤프 라운드·다크 버튼 */
+  /* Luce 톤 통일: 섹션 라벨(mono) · 입력요소 Pretendard·샤프 라운드·다크 버튼 */
   .inv.luce .sect-label{font-family:var(--mono)!important;color:#8a8574!important;letter-spacing:.14em;opacity:1}
   .inv.luce .rule{background:#c9bf86!important}
   .inv.luce .greet,.inv.luce .info-line,.inv.luce .par{font-family:'Pretendard Variable','Pretendard',sans-serif}
-  .inv.luce .rsvp-card{font-family:'Pretendard Variable','Pretendard',sans-serif;border:0!important;padding:0!important;box-shadow:none!important;background:transparent!important}
-  .inv.luce .rsvp-row label,.inv.luce .rsvp-card label{font-family:'Pretendard',sans-serif;color:#4a463c}
-  .inv.luce .rsvp-card input:focus,.inv.luce .rsvp-row input:focus,.inv.luce .rsvp-card textarea:focus{border-color:#141414!important;box-shadow:none!important}
-  .inv.luce .rsvp-card input,.inv.luce .rsvp-card select,.inv.luce .rsvp-card textarea,.inv.luce .rsvp-row input,.inv.luce .rsvp-row select,.inv.luce .rsvp-row textarea{border:1px solid #d3d0c8!important;border-radius:2px!important;background:#fff!important;font-family:'Pretendard',sans-serif!important;color:#141414}
-  .inv.luce .att-row button,.inv.luce .att-row label{border-radius:2px!important;font-family:'Pretendard',sans-serif!important;border:1px solid #d3d0c8!important;background:#fff!important;color:#6b675e!important}
-  .inv.luce .att-row .sel,.inv.luce .att-row button.sel,.inv.luce .att-row label.sel{background:#8f8c83!important;color:#fff!important;border-color:#8f8c83!important}
-  .inv.luce .rsvp-submit{background:#8f8c83!important;color:#fff!important;border:0!important;border-radius:2px!important;font-family:var(--mono)!important;letter-spacing:.04em;font-weight:500}
-  /* RSVP v2 (Figma) — .inv 프리픽스로 luce !important 규칙(.inv.luce .rsvp-card input 등) 이김 */
-  .inv .rs2-card{display:flex!important;flex-direction:column!important;gap:20px!important;font-family:'Pretendard',sans-serif!important;color:#000!important}
-  .inv .rs2-card .rs2-row{display:flex!important;align-items:center;gap:20px}
-  .inv .rs2-card .rs2-lb{flex:0 0 49px;font-size:13px;font-weight:500;color:#000;line-height:1.5;text-align:left}
-  .inv .rs2-card .rs2-ct{flex:1;min-width:0}
-  .inv .rs2-card input.rs2-input{width:100%!important;box-sizing:border-box!important;height:30px!important;min-height:30px!important;background:#F4F4F4!important;border:0!important;border-radius:6px!important;padding:5px 12px!important;font-size:13px!important;color:#000!important;font-family:'Pretendard',sans-serif!important;box-shadow:none!important}
-  .inv .rs2-card input.rs2-input::placeholder{color:#95A0AC!important}
-  .inv .rs2-card input.rs2-input:focus{border:0!important;box-shadow:none!important;outline:none!important}
-  .inv .rs2-card .rs2-tog{display:flex!important;gap:5px}
-  .inv .rs2-card .rs2-side{flex:1;box-sizing:border-box;display:flex!important;justify-content:center;align-items:center;height:29px;background:#fff!important;border:1px solid #DDDDDD!important;border-radius:6px!important;font-size:13px;color:#000!important;cursor:pointer;font-family:'Pretendard',sans-serif!important}
-  .inv .rs2-card .rs2-side.sel{background:#F3F8FF!important;border-color:#B9D9FF!important;color:#000!important}
-  .inv .rs2-card .rs2-step{box-sizing:border-box;display:flex!important;justify-content:space-between;align-items:center;height:29px;border:1px solid #DDDDDD!important;border-radius:6px!important;padding:0 14px;background:#fff!important}
-  .inv .rs2-card .rs2-step button{background:none!important;border:0!important;font-size:16px;line-height:1;color:#000!important;cursor:pointer;padding:0}
-  .inv .rs2-card .rs2-step .rs-num{font-size:13px;color:#000}
-  .inv .rs2-card .rs2-rad{display:flex!important;align-items:center;gap:24px}
-  .inv .rs2-card .rs2-rl{display:flex!important;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:500;color:#000!important}
-  .inv .rs2-card .rs2-dot{box-sizing:border-box;width:12px;height:12px;border-radius:50%;border:1px solid #D9D9D9;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-  .inv .rs2-card .rs2-rl.sel .rs2-dot{border-color:#000}
-  .inv .rs2-card .rs2-rl.sel .rs2-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:#000}
-  .inv .rs2-card input[type=radio]{display:none!important}
-  .inv .rs2-card .rs2-rl,.inv .rs2-card .rs2-side,.inv .rs2-card .rs2-step button,.inv .rs2-card .rs2-submit{-webkit-tap-highlight-color:transparent!important;outline:none!important}
-  .inv .rs2-card .rs2-submit{width:100%!important;height:35px!important;margin-top:10px!important;margin-bottom:14px!important;background:#B1DAFF!important;border:0!important;border-radius:6px!important;font-size:13px!important;font-weight:500!important;color:#000!important;cursor:pointer;font-family:'Pretendard',sans-serif!important;letter-spacing:0!important}
-  .inv.luce .acc-copy{border-radius:2px!important;font-family:'Pretendard',sans-serif}
   .inv.luce .inv-gallery img{border-radius:0!important}
   /* v4.4 폴라로이드 대표 + 갤러리 그리드 */
   .luce-featured{display:flex;flex-direction:column;gap:15px;align-items:center;padding:0}
@@ -267,11 +237,6 @@
   .luce-acct summary::-webkit-details-marker,.luce-acct summary::marker{display:none!important;content:''}
   .luce-acct[open] summary>span:last-child{transform:rotate(90deg)}
   .luce-acct summary>span:last-child{transition:transform .15s}
-  .rs-stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line,#ddd);border-radius:10px;overflow:hidden;width:max-content}
-  .rs-stepper button{width:44px;height:44px;border:0;background:#fff;font-size:18px;cursor:pointer;color:#333;line-height:1}
-  .rs-stepper button:active{background:#f2f2ee}
-  .rs-stepper .rs-num{min-width:64px;text-align:center;font-size:15px;font-weight:600}
-  .inv.luce .rs-stepper{border-radius:2px;border-color:#d3d0c8;font-family:'Pretendard',sans-serif}
   .inv .eyebrow{font-family:var(--serif);letter-spacing:.4em;text-transform:uppercase;font-size:12px}
   .inv .rule{width:30px;height:1px;margin:18px auto;opacity:.5}
   .inv .names-en{font-family:var(--serif);font-style:italic;font-weight:400}
@@ -404,17 +369,6 @@
   .stat.clickable:hover{border-color:var(--accent);box-shadow:0 4px 14px rgba(0,0,0,.05);transform:translateY(-1px)}
   .filter-chip{display:inline-flex;align-items:center;gap:8px;background:#f1efe8;border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--ink-soft);margin:0 0 14px}
   .filter-chip button{background:none;border:0;color:var(--accent-deep);font-size:12px;cursor:pointer;text-decoration:underline}
-  .inv-rsvp{font-family:var(--sans);text-align:left;border:1px solid currentColor;border-radius:12px;padding:18px 16px}
-  .inv-rsvp .rs-row{display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:center;margin-bottom:10px;font-size:13px}
-  .inv-rsvp input,.inv-rsvp select,.inv-rsvp textarea{width:100%;border:1px solid rgba(0,0,0,.18);background:#fff;border-radius:7px;padding:9px 10px;font-size:13px;color:#222;font-family:var(--sans)}
-  .inv-rsvp textarea{min-height:64px;line-height:1.5}
-  .inv-rsvp .rs-att{display:flex;gap:8px}
-  .inv-rsvp .rs-att label{flex:1;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.18);border-radius:8px;padding:9px;font-size:13px;cursor:pointer;background:#fff;color:#222}
-  .inv-rsvp .rs-att input{display:none}
-  .inv-rsvp .rs-att input:checked + span{font-weight:700}
-  .inv-rsvp .rs-submit{width:100%;background:currentColor;color:#fff;border:0;border-radius:9px;padding:11px;font-weight:700;cursor:pointer;margin-top:6px;font-family:var(--sans)}
-  .inv-rsvp .rs-submit span,.inv-rsvp .rs-submit{filter:none}
-  .inv-rsvp .rs-done{text-align:center;padding:18px;font-size:14px}
   .inv-share{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:8px 0}
   .sh-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font-weight:700;font-size:14px;color:#fff;flex:0 0 auto;font-family:var(--sans)}
   .sh-btn.kakao{background:#FEE500;color:#3c1e1e}
@@ -573,24 +527,6 @@
   .step-prog-pill.active{background:var(--sky);color:#fff}
   @media(max-width:760px){.step-prog{top:50px;padding:10px 14px 12px;margin:-16px -14px 14px} .step-card{padding:18px 16px}}
   /* attendance buttons (sky-blue selected state) */
-  .att-row{display:flex;gap:8px}
-  .att-row label{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;padding:12px 6px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:13px;font-weight:500;cursor:pointer;transition:.12s;user-select:none;white-space:nowrap}
-  @media(max-width:400px){.att-row label{font-size:12px;padding:11px 4px;letter-spacing:-.02em}}
-  .att-row label.sel{background:var(--sky);color:#fff;border-color:var(--sky)}
-  .att-row label.sel.no{background:#888;border-color:#888}
-  .att-row input{display:none}
-  /* RSVP form (new sky styling, overrides inv-rsvp) */
-  .rsvp-card{background:#fff;border:1px solid currentColor;border-radius:14px;padding:20px 18px;font-family:var(--sans)}
-  .rsvp-row{margin-bottom:14px}
-  .rsvp-row > label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:500}
-  .rsvp-row input[type=text],.rsvp-row input[type=number],.rsvp-row select,.rsvp-row textarea{width:100%;border:1px solid #e5e9ee;background:#fff;border-radius:9px;padding:11px 12px;font-size:14px;color:var(--ink);font-family:var(--sans)}
-  .rsvp-row input:focus,.rsvp-row select:focus,.rsvp-row textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px var(--sky-tint)}
-  .rsvp-row textarea{min-height:70px;line-height:1.5}
-  .rsvp-row .helper{font-size:11.5px;color:var(--muted);margin-top:4px}
-  .rsvp-submit{width:100%;background:var(--sky);color:#fff;border:0;border-radius:10px;padding:13px;font-weight:700;cursor:pointer;font-size:14px;margin-top:6px;transition:.15s}
-  .rsvp-submit:hover{background:var(--sky-deep)}
-  .rsvp-submit:disabled{background:#d5d9de;cursor:not-allowed}
-  .rsvp-done{text-align:center;padding:22px 14px;font-size:14px;color:var(--ink)}
   /* music player */
   .inv-music{position:fixed;bottom:18px;right:18px;z-index:80;background:rgba(0,0,0,.7);color:#fff;border:0;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.18)}
   .inv-music:hover{background:rgba(0,0,0,.85)}
@@ -599,18 +535,6 @@
   .cal-row{display:flex;gap:10px;justify-content:center;margin-top:12px}
   .cal-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid currentColor;border-radius:999px;font-size:12px;background:transparent;color:inherit;cursor:pointer;font-family:var(--sans);text-decoration:none}
   .cal-btn:hover{opacity:.75}
-  /* RSVP admin */
-  .rsvp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0 22px}
-  .rsvp-stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 18px}
-  .rsvp-stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
-  .rsvp-stat .v{font-size:30px;font-weight:600;margin-top:6px;color:var(--ink)}
-  .rsvp-stat .v.ok{color:var(--sky)}
-  .rsvp-stat .v.no{color:var(--soft-red)}
-  @media(max-width:760px){.rsvp-stats{grid-template-columns:1fr 1fr}}
-  .rsvp-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
-  .rsvp-search{flex:1;min-width:200px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 13px;font-size:13px;font-family:var(--sans)}
-  .rsvp-search:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px var(--sky-tint)}
-  /* RSVP-related field toggle list */
   .rsvp-fields-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
   .rsvp-fields-list label{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:13px;cursor:pointer}
   .rsvp-fields-list label.on{background:var(--sky-tint);border-color:var(--sky)}
@@ -1491,8 +1415,8 @@ function defaultUsers(){return[
      acctOrder:[{key:'ac1',label:'신랑'},{key:'ac2',label:'신부'}],
      notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
      greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
-     sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'rsvp',show:true},{id:'accounts',show:true},{id:'share',show:true}],
-     music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
+     sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'accounts',show:true},{id:'share',show:true}],
+     music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
      coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
 ];}
 
@@ -1505,7 +1429,6 @@ const SECTION_DEFS=[
   {id:'where',      label:'예식 장소'},
   {id:'when',       label:'예식 일시'},
   {id:'notice',     label:'안내 사항'},
-  {id:'rsvp',       label:'참석 의사 전달하기'},
   {id:'accounts',   label:'마음 전하실 곳'},
   {id:'share',      label:'공유'}
 ];
@@ -1514,8 +1437,6 @@ function defaultDefaults(){return{
   notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
   thankYouTitle:'THANK YOU',
   thankYouMessage:'결혼식에 참석하여 자리를 빛내주셔서\n진심으로 감사드립니다.\n\n축복해 주신 만큼 그 고마운 마음,\n가슴속에 간직하고 행복하게 살겠습니다.',
-  rsvpPrompt:'귀하의 참석 여부를 미리 알려주시면 정성껏 준비하겠습니다.',
-  rsvpFields:{side:true,attend:true,count:true,meal:false},
   musicPresets:[
     {name:'잔잔한 피아노',url:''},
     {name:'서정적인 현악',url:''},
@@ -1529,8 +1450,8 @@ function defaultDefaults(){return{
     brandHomeName:''
   }
 };}
-function defaultSectionsList(){return SECTION_DEFS.map(x=>({id:x.id,show:x.id!=='rsvp'}));}
-function resetDB(){DB={users:defaultUsers(),templates:defaultTemplates(),customIdx:0,nstoreIdx:0,rsvps:{},stats:{},adminFilter:null,defaults:defaultDefaults()};session=null;}
+function defaultSectionsList(){return SECTION_DEFS.map(x=>({id:x.id,show:true}));}
+function resetDB(){DB={users:defaultUsers(),templates:defaultTemplates(),customIdx:0,nstoreIdx:0,stats:{},adminFilter:null,defaults:defaultDefaults()};session=null;}
 resetDB();
 function tplName(id){const t=DB.templates.find(x=>x.id===id);return t?t.name:'-';}
 function defaultDateStr(){var d=new Date();d.setDate(d.getDate()+90);return d.toISOString().slice(0,10);}
@@ -1542,7 +1463,7 @@ function blankData(){const D=(DB&&DB.defaults)||defaultDefaults();return{templat
   publishStart:(function(){return new Date().toLocaleDateString('sv');})(), /* v4.4: 최초 접속(생성)일 */
   publishEnd:(function(){try{var w=parseDate(defaultDateStr());w.setHours(0,0,0,0);return new Date(w.getTime()+90*DAY).toLocaleDateString('sv');}catch(e){return '';}})(), /* 예식일+3개월(바른손식) */
   accounts:{},notice:D.notice||'',greeting:D.greeting||'',thankYouTitle:D.thankYouTitle||'THANK YOU',thankYouMessage:D.thankYouMessage||'',sections:defaultSectionsList(),
-  music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},showCalendar:true};}
+  music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},showCalendar:true};}
 
 const app=()=>document.getElementById('app');
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2100);}
@@ -1720,7 +1641,7 @@ function luceAcctRows(p,d){
 function luceShare(d,prev){
   var slug=userSlugForData(d)||'';
   var icon='<img src="/assets/icon-share.png" alt="" style="width:12px;height:auto">';
-  return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="share">'
+  return '<div style="padding:'+((prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="share">'
     +'<button type="button" onclick="cezShare(\''+esc(slug)+'\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 '+icon+'</button>'
   +'</div></div>';
 }
@@ -1825,7 +1746,7 @@ function tplLuce(d){
     accounts:function(prev){
       var rows=luceAcctRows(p,d);
       if(!rows) return '<div data-pv-sec="accounts" style="height:1px"></div>'; /* 계좌 미입력 시 배포 화면에서 숨김(에디터는 placeholder) */
-      return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="accounts">'
+      return '<div style="padding:'+((prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="accounts">'
         +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">'+esc(getSecLabel(d,'accounts')||'마음 전하실 곳')+'<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
         +'<div style="background:#fff;padding:2px 20px 16px">'+rows+'</div>'
         +'</details>'
@@ -1839,18 +1760,11 @@ function tplLuce(d){
       +'</div>';
     },
     cover:function(){ return ''; }, /* 실제 표지는 상단 luce-coverwrap(data-pv-sec=cover)이 담당 */
-    rsvp:function(prev){
-      return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="rsvp">'
-        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">참석 의사 전달하기<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
-        +'<div style="background:#fff;padding:14px 20px 16px;font-family:'+KO+'">'+rsvpHTML(d,sk)+'</div>'
-        +'</details>'
-      +'</div></div>';
-    },
     share:function(prev){ return luceShare(d,prev); }
   };
   const sections=getSections(d);
   let _prevSec=null;
-  const JOINED={'when|where':1,'where|when':1,'where|notice':1,'notice|where':1,'notice|when':1,'when|notice':1,'rsvp|accounts':1,'accounts|rsvp':1,'rsvp|share':1,'accounts|share':1}; /* 연결 그룹: 사이에 접힘선 없음. 하단 번들(rsvp·accounts·share)은 순서 무관 연결 */
+  const JOINED={'when|where':1,'where|when':1,'where|notice':1,'notice|where':1,'notice|when':1,'when|notice':1,'accounts|share':1}; /* 연결 그룹: 사이에 접힘선 없음. 하단 번들(accounts·share)은 순서 무관 연결 */
   const VGROUP={when:1,where:1,notice:1};
   /* 그룹 여백 규칙(한 곳에서만 관리):
      GROUP_PAD = 그룹(흰 카드) 상/하 외부여백 — 단독 카드일 때도 위아래가 여유롭게 뜬다.
@@ -1903,21 +1817,18 @@ function renderInvitation(d){
 /* ================================================================
    PUBLISHED INVITATION (#/i/<slug>) + gate + router
    ================================================================ */
-/* ===== additive helpers: banks, address search, preview overlay, naver pay, viz, figma, RSVP, share, NStore ===== */
+/* ===== additive helpers: banks, address search, preview overlay, naver pay, viz, figma, share, NStore ===== */
 
 /* address search via Daum postcode (no key) */
 /* preview overlay (narrow screens) */
-/* RSVP */
 function userSlugForData(d){
   var u=DB.users.find(function(x){return x.data===d;});
   if(u&&u.slug) return u.slug;
   /* 하객 공개 뷰(#/i/slug)에선 d가 서버 데이터라 DB.users에 없음 → URL의 slug 신뢰.
-     (공유 버튼이 slug 없이 /i/ 로 전달되던 근본 원인 · submitRSVPv2와 동일 패턴) */
+     (공유 버튼이 slug 없이 /i/ 로 전달되던 근본 원인) */
   try{ if((location.hash||'').indexOf('#/i/')===0){ var s=decodeURIComponent(location.hash.slice(4)).trim(); if(s) return s; } }catch(e){}
   return '';
 }
-/* (구버전 rsvpHTML·submitRSVP 제거 — 아래 필드인식형 rsvpHTML/submitRSVPv2가 항상 우선했던 死코드) */
-
 /* Share */
 function shareURL(slug){return location.origin+'/i/'+(slug||'');}
 function shareHTML(d,sk){var slug=userSlugForData(d)||'';
@@ -1960,19 +1871,13 @@ function getSections(d){
   }
   if(!d._secV4){
     var _ci=d.sections.findIndex(x=>x.id==='cover'); if(_ci>0){ var _c=d.sections.splice(_ci,1)[0]; d.sections.unshift(_c); }
-    { var _ri=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri>=0){ var _r=d.sections.splice(_ri,1)[0]; var _si=d.sections.findIndex(x=>x.id==='share'); if(_si<0)_si=d.sections.length; d.sections.splice(_si,0,_r); } }
     if(d.coverIntro==null) d.coverIntro='Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.';
     d._secV4=1;
   }
-  if(!d._secV5){
-    { var _ri5=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri5>=0){ var _r5=d.sections.splice(_ri5,1)[0]; var _ai5=d.sections.findIndex(x=>x.id==='accounts'); if(_ai5<0)_ai5=d.sections.length; d.sections.splice(_ai5,0,_r5); } }
-    d._secV5=1;
-  }
-  if(!d._secV6){ var _rs6=d.sections.find(x=>x.id==='rsvp'); if(_rs6 && !_rs6.userOff && !_rs6.userOn) _rs6.show=false; d._secV6=1; }
-  /* v7: 과거 append 버그로 rsvp/accounts가 공유 뒤 등 엉뚱한 위치에 저장된 경우 정규화 —
-     하단 묶음을 항상 rsvp→accounts→share 순서(공유 맨 끝)로. 각 섹션의 show/userOff 상태는 보존 */
+  /* v7: 과거 append 버그로 accounts가 공유 뒤 등 엉뚱한 위치에 저장된 경우 정규화 —
+     하단 묶음을 항상 accounts→share 순서(공유 맨 끝)로. 각 섹션의 show/userOff 상태는 보존 */
   if(!d._secV7){
-    var _bundle=['rsvp','accounts','share'], _saved={};
+    var _bundle=['accounts','share'], _saved={};
     _bundle.forEach(function(id){ var i=d.sections.findIndex(function(x){return x.id===id;}); if(i>=0)_saved[id]=d.sections.splice(i,1)[0]; });
     _bundle.forEach(function(id){ if(_saved[id])d.sections.push(_saved[id]); });
     d._secV7=1;
@@ -1985,7 +1890,7 @@ function getSections(d){
   if(_shi>=0 && _shi!==d.sections.length-1){ var _sh=d.sections.splice(_shi,1)[0]; d.sections.push(_sh); }
   return d.sections;
 }
-const DEFAULT_SEC_LABELS={invitation:'INVITATION',couple:'THE COUPLE',gallery:'GALLERY',when:'WHEN',where:'WHERE',accounts:'마음 전하실 곳',rsvp:'참석 의사 전달하기',notice:'안내 사항',share:'SHARE'};
+const DEFAULT_SEC_LABELS={invitation:'INVITATION',couple:'THE COUPLE',gallery:'GALLERY',when:'WHEN',where:'WHERE',accounts:'마음 전하실 곳',notice:'안내 사항',share:'SHARE'};
 function sectionLabel(id){const f=SECTION_DEFS.find(x=>x.id===id);return f?f.label:id;}
 function getSecLabel(d,id){var sl=d&&d.sectionLabels||{};return sl[id]||DEFAULT_SEC_LABELS[id]||id;}
 function setSecLabel(id,v){var d=editTarget().data;d.sectionLabels=d.sectionLabels||{};d.sectionLabels[id]=v;refreshPreviewDebounced();}
@@ -2032,142 +1937,6 @@ function closeLightbox(){var l=document.getElementById('lightbox');if(l)l.remove
 
 /* section toggle + drag-reorder */
 
-/* ===== RSVP fields + music + calendar + stats + QR upgrades ===== */
-const RSVP_FIELD_DEFS=[
-  {k:'side',    label:'신랑/신부측'},
-  {k:'attend',  label:'참석 여부', required:true},
-  {k:'count',   label:'참석 인원'},
-  {k:'meal',    label:'식사 여부'}
-];
-function getRsvpFields(d){
-  var base=(DB.defaults&&DB.defaults.rsvpFields)||{side:true,attend:true,count:true,meal:false};
-  var ov=(d&&d.rsvpFields)||{};
-  var out={};RSVP_FIELD_DEFS.forEach(function(f){out[f.k]=(ov[f.k]!=null)?!!ov[f.k]:!!base[f.k];});
-  out.attend=true; /* attend always on */
-  return out;
-}
-
-/* RSVP form (sky-blue design, field-aware) */
-function rsStep(dv){var h=document.getElementById('rs-count');if(!h)return;var v=parseInt(h.value,10)||1;v=Math.min(20,Math.max(1,v+dv));h.value=v;var l=document.getElementById('rs-count-label');if(l)l.textContent=v+'명';}
-function rsvpHTML(d,sk){
-  var slug=userSlugForData(d)||'_preview';
-  var done=(DB.rsvps&&DB.rsvps[slug]&&DB.rsvps[slug]._submitted)?true:false;
-  if(done) return '<div class="rsvp-card rsvp-done" style="color:'+sk.text+'">참석 의사를 보내주셔서 감사합니다 💌</div>';
-  var f=getRsvpFields(d);
-  var html='<div class="rsvp-card rs2-card">';
-  html+='<div class="rs2-row"><div class="rs2-lb">이름</div><div class="rs2-ct"><input type="text" id="rs-name" class="rs2-input" placeholder="이름 입력"></div></div>';
-  if(f.side){
-    html+='<div class="rs2-row"><div class="rs2-lb">관계</div><div class="rs2-ct"><div class="rs2-tog">'
-      +'<label class="rs2-side sel" data-side="신랑측" onclick="pickSide(this,\'신랑측\')"><input type="radio" name="rs-side" value="신랑측" checked hidden><span>신랑 측</span></label>'
-      +'<label class="rs2-side" data-side="신부측" onclick="pickSide(this,\'신부측\')"><input type="radio" name="rs-side" value="신부측" hidden><span>신부 측</span></label>'
-      +'</div></div></div>';
-  }
-  html+='<div class="rs2-row"><div class="rs2-lb">참석 여부</div><div class="rs2-ct"><div class="rs2-rad">'
-    +'<label class="rs2-rl sel" data-att="참석" onclick="pickAttend(this,\'참석\')"><input type="radio" name="rs-att" value="참석" checked hidden><span class="rs2-dot"></span><span>참석 함</span></label>'
-    +'<label class="rs2-rl" data-att="불참" onclick="pickAttend(this,\'불참\')"><input type="radio" name="rs-att" value="불참" hidden><span class="rs2-dot"></span><span>참석 어려움</span></label>'
-    +'</div></div></div>';
-  if(f.meal){
-    html+='<div class="rs2-row"><div class="rs2-lb">식사 여부</div><div class="rs2-ct"><div class="rs2-rad">'
-      +'<label class="rs2-rl sel" data-meal="식사함" onclick="pickMeal(this,\'식사함\')"><input type="radio" name="rs-meal" value="식사함" checked hidden><span class="rs2-dot"></span><span>식사 함</span></label>'
-      +'<label class="rs2-rl" data-meal="식사안함" onclick="pickMeal(this,\'식사안함\')"><input type="radio" name="rs-meal" value="식사안함" hidden><span class="rs2-dot"></span><span>식사 안 함</span></label>'
-      +'</div></div></div>';
-  }
-  if(f.count){
-    html+='<div class="rs2-row"><div class="rs2-lb">인원</div><div class="rs2-ct"><div class="rs2-step"><button type="button" onclick="rsStep(-1)" aria-label="인원 줄이기">−</button><span class="rs-num" id="rs-count-label">2명</span><button type="button" onclick="rsStep(1)" aria-label="인원 늘리기">+</button><input type="hidden" id="rs-count" value="2"></div></div></div>';
-  }
-  html+='<button type="button" class="rs2-submit" onclick="submitRSVPv2(\''+esc(slug)+'\')">제출하기</button>';
-  html+='</div>';
-  return html;
-}
-function pickAttend(el,v){var p=el.parentNode;p.querySelectorAll('label').forEach(function(l){l.classList.remove('sel','no');});el.classList.add('sel');if(v==='불참')el.classList.add('no');el.querySelector('input').checked=true;
-  /* 불참 선택 시 인원 스테퍼만 비활성화 */
-  var card=el.closest('.rs2-card')||document; var step=card.querySelector('.rs2-step');
-  if(step){ var dis=(v==='불참'); step.style.opacity=dis?'0.4':''; step.style.pointerEvents=dis?'none':''; step.querySelectorAll('button').forEach(function(b){b.disabled=dis;}); }
-}
-function pickSide(el,v){var p=el.parentNode;p.querySelectorAll('label').forEach(function(l){l.classList.remove('sel');});el.classList.add('sel');el.querySelector('input').checked=true;}
-function pickMeal(el,v){var p=el.parentNode;p.querySelectorAll('label').forEach(function(l){l.classList.remove('sel','no');});el.classList.add('sel');if(v==='식사안함')el.classList.add('no');el.querySelector('input').checked=true;}
-/* ── RSVP 저장 신뢰성 (응답 누락 방지) ────────────────────────────────
-   과거: 저장 성공 여부와 무관하게 하객에게 '감사'를 즉시 표시 → 저장이 실패해도(느린 네트워크·slug 미해석·RPC 오류)
-         하객은 모르고 다시 안 보내 → 응답이 조용히 유실.
-   개선: (1) 저장 성공을 '확인한 뒤에만' 완료 표시, (2) 3회 재시도, (3) 실패 시 재접속 때 자동 재전송(localStorage). */
-var CEZ_RSVP_PEND='cez_pending_rsvp';
-async function saveRSVPReliable(slug, payload){
-  /* 로컬 클론: 외부 서버 없이 브라우저 localStorage에 응답 기록 */
-  try{
-    var key='cez_rsvp_'+slug;
-    var arr=[]; try{ arr=JSON.parse(localStorage.getItem(key)||'[]'); }catch(e){}
-    arr.push(Object.assign({ts:Date.now()},payload));
-    localStorage.setItem(key, JSON.stringify(arr.slice(-300)));
-    return true;
-  }catch(e){ console.error('[RSVP save]', e && e.message); return false; }
-}
-function cezPendGet(){ try{ return JSON.parse(localStorage.getItem(CEZ_RSVP_PEND)||'[]'); }catch(e){ return []; } }
-function cezPendSet(a){ try{ localStorage.setItem(CEZ_RSVP_PEND, JSON.stringify(a.slice(-20))); }catch(e){} }
-function cezStashPendingRSVP(slug, payload, key){ var a=cezPendGet(); a.push({slug:slug,payload:payload,key:key,ts:Date.now()}); cezPendSet(a); }
-function cezClearPending(key){ if(!key)return; cezPendSet(cezPendGet().filter(function(x){return x.key!==key;})); }
-async function cezFlushPendingRSVP(){
-  try{
-    var a=cezPendGet(); if(!a.length) return;
-    var keep=[];
-    for(var i=0;i<a.length;i++){ var ok=await saveRSVPReliable(a[i].slug, a[i].payload); if(!ok) keep.push(a[i]); }
-    cezPendSet(keep);
-  }catch(e){}
-}
-try{ setTimeout(cezFlushPendingRSVP, 6000); }catch(e){}   /* 접속 시 지난 실패분 자동 재전송 */
-
-function submitRSVPv2(slug){
-  /* 슬러그: 해시형(#/i/slug)·경로형(/i/slug) 모두 URL 을 신뢰 (렌더 slug 오해석으로 저장 스킵되던 문제 방지) */
-  try{
-    var _h=location.hash||'';
-    if(_h.indexOf('#/i/')===0){ var _us=decodeURIComponent(_h.slice(4)).trim(); if(_us) slug=_us; }
-    else { var _pm=(location.pathname||'').match(/^\/i\/([^\/?#]+)/); if(_pm && _pm[1]){ var _ps=decodeURIComponent(_pm[1]).trim(); if(_ps) slug=_ps; } }
-  }catch(e){}
-  var n=document.getElementById('rs-name');
-  if(!n||!n.value.trim()){toast('성함을 입력해 주세요');return;}
-  var rec={name:n.value.trim(),ts:Date.now()};
-  var sd=document.querySelector('input[name=rs-side]:checked');if(sd)rec.side=sd.value;
-  var c=document.getElementById('rs-count');if(c)rec.count=c.value;
-  var a=document.querySelector('input[name=rs-att]:checked');if(a)rec.attend=a.value;
-  var m=document.querySelector('input[name=rs-meal]:checked');if(m)rec.meal=m.value;
-  var al=document.getElementById('rs-allergy');if(al)rec.allergy=al.value.trim();
-  var sh=document.querySelector('input[name=rs-sh]:checked');if(sh)rec.shuttle=sh.value;
-  var pk=document.querySelector('input[name=rs-pk]:checked');if(pk)rec.parking=pk.value;
-  var msg=document.getElementById('rs-msg');if(msg)rec.message=msg.value.trim();
-
-  var extras=[];
-  if(rec.allergy) extras.push('알레르기: '+rec.allergy);
-  if(rec.shuttle) extras.push('셔틀버스: '+rec.shuttle);
-  if(rec.parking) extras.push('주차: '+rec.parking);
-  var fullMsg=(rec.message||'')+(extras.length?((rec.message?'\n':'')+extras.join(' · ')):'');
-  var payload={name:rec.name, side:rec.side||null, attend:rec.attend||null, count:rec.count||null, meal:rec.meal||null, message:fullMsg||null};
-  var pkey=slug+'|'+rec.name+'|'+rec.ts;
-
-  function showDone(){
-    DB.rsvps=DB.rsvps||{};DB.rsvps[slug]=DB.rsvps[slug]||[];
-    DB.rsvps[slug].push(rec);DB.rsvps[slug]._submitted=true;
-    var card=document.querySelector('.rsvp-card');
-    if(card&&card.parentNode){card.outerHTML='<div class="rsvp-card rsvp-done" style="color:inherit">참석 의사를 보내주셔서 감사합니다 💌</div>';}
-    toast('참석 의사를 보내주셔서 감사합니다');
-  }
-
-  /* 프리뷰/에디터(실제 저장 대상 아님) — 기존처럼 즉시 완료 */
-  var canSave = !!(slug && slug!=='_preview');
-  if(!canSave){ showDone(); return; }
-
-  /* 실제 하객 — 저장 성공을 확인한 뒤에만 완료 표시 */
-  var btn=document.querySelector('.rs2-submit'); var oldTxt=btn?btn.textContent:'';
-  if(btn){ btn.disabled=true; btn.textContent='보내는 중…'; }
-  saveRSVPReliable(slug, payload).then(function(ok){
-    if(ok){ cezClearPending(pkey); showDone(); }
-    else {
-      cezStashPendingRSVP(slug, payload, pkey);           /* 재접속 시 자동 재전송 */
-      if(btn){ btn.disabled=false; btn.textContent=oldTxt||'제출하기'; }
-      toast('저장이 지연되고 있어요. 잠시 후 한 번만 더 눌러 주세요 🙏');
-    }
-  });
-}
-
-/* music player (renders fixed-position button + audio element) */
 function musicPlayerHTML(d){
   if(!d||!d.music||!d.music.enabled)return '';
   var src='';

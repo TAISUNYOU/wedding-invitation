@@ -1,337 +1,903 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
-<title>모바일 청첩장</title>
-<link rel="stylesheet" as="style" crossorigin
-  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-<meta property="og:type" content="website">
-<meta property="og:title" content="소중한 날에 초대합니다">
-<meta property="og:description" content="자세한 내용을 확인해보세요.">
-<meta property="og:image" content="/assets/og-default.jpg?v=1">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="600">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-  <div id="app"></div>
-  <div class="toast" id="toast"></div>
-<script>
-/* ================================================================
-   브랜드 홈 + 모바일 청첩장 플랫폼 (단일 파일)
-   ================================================================ */
-const DAY=86400000;
-function today(){const d=new Date();d.setHours(0,0,0,0);return d;}
-function parseDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
-function pad(n){return String(n).padStart(2,'0');}
-function fmtDate(s){if(!s)return'';const d=parseDate(s);return d.getFullYear()+'. '+pad(d.getMonth()+1)+'. '+pad(d.getDate())+'.';}
-function todayStr(){const d=today();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-const WEEK=['일','월','화','수','목','금','토'];
-const MONTH_EN=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
-function timeLabel(t){if(!t)return'';let[h,m]=t.split(':').map(Number);const ap=h<12?'오전':'오후';let hh=h%12;if(hh===0)hh=12;return ap+' '+hh+'시'+(m?' '+m+'분':'');}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+    </style>
+    <title>모바일 청첩장</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="소중한 날에 초대합니다" />
+    <meta property="og:description" content="자세한 내용을 확인해보세요." />
+    <meta property="og:image" content="/assets/og-default.jpg?v=1" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nanum+Myeongjo:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div class="toast" id="toast"></div>
+    <script>
+      /* ===== 1. 공통 유틸: 날짜·시간 변환, HTML 이스케이프 ===== */
+      const DAY = 86400000;
+      function today() {
+        const d = new Date();
+        d.setHours(0, 0, 0, 0);
+        return d;
+      }
+      function parseDate(s) {
+        const [y, m, d] = s.split("-").map(Number);
+        return new Date(y, m - 1, d);
+      }
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+      function fmtDate(s) {
+        if (!s) return "";
+        const d = parseDate(s);
+        return (
+          d.getFullYear() +
+          ". " +
+          pad(d.getMonth() + 1) +
+          ". " +
+          pad(d.getDate()) +
+          "."
+        );
+      }
+      function todayStr() {
+        const d = today();
+        return (
+          d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
+        );
+      }
+      const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+      const MONTH_EN = [
+        "JANUARY",
+        "FEBRUARY",
+        "MARCH",
+        "APRIL",
+        "MAY",
+        "JUNE",
+        "JULY",
+        "AUGUST",
+        "SEPTEMBER",
+        "OCTOBER",
+        "NOVEMBER",
+        "DECEMBER",
+      ];
+      function timeLabel(t) {
+        if (!t) return "";
+        let [h, m] = t.split(":").map(Number);
+        const ap = h < 12 ? "오전" : "오후";
+        let hh = h % 12;
+        if (hh === 0) hh = 12;
+        return ap + " " + hh + "시" + (m ? " " + m + "분" : "");
+      }
+      function esc(s) {
+        return String(s == null ? "" : s).replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      }
 
+      /* ===== 2. 청첩장 템플릿 목록 (레몬 테마 단일) ===== */
+      function defaultTemplates() {
+        return [
+          {
+            id: "luce",
+            name: "Lemon Archive",
+            desc: "연노랑 종이 · 폴라로이드 · 모노",
+            swatch: "linear-gradient(135deg,#f4ecbe,#e8dca0)",
+            visible: true,
+          },
+        ];
+      }
 
+      /* ===== 3. 샘플 계정 데이터 — 실제 청첩장 내용은 여기서 수정 ===== */
+      function defaultUsers() {
+        return [
+          {
+            id: "sample01",
+            name: "샘플",
+            email: "sample@local",
+            pw: "",
+            role: "user",
+            tier: "PAID",
+            plan: "",
+            paidAt: "",
+            slug: "sample01",
+            slugLocked: true,
+            joinedAt: "2026-01-01",
+            data: {
+              template: "luce",
+              groomKo: "태선",
+              brideKo: "세상",
+              groomEn: "Taisun",
+              brideEn: "Sesang",
+              groomFather: "유인근",
+              groomFatherDec: false,
+              groomMother: "정지은",
+              groomMotherDec: false,
+              groomRelation: "아들",
+              brideFather: "박병일",
+              brideFatherDec: false,
+              brideMother: "성서경",
+              brideMotherDec: false,
+              brideRelation: "딸",
+              date: "2027-02-21",
+              time: "14:00",
+              venueName: "노블발렌티 대치",
+              venueAddr: "서울특별시 강남구 영동대로 325",
+              floorHall: "",
+              showMap: true,
+              mapQuery: "더채플 커티지홀",
+              showCalendar: true,
+              cover: "pictures/img1.jpg",
+              coverIntro: "멋진 문구 넣기",
+              gallery: [
+                "pictures/img2.jpg",
+                "pictures/img3.jpg",
+                "pictures/img4.jpg",
+                "pictures/img5.jpg",
+                "pictures/img6.jpg",
+                "pictures/img7.jpg",
+                "pictures/img8.jpg",
+              ],
+              featuredGallery: [
+                {
+                  s: 1,
+                  x: 0,
+                  y: 0,
+                  src: "pictures/img9.jpg",
+                  frameOrientation: "landscape",
+                },
+                {
+                  s: 1,
+                  x: 0,
+                  y: 0,
+                  src: "pictures/img10.jpg",
+                  frameOrientation: "landscape",
+                },
+                {
+                  s: 1,
+                  x: 0,
+                  y: 0,
+                  src: "pictures/img11.jpg",
+                  frameOrientation: "landscape",
+                },
+              ],
+              accounts: {
+                ac1: {
+                  bank: "국민",
+                  holder: "김도윤",
+                  number: "123456-04-123456",
+                },
+                ac2: {
+                  bank: "우리",
+                  holder: "박서아",
+                  number: "110-123-456789",
+                },
+              },
+              acctOrder: [
+                { key: "ac1", label: "신랑" },
+                { key: "ac2", label: "신부" },
+              ],
+              notice:
+                "신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.",
+              greeting:
+                "두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.",
+              sections: [
+                { id: "cover", show: true },
+                { id: "invitation", show: true },
+                { id: "couple", show: true },
+                { id: "gallery", show: true },
+                { id: "when", show: true },
+                { id: "notice", show: true },
+                { id: "where", show: true },
+                { id: "accounts", show: true },
+                { id: "share", show: true },
+              ],
+              music: {
+                enabled: true,
+                kind: "preset",
+                presetIdx: 0,
+                url: "",
+                loop: true,
+              },
+              shareChannels: { kakao: true, sms: true, insta: true },
+              sectionLabels: {},
+              coverCrop: { s: 1, x: 0, y: 0, src: "pictures/img1.jpg" },
+              coverGrainEnabled: true,
+              _secV2: 1,
+              _secV3: 1,
+              _secV4: 1,
+              _secV5: 1,
+              _secV6: 1,
+              _secV7: 1,
+            },
+          },
+        ];
+      }
 
-/* ---- templates (visible flag; custom = uploaded via Figma) ---- */
-/* v4.4: 템플릿 2종 — Lemon/Cotton Archive (렌더 코드 보존, 기존 청첩장 계속 렌더) */
-function defaultTemplates(){return[
-  {id:'luce',   name:'Lemon Archive',  desc:'연노랑 종이 · 폴라로이드 · 모노', swatch:'linear-gradient(135deg,#f4ecbe,#e8dca0)',visible:true},
-];}
+      /* ===== 4. 초대장 섹션 정의 (순서·표시 여부) ===== */
+      let DB,
+        session,
+        prevWidth = 390,
+        editId = null,
+        adminTab = "users";
+      const SECTION_DEFS = [
+        { id: "cover", label: "표지 문구" },
+        { id: "invitation", label: "인사말" },
+        { id: "couple", label: "신랑 · 신부" },
+        { id: "gallery", label: "갤러리" },
+        { id: "where", label: "예식 장소" },
+        { id: "when", label: "예식 일시" },
+        { id: "notice", label: "안내 사항" },
+        { id: "accounts", label: "마음 전하실 곳" },
+        { id: "share", label: "공유" },
+      ];
+      function defaultDefaults() {
+        return {
+          greeting:
+            "두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.",
+          notice:
+            "신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.",
+          thankYouTitle: "THANK YOU",
+          thankYouMessage:
+            "결혼식에 참석하여 자리를 빛내주셔서\n진심으로 감사드립니다.\n\n축복해 주신 만큼 그 고마운 마음,\n가슴속에 간직하고 행복하게 살겠습니다.",
+          musicPresets: [
+            { name: "잔잔한 피아노", url: "" },
+            { name: "서정적인 현악", url: "" },
+            { name: "경쾌한 어쿠스틱", url: "" },
+          ],
+          coverSamples: [],
+          externalLinks: {
+            smartStore: "",
+            smartStoreName: "스마트 스토어",
+            brandHome: "",
+            brandHomeName: "",
+          },
+        };
+      }
+      function defaultSectionsList() {
+        return SECTION_DEFS.map((x) => ({ id: x.id, show: true }));
+      }
+      /* ===== 5. DB 초기화·빈 청첩장 생성 헬퍼 ===== */
+      function resetDB() {
+        DB = {
+          users: defaultUsers(),
+          templates: defaultTemplates(),
+          customIdx: 0,
+          nstoreIdx: 0,
+          stats: {},
+          adminFilter: null,
+          defaults: defaultDefaults(),
+        };
+        session = null;
+      }
+      resetDB();
+      function tplName(id) {
+        const t = DB.templates.find((x) => x.id === id);
+        return t ? t.name : "-";
+      }
+      function defaultDateStr() {
+        var d = new Date();
+        d.setDate(d.getDate() + 90);
+        return d.toISOString().slice(0, 10);
+      }
+      function blankData() {
+        const D = (DB && DB.defaults) || defaultDefaults();
+        return {
+          template: (
+            DB.templates.find((t) => t.visible !== false) || DB.templates[0]
+          ).id,
+          groomKo: "",
+          brideKo: "",
+          groomEn: "",
+          brideEn: "",
+          groomFather: "",
+          groomFatherDec: false,
+          groomMother: "",
+          groomMotherDec: false,
+          groomRelation: "",
+          brideFather: "",
+          brideFatherDec: false,
+          brideMother: "",
+          brideMotherDec: false,
+          brideRelation: "",
+          date: "",
+          time: "",
+          venueName: "",
+          venueAddr: "",
+          floorHall: "",
+          showMap: true,
+          cover: "luce-cover.jpg?v=4",
+          gallery: [],
+          publishStart: (function () {
+            return new Date().toLocaleDateString("sv");
+          })(),
+          publishEnd: (function () {
+            try {
+              var w = parseDate(defaultDateStr());
+              w.setHours(0, 0, 0, 0);
+              return new Date(w.getTime() + 90 * DAY).toLocaleDateString("sv");
+            } catch (e) {
+              return "";
+            }
+          })(),
+          accounts: {},
+          notice: D.notice || "",
+          greeting: D.greeting || "",
+          thankYouTitle: D.thankYouTitle || "THANK YOU",
+          thankYouMessage: D.thankYouMessage || "",
+          sections: defaultSectionsList(),
+          music: {
+            enabled: true,
+            kind: "preset",
+            presetIdx: 0,
+            url: "",
+            loop: true,
+          },
+          shareChannels: { kakao: true, sms: true, insta: true },
+          sectionLabels: {},
+          showCalendar: true,
+        };
+      }
 
-function defaultUsers(){return[
-  {id:'sample01',name:'샘플',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sample01',slugLocked:true,joinedAt:'2026-01-01',
-   data:{template:'luce',groomKo:'태선',brideKo:'세상',groomEn:'Taisun',brideEn:'Sesang',
-     groomFather:'유인근',groomFatherDec:false,groomMother:'정지은',groomMotherDec:false,groomRelation:'아들',
-     brideFather:'박병일',brideFatherDec:false,brideMother:'성서경',brideMotherDec:false,brideRelation:'딸',
-     date:'2027-02-21',time:'14:00',venueName:'노블발렌티 대치',venueAddr:'서울특별시 강남구 영동대로 325',
-     floorHall:'',showMap:true,mapQuery:'더채플 커티지홀',showCalendar:true,
-     cover:'pictures/img1.jpg',
-     coverIntro:'멋진 문구 넣기',
-     gallery:['pictures/img2.jpg','pictures/img3.jpg','pictures/img4.jpg','pictures/img5.jpg','pictures/img6.jpg','pictures/img7.jpg','pictures/img8.jpg'],
-     featuredGallery:[{s:1,x:0,y:0,src:'pictures/img9.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img10.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img11.jpg',frameOrientation:'landscape'}],
-     accounts:{ac1:{bank:'국민',holder:'김도윤',number:'123456-04-123456'},ac2:{bank:'우리',holder:'박서아',number:'110-123-456789'}},
-     acctOrder:[{key:'ac1',label:'신랑'},{key:'ac2',label:'신부'}],
-     notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
-     greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
-     sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'accounts',show:true},{id:'share',show:true}],
-     music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
-     coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
-];}
+      /* ===== 6. UI 헬퍼: 앱 컨테이너·토스트 알림·해시 이동 ===== */
+      const app = () => document.getElementById("app");
+      function toast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(t._t);
+        t._t = setTimeout(() => t.classList.remove("show"), 2100);
+      }
+      function go(hash) {
+        location.hash = hash;
+      }
+      function val(id) {
+        const e = document.getElementById(id);
+        return e ? e.value : "";
+      }
+    </script>
+    <!-- ===== 초대장 렌더러 (디자인·테마 코드) — assets/invitation-renderer.js ===== -->
+    <script src="assets/invitation-renderer.js"></script>
+    <script>
+      /* ===== 1. 공유 기능: 링크 복사·네이티브 공유 ===== */
+      function userSlugForData(d) {
+        var u = DB.users.find(function (x) {
+          return x.data === d;
+        });
+        if (u && u.slug) return u.slug;
 
-let DB,session,prevWidth=390,editId=null,adminTab='users';
-const SECTION_DEFS=[
-  {id:'cover',      label:'표지 문구'},
-  {id:'invitation', label:'인사말'},
-  {id:'couple',     label:'신랑 · 신부'},
-  {id:'gallery',    label:'갤러리'},
-  {id:'where',      label:'예식 장소'},
-  {id:'when',       label:'예식 일시'},
-  {id:'notice',     label:'안내 사항'},
-  {id:'accounts',   label:'마음 전하실 곳'},
-  {id:'share',      label:'공유'}
-];
-function defaultDefaults(){return{
-  greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
-  notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
-  thankYouTitle:'THANK YOU',
-  thankYouMessage:'결혼식에 참석하여 자리를 빛내주셔서\n진심으로 감사드립니다.\n\n축복해 주신 만큼 그 고마운 마음,\n가슴속에 간직하고 행복하게 살겠습니다.',
-  musicPresets:[
-    {name:'잔잔한 피아노',url:''},
-    {name:'서정적인 현악',url:''},
-    {name:'경쾌한 어쿠스틱',url:''}
-  ],
-  coverSamples:[],
-  externalLinks:{
-    smartStore:'',
-    smartStoreName:'스마트 스토어',
-    brandHome:'',
-    brandHomeName:''
-  }
-};}
-function defaultSectionsList(){return SECTION_DEFS.map(x=>({id:x.id,show:true}));}
-function resetDB(){DB={users:defaultUsers(),templates:defaultTemplates(),customIdx:0,nstoreIdx:0,stats:{},adminFilter:null,defaults:defaultDefaults()};session=null;}
-resetDB();
-function tplName(id){const t=DB.templates.find(x=>x.id===id);return t?t.name:'-';}
-function defaultDateStr(){var d=new Date();d.setDate(d.getDate()+90);return d.toISOString().slice(0,10);}
-function blankData(){const D=(DB&&DB.defaults)||defaultDefaults();return{template:(DB.templates.find(t=>t.visible!==false)||DB.templates[0]).id,
-  groomKo:'',brideKo:'',groomEn:'',brideEn:'',
-  groomFather:'',groomFatherDec:false,groomMother:'',groomMotherDec:false,groomRelation:'',
-  brideFather:'',brideFatherDec:false,brideMother:'',brideMotherDec:false,brideRelation:'',
-  date:'',time:'',venueName:'',venueAddr:'',floorHall:'',showMap:true,cover:'luce-cover.jpg?v=4',gallery:[],
-  publishStart:(function(){return new Date().toLocaleDateString('sv');})(), /* v4.4: 최초 접속(생성)일 */
-  publishEnd:(function(){try{var w=parseDate(defaultDateStr());w.setHours(0,0,0,0);return new Date(w.getTime()+90*DAY).toLocaleDateString('sv');}catch(e){return '';}})(), /* 예식일+3개월(바른손식) */
-  accounts:{},notice:D.notice||'',greeting:D.greeting||'',thankYouTitle:D.thankYouTitle||'THANK YOU',thankYouMessage:D.thankYouMessage||'',sections:defaultSectionsList(),
-  music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},showCalendar:true};}
+        try {
+          if ((location.hash || "").indexOf("#/i/") === 0) {
+            var s = decodeURIComponent(location.hash.slice(4)).trim();
+            if (s) return s;
+          }
+        } catch (e) {}
+        return "";
+      }
 
-const app=()=>document.getElementById('app');
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2100);}
-function go(hash){location.hash=hash;}
-function val(id){const e=document.getElementById(id);return e?e.value:'';}
-</script>
-<script src="assets/invitation-renderer.js"></script>
-<script>
-/* ================================================================
-   PUBLISHED INVITATION (#/i/<slug>) + gate + router
-   ================================================================ */
-/* ===== additive helpers: banks, address search, preview overlay, naver pay, viz, figma, share, NStore ===== */
+      function shareURL(slug) {
+        return location.href.split("#")[0] + "#/i/" + (slug || "");
+      }
+      function shareHTML(d, sk) {
+        var slug = userSlugForData(d) || "";
 
-/* address search via Daum postcode (no key) */
-/* preview overlay (narrow screens) */
-function userSlugForData(d){
-  var u=DB.users.find(function(x){return x.data===d;});
-  if(u&&u.slug) return u.slug;
-  /* 하객 공개 뷰(#/i/slug)에선 d가 서버 데이터라 DB.users에 없음 → URL의 slug 신뢰.
-     (공유 버튼이 slug 없이 /i/ 로 전달되던 근본 원인) */
-  try{ if((location.hash||'').indexOf('#/i/')===0){ var s=decodeURIComponent(location.hash.slice(4)).trim(); if(s) return s; } }catch(e){}
-  return '';
-}
-/* Share */
-function shareURL(slug){return location.href.split('#')[0]+'#/i/'+(slug||'');}
-function shareHTML(d,sk){var slug=userSlugForData(d)||'';
- /* v4.1: 공유는 링크 복사 하나만 (카카오/문자/인스타 제거) */
- return '<div style="display:flex;justify-content:center"><button type="button" onclick="shareLink(\''+esc(slug)+'\')" style="border:1px solid '+sk.text+';background:transparent;color:'+sk.text+';font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 30px;cursor:pointer">LINK 복사</button></div>';
-}
-function ytsShare(slug){
-  var url=shareURL(slug);
-  if(navigator.share){ trackShare(slug,'link'); navigator.share({title:'모바일 청첩장',url:url}).catch(function(){}); return; }
-  shareLink(slug);
-}
-function shareLink(slug){trackShare(slug,'link');navigator.clipboard&&navigator.clipboard.writeText(shareURL(slug)).catch(function(){});toast('청첩장 링크를 복사했습니다');}
+        return (
+          '<div style="display:flex;justify-content:center"><button type="button" onclick="shareLink(\'' +
+          esc(slug) +
+          '\')" style="border:1px solid ' +
+          sk.text +
+          ";background:transparent;color:" +
+          sk.text +
+          ';font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 30px;cursor:pointer">LINK 복사</button></div>'
+        );
+      }
+      function ytsShare(slug) {
+        var url = shareURL(slug);
+        if (navigator.share) {
+          trackShare(slug, "link");
+          navigator
+            .share({ title: "모바일 청첩장", url: url })
+            .catch(function () {});
+          return;
+        }
+        shareLink(slug);
+      }
+      function shareLink(slug) {
+        trackShare(slug, "link");
+        navigator.clipboard &&
+          navigator.clipboard.writeText(shareURL(slug)).catch(function () {});
+        toast("청첩장 링크를 복사했습니다");
+      }
 
+      /* ===== 2. 섹션 목록 정규화: 손상 방어·누락 보충·순서 보정 ===== */
+      function getSections(d) {
+        if (!d) return defaultSectionsList();
+        if (!d.sections || !d.sections.length || !Array.isArray(d.sections)) {
+          d.sections = defaultSectionsList();
+          return d.sections;
+        }
 
+        d.sections = d.sections.filter(function (x) {
+          return x && typeof x === "object" && x.id;
+        });
+        if (!d.sections.length) {
+          d.sections = defaultSectionsList();
+          return d.sections;
+        }
 
-/* required-field progress + acct check */
-function getSections(d){
-  if(!d)return defaultSectionsList();
-  if(!d.sections||!d.sections.length||!Array.isArray(d.sections)){d.sections=defaultSectionsList();return d.sections;}
-  /* 손상 방어(자가치유): null·비객체·id없는 섹션 요소 제거. 과거 드래그 splice 가 잘못된 인덱스에서
-     undefined 를 삽입→저장(JSON null)한 데이터가, 여기서 x.id 접근 시 TypeError 를 내
-     getSections→renderInvitation 전체(편집기·하객뷰)를 크래시시키던 문제를 차단하고, 다음 저장 시 자가치유. */
-  d.sections = d.sections.filter(function(x){ return x && typeof x === 'object' && x.id; });
-  if(!d.sections.length){ d.sections=defaultSectionsList(); return d.sections; }
-  // Migrate: ensure any new section in SECTION_DEFS but missing from d.sections is appended
-  d.sections.forEach(function(x){ if(x.id==='invitation'||x.id==='couple') x.show=true; }); /* invitation/couple만 항상 표시. where/when은 뮤트 가능 */
-  const ids=d.sections.map(x=>x.id);
-  SECTION_DEFS.forEach(function(def){
-    if(ids.indexOf(def.id)>=0)return;
-    /* 누락 섹션은 끝에 붙이지 말고 SECTION_DEFS 순서상 올바른 위치에 삽입(예: 계좌는 공유 앞) */
-    var defOrder=SECTION_DEFS.findIndex(function(s){return s.id===def.id;});
-    var at=d.sections.length;
-    for(var k=0;k<d.sections.length;k++){ var ko=SECTION_DEFS.findIndex(function(s){return s.id===d.sections[k].id;}); if(ko>defOrder){ at=k; break; } }
-    d.sections.splice(at,0,{id:def.id,show:true});
-  });
-  /* v4.4: Figma 순서(venue→date→information)로 일회성 정렬(이후 사용자 드래그 존중) */
-  if(!d._secV3){
-    ['when','notice'].forEach(function(id){ var i=d.sections.findIndex(x=>x.id===id); if(i>=0){ var it=d.sections.splice(i,1)[0]; var wi=d.sections.findIndex(x=>x.id==='where'); var off=(id==='when')?1:2; d.sections.splice(Math.min(wi+off,d.sections.length),0,it); } });
-    d._secV2=1; d._secV3=1;
-  }
-  if(!d._secV4){
-    var _ci=d.sections.findIndex(x=>x.id==='cover'); if(_ci>0){ var _c=d.sections.splice(_ci,1)[0]; d.sections.unshift(_c); }
-    if(d.coverIntro==null) d.coverIntro='Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.';
-    d._secV4=1;
-  }
-  /* v7: 과거 append 버그로 accounts가 공유 뒤 등 엉뚱한 위치에 저장된 경우 정규화 —
-     하단 묶음을 항상 accounts→share 순서(공유 맨 끝)로. 각 섹션의 show/userOff 상태는 보존 */
-  if(!d._secV7){
-    var _bundle=['accounts','share'], _saved={};
-    _bundle.forEach(function(id){ var i=d.sections.findIndex(function(x){return x.id===id;}); if(i>=0)_saved[id]=d.sections.splice(i,1)[0]; });
-    _bundle.forEach(function(id){ if(_saved[id])d.sections.push(_saved[id]); });
-    d._secV7=1;
-  }
-  /* 공유(share)는 편집기 재정렬 대상이 아니므로 '항상' 마지막으로 고정(매 렌더 idempotent).
-     _secV7은 1회성이라, 이후 인덱스 버그로 share 앞으로 섹션이 끼어든 데이터를 못 고쳤음 →
-     ① 편집기 섹션 리스트(share 제외 렌더)의 인덱스가 d.sections와 정렬돼 재정렬 릴리즈가 정상 동작
-     ② 프리뷰에서 share 밑에 섹션이 남지 않아 그 사이 접힘선이 사라짐. share 없으면 no-op. */
-  var _shi=d.sections.findIndex(function(x){return x&&x.id==='share';});
-  if(_shi>=0 && _shi!==d.sections.length-1){ var _sh=d.sections.splice(_shi,1)[0]; d.sections.push(_sh); }
-  return d.sections;
-}
-const DEFAULT_SEC_LABELS={invitation:'INVITATION',couple:'THE COUPLE',gallery:'GALLERY',when:'WHEN',where:'WHERE',accounts:'마음 전하실 곳',notice:'안내 사항',share:'SHARE'};
-function sectionLabel(id){const f=SECTION_DEFS.find(x=>x.id===id);return f?f.label:id;}
-function getSecLabel(d,id){var sl=d&&d.sectionLabels||{};return sl[id]||DEFAULT_SEC_LABELS[id]||id;}
-function setSecLabel(id,v){var d=editTarget().data;d.sectionLabels=d.sectionLabels||{};d.sectionLabels[id]=v;refreshPreviewDebounced();}
-function openLightbox(src){
-  closeLightbox();
-  var html='<div class="lightbox" id="lightbox" onclick="closeLightbox()" oncontextmenu="return false">'
-    +'<button type="button" class="lightbox-close" onclick="closeLightbox()" oncontextmenu="return false">&times;</button>'
-    +'<img class="lightbox-img" src="'+esc(src)+'" oncontextmenu="return false" draggable="false" onclick="event.stopPropagation()">'
-    +'</div>';
-  document.body.insertAdjacentHTML('beforeend',html);
-}
-var _gcIdx=0,_gcImgs=[];
-function openGalleryCarousel(idx,cellEl){
-  closeLightbox();
-  var imgs=[],noZoom=false;
-  /* v4.5: 화면에 떠 있는 청첩장의 갤러리를 셀 기준으로 읽는다 — 하객/타계정에서 editTarget(내 데이터)이 열리던 버그 수정 */
-  try{
-    var grid=cellEl&&cellEl.closest?cellEl.closest('.luce-ggrid'):null;
-    if(grid&&grid.getAttribute('data-gal')){ imgs=JSON.parse(decodeURIComponent(grid.getAttribute('data-gal')))||[]; noZoom=(grid.getAttribute('data-nozoom')==='1'); }
-  }catch(e){ imgs=[]; }
-  if(!imgs.length){
-    try{var u=editTarget&&editTarget();var d=u&&u.data;if(d&&d.gallery&&d.gallery.length){imgs=d.gallery.slice();}else{document.querySelectorAll('.inv-gallery img').forEach(function(im){imgs.push(im.src);});}}catch(e){document.querySelectorAll('.inv-gallery img').forEach(function(im){imgs.push(im.src);});}
-  }
-  if(!imgs.length)return;
-  _gcImgs=imgs;_gcIdx=Math.max(0,Math.min(idx||0,imgs.length-1));
-  var html='<div class="lightbox carousel'+(noZoom?'':' zoomable')+'" id="lightbox" oncontextmenu="return false">'
-    +'<button type="button" class="lightbox-close" onclick="closeLightbox()">&times;</button>'
-    +'<button type="button" class="lb-nav prev" onclick="gcPrev()" aria-label="이전"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
-    +'<div class="lb-stage" id="lb-stage" onclick="closeLightbox()"><img class="lightbox-img" id="lb-img" src="" oncontextmenu="return false" draggable="false" onclick="event.stopPropagation()"></div>'
-    +'<button type="button" class="lb-nav next" onclick="gcNext()" aria-label="다음"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
-    +'<div class="lb-counter" id="lb-counter"></div>'
-    +'</div>';
-  document.body.insertAdjacentHTML('beforeend',html);
-  gcUpdate();
-  var stage=document.getElementById('lb-stage');
-  if(stage){var sX=0,cX=0,dr=false;stage.addEventListener('touchstart',function(e){if(e.touches.length>1){dr=false;return;}if(!e.touches[0])return;sX=e.touches[0].clientX;cX=sX;dr=true;},{passive:true});stage.addEventListener('touchmove',function(e){if(e.touches.length>1){dr=false;return;}if(!dr||!e.touches[0])return;cX=e.touches[0].clientX;},{passive:true});stage.addEventListener('touchend',function(){if(!dr)return;dr=false;var dx=cX-sX;if(Math.abs(dx)>40){if(dx<0)gcNext();else gcPrev();}});}
-  if(!window._gcKeyBound){window._gcKeyBound=true;document.addEventListener('keydown',function(e){if(!document.getElementById('lightbox'))return;if(e.key==='ArrowRight')gcNext();else if(e.key==='ArrowLeft')gcPrev();else if(e.key==='Escape')closeLightbox();});}
-}
-function gcPrev(){if(!_gcImgs.length)return;_gcIdx=(_gcIdx-1+_gcImgs.length)%_gcImgs.length;gcUpdate();}
-function gcNext(){if(!_gcImgs.length)return;_gcIdx=(_gcIdx+1)%_gcImgs.length;gcUpdate();}
-function gcUpdate(){var img=document.getElementById('lb-img');var c=document.getElementById('lb-counter');if(img){var _o=_gcImgs[_gcIdx];img.onerror=function(){img.onerror=null;img.src=_o;};img.src=_o;}if(c)c.textContent=(_gcIdx+1)+' / '+_gcImgs.length;}
-function closeLightbox(){var l=document.getElementById('lightbox');if(l)l.remove();}
+        d.sections.forEach(function (x) {
+          if (x.id === "invitation" || x.id === "couple") x.show = true;
+        });
+        const ids = d.sections.map((x) => x.id);
+        SECTION_DEFS.forEach(function (def) {
+          if (ids.indexOf(def.id) >= 0) return;
 
+          var defOrder = SECTION_DEFS.findIndex(function (s) {
+            return s.id === def.id;
+          });
+          var at = d.sections.length;
+          for (var k = 0; k < d.sections.length; k++) {
+            var ko = SECTION_DEFS.findIndex(function (s) {
+              return s.id === d.sections[k].id;
+            });
+            if (ko > defOrder) {
+              at = k;
+              break;
+            }
+          }
+          d.sections.splice(at, 0, { id: def.id, show: true });
+        });
 
-/* section toggle + drag-reorder */
+        if (!d._secV3) {
+          ["when", "notice"].forEach(function (id) {
+            var i = d.sections.findIndex((x) => x.id === id);
+            if (i >= 0) {
+              var it = d.sections.splice(i, 1)[0];
+              var wi = d.sections.findIndex((x) => x.id === "where");
+              var off = id === "when" ? 1 : 2;
+              d.sections.splice(Math.min(wi + off, d.sections.length), 0, it);
+            }
+          });
+          d._secV2 = 1;
+          d._secV3 = 1;
+        }
+        if (!d._secV4) {
+          var _ci = d.sections.findIndex((x) => x.id === "cover");
+          if (_ci > 0) {
+            var _c = d.sections.splice(_ci, 1)[0];
+            d.sections.unshift(_c);
+          }
+          if (d.coverIntro == null)
+            d.coverIntro =
+              "Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.";
+          d._secV4 = 1;
+        }
 
-function musicPlayerHTML(d){
-  if(!d||!d.music||!d.music.enabled)return '';
-  var src='';
-  if(d.music.kind==='preset'&&d.music.presetIdx>=0){
-    var pres=(DB.defaults&&DB.defaults.musicPresets)||[];
-    if(pres[d.music.presetIdx])src=pres[d.music.presetIdx].url||'';
-  }else if(d.music.kind==='url'||d.music.kind==='upload'){
-    src=d.music.url||'';
-  }
-  if(!src)return ''; /* 음원 미설정 시 죽은 회색 버튼 대신 아예 미표시 */
-  var loopAttr=(d.music.loop!==false)?'loop':'';
-  return '<audio id="inv-audio" src="'+esc(src)+'" '+loopAttr+' preload="auto"></audio>'
-    +'<button class="inv-music" id="inv-music-btn" onclick="toggleMusic()" title="음악 재생/일시정지">'
-    +'<svg id="music-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
-    +'<svg id="music-icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>'
-    +'</button>';
-}
-function toggleMusic(){
-  var a=document.getElementById('inv-audio');if(!a)return;
-  var pi=document.getElementById('music-icon-play'),pa=document.getElementById('music-icon-pause');
-  if(a.paused){a.play().then(function(){if(pi)pi.style.display='none';if(pa)pa.style.display='block';}).catch(function(){toast('재생을 시작할 수 없어요. 화면을 한 번 터치해 주세요.');});}
-  else{a.pause();if(pi)pi.style.display='block';if(pa)pa.style.display='none';}
-}
-/* 자동재생: 진입 시 바로 시도, 브라우저가 막으면 첫 터치/스크롤에서 시작 (사용자가 일시정지하면 다시 켜지 않음) */
-function _musicSyncIcon(){var a=document.getElementById('inv-audio');var pi=document.getElementById('music-icon-play'),pa=document.getElementById('music-icon-pause');if(!a)return;var playing=!a.paused;if(pi)pi.style.display=playing?'none':'block';if(pa)pa.style.display=playing?'block':'none';}
-(function(){
-  var tried=false;
-  function tryAuto(){
-    var a=document.getElementById('inv-audio');
-    if(!a||!a.paused||a._userPaused)return !!a&&!a.paused;
-    return a.play().then(function(){_musicSyncIcon();return true;}).catch(function(){return false;});
-  }
-  function onGesture(){ Promise.resolve(tryAuto()).then(function(okv){ if(okv){ ['click','touchstart','scroll','keydown'].forEach(function(ev){ document.removeEventListener(ev,onGesture,true); }); } }); }
-  new MutationObserver(function(){
-    var a=document.getElementById('inv-audio');
-    if(a&&!a._autoInit){
-      a._autoInit=true; tried=false; window._ytsInvAudio=a; /* 이탈 시 정지용 참조(엘리먼트가 DOM에서 제거돼도 접근) */
-      /* toggleMusic의 일시정지만 사용자 의도로 기록 */
-      var origToggle=window.toggleMusic;
-      window.toggleMusic=function(){ var el=document.getElementById('inv-audio'); if(el&&!el.paused){ el._userPaused=true; } else if(el){ el._userPaused=false; } origToggle(); };
-      Promise.resolve(tryAuto()).then(function(okv){
-        if(!okv){ ['click','touchstart','scroll','keydown'].forEach(function(ev){ document.addEventListener(ev,onGesture,true); }); }
+        if (!d._secV7) {
+          var _bundle = ["accounts", "share"],
+            _saved = {};
+          _bundle.forEach(function (id) {
+            var i = d.sections.findIndex(function (x) {
+              return x.id === id;
+            });
+            if (i >= 0) _saved[id] = d.sections.splice(i, 1)[0];
+          });
+          _bundle.forEach(function (id) {
+            if (_saved[id]) d.sections.push(_saved[id]);
+          });
+          d._secV7 = 1;
+        }
+
+        var _shi = d.sections.findIndex(function (x) {
+          return x && x.id === "share";
+        });
+        if (_shi >= 0 && _shi !== d.sections.length - 1) {
+          var _sh = d.sections.splice(_shi, 1)[0];
+          d.sections.push(_sh);
+        }
+        return d.sections;
+      }
+      const DEFAULT_SEC_LABELS = {
+        invitation: "INVITATION",
+        couple: "THE COUPLE",
+        gallery: "GALLERY",
+        when: "WHEN",
+        where: "WHERE",
+        accounts: "마음 전하실 곳",
+        notice: "안내 사항",
+        share: "SHARE",
+      };
+      function sectionLabel(id) {
+        const f = SECTION_DEFS.find((x) => x.id === id);
+        return f ? f.label : id;
+      }
+      function getSecLabel(d, id) {
+        var sl = (d && d.sectionLabels) || {};
+        return sl[id] || DEFAULT_SEC_LABELS[id] || id;
+      }
+      function setSecLabel(id, v) {
+        var d = editTarget().data;
+        d.sectionLabels = d.sectionLabels || {};
+        d.sectionLabels[id] = v;
+        refreshPreviewDebounced();
+      }
+      /* ===== 3. 이미지 라이트박스·갤러리 캐러셀 ===== */
+      function openLightbox(src) {
+        closeLightbox();
+        var html =
+          '<div class="lightbox" id="lightbox" onclick="closeLightbox()" oncontextmenu="return false">' +
+          '<button type="button" class="lightbox-close" onclick="closeLightbox()" oncontextmenu="return false">&times;</button>' +
+          '<img class="lightbox-img" src="' +
+          esc(src) +
+          '" oncontextmenu="return false" draggable="false" onclick="event.stopPropagation()">' +
+          "</div>";
+        document.body.insertAdjacentHTML("beforeend", html);
+      }
+      var _gcIdx = 0,
+        _gcImgs = [];
+      function openGalleryCarousel(idx, cellEl) {
+        closeLightbox();
+        var imgs = [],
+          noZoom = false;
+
+        try {
+          var grid =
+            cellEl && cellEl.closest ? cellEl.closest(".luce-ggrid") : null;
+          if (grid && grid.getAttribute("data-gal")) {
+            imgs =
+              JSON.parse(decodeURIComponent(grid.getAttribute("data-gal"))) ||
+              [];
+            noZoom = grid.getAttribute("data-nozoom") === "1";
+          }
+        } catch (e) {
+          imgs = [];
+        }
+        if (!imgs.length) {
+          try {
+            var u = editTarget && editTarget();
+            var d = u && u.data;
+            if (d && d.gallery && d.gallery.length) {
+              imgs = d.gallery.slice();
+            } else {
+              document
+                .querySelectorAll(".inv-gallery img")
+                .forEach(function (im) {
+                  imgs.push(im.src);
+                });
+            }
+          } catch (e) {
+            document
+              .querySelectorAll(".inv-gallery img")
+              .forEach(function (im) {
+                imgs.push(im.src);
+              });
+          }
+        }
+        if (!imgs.length) return;
+        _gcImgs = imgs;
+        _gcIdx = Math.max(0, Math.min(idx || 0, imgs.length - 1));
+        var html =
+          '<div class="lightbox carousel' +
+          (noZoom ? "" : " zoomable") +
+          '" id="lightbox" oncontextmenu="return false">' +
+          '<button type="button" class="lightbox-close" onclick="closeLightbox()">&times;</button>' +
+          '<button type="button" class="lb-nav prev" onclick="gcPrev()" aria-label="이전"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '<div class="lb-stage" id="lb-stage" onclick="closeLightbox()"><img class="lightbox-img" id="lb-img" src="" oncontextmenu="return false" draggable="false" onclick="event.stopPropagation()"></div>' +
+          '<button type="button" class="lb-nav next" onclick="gcNext()" aria-label="다음"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '<div class="lb-counter" id="lb-counter"></div>' +
+          "</div>";
+        document.body.insertAdjacentHTML("beforeend", html);
+        gcUpdate();
+        var stage = document.getElementById("lb-stage");
+        if (stage) {
+          var sX = 0,
+            cX = 0,
+            dr = false;
+          stage.addEventListener(
+            "touchstart",
+            function (e) {
+              if (e.touches.length > 1) {
+                dr = false;
+                return;
+              }
+              if (!e.touches[0]) return;
+              sX = e.touches[0].clientX;
+              cX = sX;
+              dr = true;
+            },
+            { passive: true },
+          );
+          stage.addEventListener(
+            "touchmove",
+            function (e) {
+              if (e.touches.length > 1) {
+                dr = false;
+                return;
+              }
+              if (!dr || !e.touches[0]) return;
+              cX = e.touches[0].clientX;
+            },
+            { passive: true },
+          );
+          stage.addEventListener("touchend", function () {
+            if (!dr) return;
+            dr = false;
+            var dx = cX - sX;
+            if (Math.abs(dx) > 40) {
+              if (dx < 0) gcNext();
+              else gcPrev();
+            }
+          });
+        }
+        if (!window._gcKeyBound) {
+          window._gcKeyBound = true;
+          document.addEventListener("keydown", function (e) {
+            if (!document.getElementById("lightbox")) return;
+            if (e.key === "ArrowRight") gcNext();
+            else if (e.key === "ArrowLeft") gcPrev();
+            else if (e.key === "Escape") closeLightbox();
+          });
+        }
+      }
+      function gcPrev() {
+        if (!_gcImgs.length) return;
+        _gcIdx = (_gcIdx - 1 + _gcImgs.length) % _gcImgs.length;
+        gcUpdate();
+      }
+      function gcNext() {
+        if (!_gcImgs.length) return;
+        _gcIdx = (_gcIdx + 1) % _gcImgs.length;
+        gcUpdate();
+      }
+      function gcUpdate() {
+        var img = document.getElementById("lb-img");
+        var c = document.getElementById("lb-counter");
+        if (img) {
+          var _o = _gcImgs[_gcIdx];
+          img.onerror = function () {
+            img.onerror = null;
+            img.src = _o;
+          };
+          img.src = _o;
+        }
+        if (c) c.textContent = _gcIdx + 1 + " / " + _gcImgs.length;
+      }
+      function closeLightbox() {
+        var l = document.getElementById("lightbox");
+        if (l) l.remove();
+      }
+
+      /* ===== 4. 배경음악 플레이어: 자동재생·탭 전환 시 정지 ===== */
+      function musicPlayerHTML(d) {
+        if (!d || !d.music || !d.music.enabled) return "";
+        var src = "";
+        if (d.music.kind === "preset" && d.music.presetIdx >= 0) {
+          var pres = (DB.defaults && DB.defaults.musicPresets) || [];
+          if (pres[d.music.presetIdx]) src = pres[d.music.presetIdx].url || "";
+        } else if (d.music.kind === "url" || d.music.kind === "upload") {
+          src = d.music.url || "";
+        }
+        if (!src) return "";
+        var loopAttr = d.music.loop !== false ? "loop" : "";
+        return (
+          '<audio id="inv-audio" src="' +
+          esc(src) +
+          '" ' +
+          loopAttr +
+          ' preload="auto"></audio>' +
+          '<button class="inv-music" id="inv-music-btn" onclick="toggleMusic()" title="음악 재생/일시정지">' +
+          '<svg id="music-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg id="music-icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>' +
+          "</button>"
+        );
+      }
+      function toggleMusic() {
+        var a = document.getElementById("inv-audio");
+        if (!a) return;
+        var pi = document.getElementById("music-icon-play"),
+          pa = document.getElementById("music-icon-pause");
+        if (a.paused) {
+          a.play()
+            .then(function () {
+              if (pi) pi.style.display = "none";
+              if (pa) pa.style.display = "block";
+            })
+            .catch(function () {
+              toast("재생을 시작할 수 없어요. 화면을 한 번 터치해 주세요.");
+            });
+        } else {
+          a.pause();
+          if (pi) pi.style.display = "block";
+          if (pa) pa.style.display = "none";
+        }
+      }
+
+      function _musicSyncIcon() {
+        var a = document.getElementById("inv-audio");
+        var pi = document.getElementById("music-icon-play"),
+          pa = document.getElementById("music-icon-pause");
+        if (!a) return;
+        var playing = !a.paused;
+        if (pi) pi.style.display = playing ? "none" : "block";
+        if (pa) pa.style.display = playing ? "block" : "none";
+      }
+      (function () {
+        var tried = false;
+        function tryAuto() {
+          var a = document.getElementById("inv-audio");
+          if (!a || !a.paused || a._userPaused) return !!a && !a.paused;
+          return a
+            .play()
+            .then(function () {
+              _musicSyncIcon();
+              return true;
+            })
+            .catch(function () {
+              return false;
+            });
+        }
+        function onGesture() {
+          Promise.resolve(tryAuto()).then(function (okv) {
+            if (okv) {
+              ["click", "touchstart", "scroll", "keydown"].forEach(
+                function (ev) {
+                  document.removeEventListener(ev, onGesture, true);
+                },
+              );
+            }
+          });
+        }
+        new MutationObserver(function () {
+          var a = document.getElementById("inv-audio");
+          if (a && !a._autoInit) {
+            a._autoInit = true;
+            tried = false;
+            window._ytsInvAudio = a;
+
+            var origToggle = window.toggleMusic;
+            window.toggleMusic = function () {
+              var el = document.getElementById("inv-audio");
+              if (el && !el.paused) {
+                el._userPaused = true;
+              } else if (el) {
+                el._userPaused = false;
+              }
+              origToggle();
+            };
+            Promise.resolve(tryAuto()).then(function (okv) {
+              if (!okv) {
+                ["click", "touchstart", "scroll", "keydown"].forEach(
+                  function (ev) {
+                    document.addEventListener(ev, onGesture, true);
+                  },
+                );
+              }
+            });
+          }
+        }).observe(document.body, { childList: true, subtree: true });
+      })();
+
+      (function () {
+        function invAudio() {
+          return (
+            document.getElementById("inv-audio") || window._ytsInvAudio || null
+          );
+        }
+        function pauseInv(remember) {
+          var a = invAudio();
+          if (a && !a.paused) {
+            if (remember) a._pausedByHide = true;
+            try {
+              a.pause();
+            } catch (e) {}
+            if (typeof _musicSyncIcon === "function") _musicSyncIcon();
+          }
+        }
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) {
+            pauseInv(true);
+          } else {
+            var a = invAudio();
+            if (a && a._pausedByHide && !a._userPaused) {
+              a._pausedByHide = false;
+              a.play()
+                .then(function () {
+                  if (typeof _musicSyncIcon === "function") _musicSyncIcon();
+                })
+                .catch(function () {});
+            }
+          }
+        });
+        window.addEventListener("pagehide", pauseInv.bind(null, false));
+        window.addEventListener("hashchange", function () {
+          if ((location.hash || "").indexOf("#/i/") !== 0) {
+            pauseInv(false);
+          }
+        });
+      })();
+
+      /* ===== 5. 조회·공유 통계 (localStorage 기반) ===== */
+      function trackView(slug) {
+        if (!slug || slug === "_preview") return;
+        DB.stats = DB.stats || {};
+        var s = (DB.stats[slug] = DB.stats[slug] || {
+          views: 0,
+          uniques: 0,
+          shares: { kakao: 0, link: 0, sms: 0, insta: 0 },
+          lastView: null,
+        });
+        s.views++;
+        try {
+          var key = "yts_seen_" + slug;
+          if (!localStorage.getItem(key)) {
+            s.uniques++;
+            localStorage.setItem(key, "1");
+          }
+        } catch (e) {}
+        s.lastView = Date.now();
+      }
+      function trackShare(slug, channel) {
+        if (!slug) return;
+        DB.stats = DB.stats || {};
+        var s = (DB.stats[slug] = DB.stats[slug] || {
+          views: 0,
+          uniques: 0,
+          shares: { kakao: 0, link: 0, sms: 0, insta: 0 },
+          lastView: null,
+        });
+        s.shares = s.shares || { kakao: 0, link: 0, sms: 0, insta: 0 };
+        s.shares[channel] = (s.shares[channel] || 0) + 1;
+      }
+
+      /* ===== 6. 발행 뷰 렌더링·라우터 ===== */
+      function viewPublished(slug) {
+        const u = DB.users.find((x) => x.slug === slug && x.role !== "admin");
+        trackView(slug);
+        if (!u || !u.data) return "";
+        return (
+          '<div class="pub-wrap"><div class="pub-paper">' +
+          renderInvitation(u.data) +
+          "</div></div>" +
+          musicPlayerHTML(u.data)
+        );
+      }
+      function render() {
+        app().innerHTML = viewPublished("sample01");
+        if (window._preserveScrollY == null) window.scrollTo(0, 0);
+      }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeFigmaModal && closeFigmaModal();
+        }
       });
-    }
-  }).observe(document.body,{childList:true,subtree:true});
-})();
-/* 배경음악: 탭 전환·이탈·라우트 이동 시 정지 (하객이 나가도 계속 재생되던 문제) */
-(function(){
-  function invAudio(){ return document.getElementById('inv-audio')||window._ytsInvAudio||null; }
-  function pauseInv(remember){ var a=invAudio(); if(a&&!a.paused){ if(remember)a._pausedByHide=true; try{a.pause();}catch(e){} if(typeof _musicSyncIcon==='function')_musicSyncIcon(); } }
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden){ pauseInv(true); }
-    else { var a=invAudio(); if(a&&a._pausedByHide&&!a._userPaused){ a._pausedByHide=false; a.play().then(function(){ if(typeof _musicSyncIcon==='function')_musicSyncIcon(); }).catch(function(){}); } }
-  });
-  window.addEventListener('pagehide',pauseInv.bind(null,false));
-  window.addEventListener('hashchange',function(){ if((location.hash||'').indexOf('#/i/')!==0){ pauseInv(false); } }); /* 청첩장 뷰를 벗어나면 정지 */
-})();
-
-/* Calendar save (Google Calendar + ICS) */
-function trackView(slug){
-  if(!slug||slug==='_preview')return;
-  DB.stats=DB.stats||{};
-  var s=DB.stats[slug]=DB.stats[slug]||{views:0,uniques:0,shares:{kakao:0,link:0,sms:0,insta:0},lastView:null};
-  s.views++;
-  try{
-    var key='yts_seen_'+slug;
-    if(!localStorage.getItem(key)){s.uniques++;localStorage.setItem(key,'1');}
-  }catch(e){}
-  s.lastView=Date.now();
-}
-function trackShare(slug,channel){
-  if(!slug)return;
-  DB.stats=DB.stats||{};
-  var s=DB.stats[slug]=DB.stats[slug]||{views:0,uniques:0,shares:{kakao:0,link:0,sms:0,insta:0},lastView:null};
-  s.shares=s.shares||{kakao:0,link:0,sms:0,insta:0};
-  s.shares[channel]=(s.shares[channel]||0)+1;
-}
-
-function viewPublished(slug){
-  const u=DB.users.find(x=>x.slug===slug&&x.role!=='admin');
-  trackView(slug);
-  if(!u||!u.data)return '';
-  return '<div class="pub-wrap"><div class="pub-paper">'+renderInvitation(u.data)+'</div></div>'+musicPlayerHTML(u.data);
-}
-function render(){
-  app().innerHTML=viewPublished('sample01');
-  if(window._preserveScrollY==null)window.scrollTo(0,0);
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeFigmaModal&&closeFigmaModal();}});
-window.addEventListener('hashchange',render);
-window.addEventListener('DOMContentLoaded',render);
-render();
-</script>
-</body>
+      window.addEventListener("hashchange", render);
+      window.addEventListener("DOMContentLoaded", render);
+      render();
+    </script>
+  </body>
 </html>

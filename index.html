@@ -133,7 +133,7 @@ function userSlugForData(d){
   return '';
 }
 /* Share */
-function shareURL(slug){return location.origin+'/i/'+(slug||'');}
+function shareURL(slug){return location.href.split('#')[0]+'#/i/'+(slug||'');}
 function shareHTML(d,sk){var slug=userSlugForData(d)||'';
  /* v4.1: 공유는 링크 복사 하나만 (카카오/문자/인스타 제거) */
  return '<div style="display:flex;justify-content:center"><button type="button" onclick="shareLink(\''+esc(slug)+'\')" style="border:1px solid '+sk.text+';background:transparent;color:'+sk.text+';font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 30px;cursor:pointer">LINK 복사</button></div>';

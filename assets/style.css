@@ -212,7 +212,7 @@
   .luce-rel{color:#b9b4a5}
   .luce-subwin{position:relative;width:240px;max-width:63%;height:151px;margin:0 auto;overflow:hidden}
   .luce-subwin img{width:100%;height:100%;object-fit:cover;transform-origin:center;display:block}
-  .luce-fold{height:120px;background:url(/assets/paper-fold-lemon.png) center/100% auto no-repeat;margin:10px 0}
+  .luce-fold{height:120px;background:url(paper-fold-lemon.png) center/100% auto no-repeat;margin:10px 0}
   .luce-acct summary{list-style:none!important}
   .luce-acct summary::-webkit-details-marker,.luce-acct summary::marker{display:none!important;content:''}
   .luce-acct[open] summary>span:last-child{transform:rotate(90deg)}

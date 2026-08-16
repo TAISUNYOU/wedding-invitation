@@ -47,10 +47,10 @@ function luceFeatured(d){
       : 'transform:translate('+((it.x||0))+'%,'+((it.y||0))+'%) scale('+(it.s||1)+')';
     /* 대표(폴라로이드) 이미지는 저장 원본 그대로 서빙 */
     var img='<img src="'+esc(it.src||'feat1.png')+'" alt="" draggable="false" oncontextmenu="return false" style="'+tf+'">'
-      +(it.grain?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'');
+      +(it.grain?'<div style="position:absolute;inset:0;background:url(assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'');
     /* 세로 = 기존 PNG 프레임을 90° 회전(같은 질감·그림자·비율). 없으면 기존 가로(바이트 동일) */
     var portrait=(it.frameOrientation==='portrait');
-    return '<div class="luce-pola'+(portrait?' is-portrait':'')+'" data-feat-i="'+i+'"><div class="luce-pola-win">'+img+'</div><img class="luce-pola-frame" src="/assets/polaroid.png" alt="" draggable="false"></div>';
+    return '<div class="luce-pola'+(portrait?' is-portrait':'')+'" data-feat-i="'+i+'"><div class="luce-pola-win">'+img+'</div><img class="luce-pola-frame" src="assets/polaroid.png" alt="" draggable="false"></div>';
   }).join('')+'</div>';
 }
 function luceGallery(d){
@@ -154,7 +154,7 @@ function luceAcctRows(p,d){
 }
 function luceShare(d,prev){
   var slug=userSlugForData(d)||'';
-  var icon='<img src="/assets/icon-share.png" alt="" style="width:12px;height:auto">';
+  var icon='<img src="assets/icon-share.png" alt="" style="width:12px;height:auto">';
   return '<div style="padding:'+((prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="share">'
     +'<button type="button" onclick="ytsShare(\''+esc(slug)+'\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 '+icon+'</button>'
   +'</div></div>';
@@ -179,14 +179,14 @@ function tplLuce(d){
   const gEn=esc(p.gEn), bEn=esc(p.bEn);
 
   /* 레몬(luce) 전용 배경 — 연노랑 종이 */
-  const pageBg='#f1e8a1 url(/assets/paper-mid-lemon.png) top center/100% auto repeat-y';
+  const pageBg='#f1e8a1 url(assets/paper-mid-lemon.png) top center/100% auto repeat-y';
   const pageInk=ink;
   let html='<div class="inv luce" style="background:'+pageBg+';color:'+pageInk+';font-family:'+KO+';text-align:center;padding:0 0 48px">';
   /* ── 고정 헤더: 커버 + 데코 + 이름 행 + 고정 가로 사진 ── */
   var _cc=d.coverCrop||{};
   html+='<div class="luce-coverwrap" data-pv-sec="cover" style="position:relative;width:100%;aspect-ratio:380/500;overflow:hidden;background:#cfc9b0">'
     +'<img class="luce-coverimg" src="'+esc(d.cover||'luce-cover.jpg?v=4')+'" alt="" draggable="false" onerror="if(!this._f){this._f=1;this.src=\''+esc(d.cover||'luce-cover.jpg?v=4')+'\';}else if(this.src.indexOf(\'luce-cover.jpg?v=4\')<0){this.src=\'luce-cover.jpg?v=4\';}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;'+ytsCoverCropStyle(_cc)+'">'
-    +((d.coverGrainEnabled!==false)?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
+    +((d.coverGrainEnabled!==false)?'<div style="position:absolute;inset:0;background:url(assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
     +'<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,18,.1),transparent 40%,rgba(20,26,18,.5))"></div>'
     +(((((d.sections||[]).find(function(_x){return _x.id==='cover';})||{show:true}).show!==false)
       ? '<div style="position:absolute;left:26px;right:26px;bottom:28px;text-align:left;color:#fff;font-family:'+MONO+'">'
@@ -201,8 +201,8 @@ function tplLuce(d){
   +'</div></div>';
   html+='<div class="luce-fold"></div>';
   var _sc2=d.subCoverCrop||{};
-  html+='<div style="padding:0 0 4px"><div class="luce-subwin"><img class="luce-subcover" src="'+esc(d.subCoverImage||'/assets/luce-gallery.jpg')+'" alt="" draggable="false" style="transform:translate('+(_sc2.x||0)+'%,'+(_sc2.y||0)+'%) scale('+(_sc2.s||1)+')">'
-    +(d.subCoverGrainEnabled?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
+  html+='<div style="padding:0 0 4px"><div class="luce-subwin"><img class="luce-subcover" src="'+esc(d.subCoverImage||'assets/luce-gallery.jpg')+'" alt="" draggable="false" style="transform:translate('+(_sc2.x||0)+'%,'+(_sc2.y||0)+'%) scale('+(_sc2.s||1)+')">'
+    +(d.subCoverGrainEnabled?'<div style="position:absolute;inset:0;background:url(assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
   +'</div></div>';
 
   /* ── 섹션 루프: d.sections 순서 그대로 (Preview=Sidebar=DB 단일 소스) ── */
@@ -212,7 +212,7 @@ function tplLuce(d){
       /* Figma Group 31: 센터 정렬 카드 — 데코·이름·인사말·혼주·일시 */
       function famLine(f,fd,m,md,rel,defRel,nameKo){
         /* v4.5: 고인은 이름 앞 국화 이미지, 자녀 이름은 성 포함 전체 이름 */
-        var MUM='<img src="/assets/deceased-flower.png" alt="故" draggable="false" style="display:inline-block;height:1.2em;vertical-align:-0.25em;margin-right:2px">';
+        var MUM='<img src="assets/deceased-flower.png" alt="故" draggable="false" style="display:inline-block;height:1.2em;vertical-align:-0.25em;margin-right:2px">';
         var ps=[]; if(f&&f.trim())ps.push((fd?MUM:'')+esc(f.trim())); if(m&&m.trim())ps.push((md?MUM:'')+esc(m.trim()));
         if(!ps.length)return '';
         return '<div>'+ps.join(' · ')+' 의 <span class="luce-rel" style="color:#b9b4a5">'+esc((rel&&rel.trim())||defRel)+'</span> '+esc((nameKo||'').trim())+'</div>';
@@ -261,7 +261,7 @@ function tplLuce(d){
       var rows=luceAcctRows(p,d);
       if(!rows) return '<div data-pv-sec="accounts" style="height:1px"></div>'; /* 계좌 미입력 시 배포 화면에서 숨김(에디터는 placeholder) */
       return '<div style="padding:'+((prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="accounts">'
-        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">'+esc(getSecLabel(d,'accounts')||'마음 전하실 곳')+'<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
+        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">'+esc(getSecLabel(d,'accounts')||'마음 전하실 곳')+'<img src="assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
         +'<div style="background:#fff;padding:2px 20px 16px">'+rows+'</div>'
         +'</details>'
       +'</div></div>';

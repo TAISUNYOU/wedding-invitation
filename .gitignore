@@ -1,0 +1,6 @@
+# 로컬 테스트 부산물
+*.log
+NVIDIA Corporation/
+
+# omo 에이전트 상태
+.omo/

@@ -1370,8 +1370,6 @@
 
 </style>
 <script>
-window.CEZ_IMG_FALLBACK='data:image/svg+xml;charset=utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2080%2080%22%3E%3Crect%20width=%2280%22%20height=%2280%22%20fill=%22%23f0f2f4%22/%3E%3C/svg%3E';
-function cezFallback(img){img.onerror=null;img.src=window.CEZ_IMG_FALLBACK;}
 </script>
 </head>
 <body>
@@ -1474,19 +1472,6 @@ function val(id){const e=document.getElementById(id);return e?e.value:'';}
 /* ================================================================
    INVITATION RENDERER (skin system: built-in + Figma custom)
    ================================================================ */
-/* 원격 이미지를 크기 변환 URL로 바꿔 전송량 절감(Pro 기능).
-   로컬 에셋·dataURL·외부 URL·이미 변환된 것은 그대로 반환. */
-var CEZ_COVER_W=1920, CEZ_COVER_Q=90;   /* 표지(첫 화면) 서빙 화질 — 갤러리는 기본값(72) 유지 */
-function cezImg(url,w,q){
-  var s=String(url||'');
-  if(!s || s.indexOf('/storage/v1/object/public/')<0 || s.indexOf('/render/image/')>=0) return url;
-  var base=s.replace('/storage/v1/object/public/','/storage/v1/render/image/public/');
-  /* resize=contain 필수 — 없으면 원격 스토리지가 기본 cover 모드로 종횡비를 왜곡(width만 줄이고 height 유지)
-     → 커버/갤러리의 object-fit:cover + 크롭 transform이 깨지고 에디터(원본 기준)와 하객뷰가 어긋난다.
-     contain은 종횡비를 보존하며 width로만 축소(패딩 없음). 크롭 데이터는 손대지 않는 순수 렌더링 수정.
-     q(quality)는 호출부에서 지정 — 표지는 첫 화면이라 높게(86), 갤러리 등 기본은 72 유지(egress 균형). */
-  return base+(base.indexOf('?')>=0?'&':'?')+'width='+(w||600)+'&quality='+(q||72)+'&resize=contain';
-}
 function parentLine(f,fd,m,md,rel){var ps=[];if(f&&f.trim())ps.push((fd?'故 ':'')+f.trim());if(m&&m.trim())ps.push((md?'故 ':'')+m.trim());var s=ps.join(' · ');if(rel&&rel.trim())s+=(s?' 의 ':'')+rel.trim();return s;}
 function invParts(d){
   d=d||{};
@@ -1531,8 +1516,8 @@ function luceFeatured(d){
     var tf=(it.posX!=null||it.posY!=null)
       ? 'object-position:'+(it.posX==null?50:it.posX)+'% '+(it.posY==null?50:it.posY)+'%;transform:scale('+(it.s||1)+')'
       : 'transform:translate('+((it.x||0))+'%,'+((it.y||0))+'%) scale('+(it.s||1)+')';
-    /* 대표(폴라로이드) 이미지는 저장 원본을 그대로 서빙했음 → 업로드 2048 상향 시 egress 급증. cezImg(1440)로 변환 서빙해 화질(레티나 크리스프)은 유지하고 용량은 캡 */
-    var img='<img src="'+esc(cezImg(it.src||'feat1.png',1440,82))+'" alt="" draggable="false" oncontextmenu="return false" style="'+tf+'">'
+    /* 대표(폴라로이드) 이미지는 저장 원본 그대로 서빙 */
+    var img='<img src="'+esc(it.src||'feat1.png')+'" alt="" draggable="false" oncontextmenu="return false" style="'+tf+'">'
       +(it.grain?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'');
     /* 세로 = 기존 PNG 프레임을 90° 회전(같은 질감·그림자·비율). 없으면 기존 가로(바이트 동일) */
     var portrait=(it.frameOrientation==='portrait');
@@ -1548,7 +1533,7 @@ function luceGallery(d){
       var isMore=(i===5&&gal.length>6);
       var more=isMore?'<div class="luce-gmore">+'+(gal.length-6)+' More</div>':'';
       /* 썸네일은 확대방지와 무관하게 항상 캐러셀로 열림(보기 가능) — 저장·핀치줌은 캐러셀(touch-action:none·우클릭/드래그 차단)이 이미 방지 */
-      return '<div class="luce-gcell" onclick="openGalleryCarousel('+i+',this)"><img src="'+esc(cezImg(src,480))+'" onerror="this.onerror=null;this.src=\''+esc(src)+'\'" alt="" loading="lazy" decoding="async" draggable="false" oncontextmenu="return false">'+more+'</div>';
+      return '<div class="luce-gcell" onclick="openGalleryCarousel('+i+',this)"><img src="'+esc(src)+'" onerror="this.onerror=null;this.src=\''+esc(src)+'\'" alt="" loading="lazy" decoding="async" draggable="false" oncontextmenu="return false">'+more+'</div>';
     }).join('')+'</div>';
   }
   var mid=(grid)?'<div class="luce-fold" style="margin:10px -25px"></div>':'';
@@ -1563,8 +1548,8 @@ function luceMap(p,d){
   var q=encodeURIComponent(query);
   return '<div style="display:flex;justify-content:space-between;margin-top:16px;font-family:'+LUCE_KO+';font-size:13px;font-weight:500">'
       +'<a href="https://map.naver.com/p/search/'+q+'" target="_blank" rel="noopener" style="color:#000;text-decoration:underline">네이버지도↗</a>'
-      +'<a href="https://map.kakao.com/?q='+q+'" onclick="return cezOpenKakao(this.href,\''+q+'\')" rel="noopener" style="color:#000;text-decoration:underline">카카오맵↗</a>'
-      +'<a href="tmap://search?name='+q+'" onclick="return cezOpenTmap(this.href)" rel="noopener" style="color:#000;text-decoration:underline">티맵↗</a>'
+      +'<a href="https://map.kakao.com/?q='+q+'" onclick="return ytsOpenKakao(this.href,\''+q+'\')" rel="noopener" style="color:#000;text-decoration:underline">카카오맵↗</a>'
+      +'<a href="tmap://search?name='+q+'" onclick="return ytsOpenTmap(this.href)" rel="noopener" style="color:#000;text-decoration:underline">티맵↗</a>'
     +'</div>';
 }
 /* v4.3 #6: 계좌 관계 자유 입력 — d.acctOrder=[{key,label}], 기본 1개·최대 6개.
@@ -1580,7 +1565,7 @@ function getAcctOrder(d){
   d.acctOrder=order.slice(0,6);
   return d.acctOrder;
 }
-function cezOpenTmap(href){
+function ytsOpenTmap(href){
   var mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   if(!mobile){ alert('티맵은 모바일에서 티맵 앱으로 연결됩니다.'); return false; }
   location.href=href;
@@ -1589,7 +1574,7 @@ function cezOpenTmap(href){
   setTimeout(function(){ if(Date.now()-t<2200 && !document.hidden){ if(confirm('티맵 앱이 열리지 않았어요. 설치 페이지로 이동할까요?')) location.href='https://www.tmap.co.kr'; } },1800);
   return false;
 }
-function cezOpenKakao(webHref,encQ){
+function ytsOpenKakao(webHref,encQ){
   var ua=navigator.userAgent, mobile=/Android|iPhone|iPad|iPod/i.test(ua);
   if(!mobile){ window.open(webHref,'_blank','noopener'); return false; }
   location.href='kakaomap://search?q='+encQ;
@@ -1642,7 +1627,7 @@ function luceShare(d,prev){
   var slug=userSlugForData(d)||'';
   var icon='<img src="/assets/icon-share.png" alt="" style="width:12px;height:auto">';
   return '<div style="padding:'+((prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="share">'
-    +'<button type="button" onclick="cezShare(\''+esc(slug)+'\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 '+icon+'</button>'
+    +'<button type="button" onclick="ytsShare(\''+esc(slug)+'\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 '+icon+'</button>'
   +'</div></div>';
 }
 /* 한글 이름에서 성 제외(3자 이상이면 첫 글자 제거) */
@@ -1652,7 +1637,7 @@ function luceGivenName(n){n=(n||'').trim();if(!n)return n;if(/^[가-힣]+$/.test
    · posY 있음(신규/마이그레이션): 세로=object-position, 가로=translateX, 줌=scale (translate.y 은퇴)
    · posY 없음(기존 전부): 현재 코드와 '바이트 동일'(object-position 미지정=기본 50% 50%). 절대 안 바뀜.
    ※ 신규 데이터는 모두 posY 구조. posY-없음 경로는 기존 데이터 보호용 임시 호환(동결). */
-function cezCoverCropStyle(cc){
+function ytsCoverCropStyle(cc){
   cc=cc||{};
   if(cc.posY!=null){
     return 'object-position:50% '+(+cc.posY)+'%;transform:translate('+(cc.x||0)+'%,0%) scale('+(cc.s||1)+')';
@@ -1671,7 +1656,7 @@ function tplLuce(d){
   /* ── 고정 헤더: 커버 + 데코 + 이름 행 + 고정 가로 사진 ── */
   var _cc=d.coverCrop||{};
   html+='<div class="luce-coverwrap" data-pv-sec="cover" style="position:relative;width:100%;aspect-ratio:380/500;overflow:hidden;background:#cfc9b0">'
-    +'<img class="luce-coverimg" src="'+esc(cezImg(d.cover||'luce-cover.jpg?v=4',CEZ_COVER_W,CEZ_COVER_Q))+'" alt="" draggable="false" onerror="if(!this._f){this._f=1;this.src=\''+esc(d.cover||'luce-cover.jpg?v=4')+'\';}else if(this.src.indexOf(\'luce-cover.jpg?v=4\')<0){this.src=\'luce-cover.jpg?v=4\';}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;'+cezCoverCropStyle(_cc)+'">'
+    +'<img class="luce-coverimg" src="'+esc(d.cover||'luce-cover.jpg?v=4')+'" alt="" draggable="false" onerror="if(!this._f){this._f=1;this.src=\''+esc(d.cover||'luce-cover.jpg?v=4')+'\';}else if(this.src.indexOf(\'luce-cover.jpg?v=4\')<0){this.src=\'luce-cover.jpg?v=4\';}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;'+ytsCoverCropStyle(_cc)+'">'
     +((d.coverGrainEnabled!==false)?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
     +'<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,18,.1),transparent 40%,rgba(20,26,18,.5))"></div>'
     +(((((d.sections||[]).find(function(_x){return _x.id==='cover';})||{show:true}).show!==false)
@@ -1786,7 +1771,7 @@ function tplLuce(d){
          venue가 마지막이면 자연히 venue 바로 밑, venue가 중간이어도 map은 항상 맨 아래(venue↔map 소속은 유지, 시각배치만 최하단).
          venue가 그룹에 없으면(숨김) 지도 없음 — 지도는 venue 전용 요소. */
       if(run.some(function(s){return s.id==='where';})){
-        html+='<div data-cez-map style="text-align:left;max-width:284px;margin-left:auto;margin-right:auto;width:100%">'+luceMap(p,d)+'</div>';
+        html+='<div data-yts-map style="text-align:left;max-width:284px;margin-left:auto;margin-right:auto;width:100%">'+luceMap(p,d)+'</div>';
       }
       html+='</div></div>';
       _prevSec=run[run.length-1].id; _i=_j-1; continue;
@@ -1835,7 +1820,7 @@ function shareHTML(d,sk){var slug=userSlugForData(d)||'';
  /* v4.1: 공유는 링크 복사 하나만 (카카오/문자/인스타 제거) */
  return '<div style="display:flex;justify-content:center"><button type="button" onclick="shareLink(\''+esc(slug)+'\')" style="border:1px solid '+sk.text+';background:transparent;color:'+sk.text+';font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 30px;cursor:pointer">LINK 복사</button></div>';
 }
-function cezShare(slug){
+function ytsShare(slug){
   var url=shareURL(slug);
   if(navigator.share){ trackShare(slug,'link'); navigator.share({title:'모바일 청첩장',url:url}).catch(function(){}); return; }
   shareLink(slug);
@@ -1931,7 +1916,7 @@ function openGalleryCarousel(idx,cellEl){
 }
 function gcPrev(){if(!_gcImgs.length)return;_gcIdx=(_gcIdx-1+_gcImgs.length)%_gcImgs.length;gcUpdate();}
 function gcNext(){if(!_gcImgs.length)return;_gcIdx=(_gcIdx+1)%_gcImgs.length;gcUpdate();}
-function gcUpdate(){var img=document.getElementById('lb-img');var c=document.getElementById('lb-counter');if(img){var _o=_gcImgs[_gcIdx];img.onerror=function(){img.onerror=null;img.src=_o;};img.src=cezImg(_o,1600,82);}if(c)c.textContent=(_gcIdx+1)+' / '+_gcImgs.length;}
+function gcUpdate(){var img=document.getElementById('lb-img');var c=document.getElementById('lb-counter');if(img){var _o=_gcImgs[_gcIdx];img.onerror=function(){img.onerror=null;img.src=_o;};img.src=_o;}if(c)c.textContent=(_gcIdx+1)+' / '+_gcImgs.length;}
 function closeLightbox(){var l=document.getElementById('lightbox');if(l)l.remove();}
 
 
@@ -1973,7 +1958,7 @@ function _musicSyncIcon(){var a=document.getElementById('inv-audio');var pi=docu
   new MutationObserver(function(){
     var a=document.getElementById('inv-audio');
     if(a&&!a._autoInit){
-      a._autoInit=true; tried=false; window._cezInvAudio=a; /* 이탈 시 정지용 참조(엘리먼트가 DOM에서 제거돼도 접근) */
+      a._autoInit=true; tried=false; window._ytsInvAudio=a; /* 이탈 시 정지용 참조(엘리먼트가 DOM에서 제거돼도 접근) */
       /* toggleMusic의 일시정지만 사용자 의도로 기록 */
       var origToggle=window.toggleMusic;
       window.toggleMusic=function(){ var el=document.getElementById('inv-audio'); if(el&&!el.paused){ el._userPaused=true; } else if(el){ el._userPaused=false; } origToggle(); };
@@ -1985,7 +1970,7 @@ function _musicSyncIcon(){var a=document.getElementById('inv-audio');var pi=docu
 })();
 /* 배경음악: 탭 전환·이탈·라우트 이동 시 정지 (하객이 나가도 계속 재생되던 문제) */
 (function(){
-  function invAudio(){ return document.getElementById('inv-audio')||window._cezInvAudio||null; }
+  function invAudio(){ return document.getElementById('inv-audio')||window._ytsInvAudio||null; }
   function pauseInv(remember){ var a=invAudio(); if(a&&!a.paused){ if(remember)a._pausedByHide=true; try{a.pause();}catch(e){} if(typeof _musicSyncIcon==='function')_musicSyncIcon(); } }
   document.addEventListener('visibilitychange',function(){
     if(document.hidden){ pauseInv(true); }
@@ -2002,7 +1987,7 @@ function trackView(slug){
   var s=DB.stats[slug]=DB.stats[slug]||{views:0,uniques:0,shares:{kakao:0,link:0,sms:0,insta:0},lastView:null};
   s.views++;
   try{
-    var key='cez_seen_'+slug;
+    var key='yts_seen_'+slug;
     if(!localStorage.getItem(key)){s.uniques++;localStorage.setItem(key,'1');}
   }catch(e){}
   s.lastView=Date.now();

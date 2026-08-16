@@ -4,40 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
-<style id="cez-flat">
-/* v4.5 flat: 시스템 UI(어드민·에디터·모달) R=0 + 선 대신 면. 청첩장 렌더(.inv·.pub-paper)는 제외 */
-.btn,.btn-line,.btn-sm,.btn-primary,.btn-secondary,.btn-dark,.btn-danger,.btn-ghost,.btn-cta,.np-pay,
-.auth-card,.modal-dialog,.tablecard,.stat,.filter-tabs .ft,.toggle-pill,.badge,.gate,.npay-chip,.u-naver,
-.tpl-cardv,.tpl-prev,.rsvp-stat,.cez-adm-actbar button,.cez-drawer,.cez-drawer-section,.cez-inv-thumb,
-.page input,.page textarea,.page select,.mform input,.mform textarea{border-radius:0!important}
-.btn-line{border-color:transparent!important;background:#f1f2f4!important}
-.btn-line:hover{background:#e8f0fe!important;color:#1a63d6!important;border-color:transparent!important}
-.filter-tabs .ft{border-color:transparent!important;background:#f1f2f4}
-.filter-tabs .ft.on{background:#1d1e1a;color:#fff}
-.tablecard{border-color:transparent!important;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.stat{border-color:transparent!important;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.page input,.page textarea,.page select{border-color:transparent!important;background:#f5f5f2}
-.page input:focus,.page textarea:focus,.page select:focus{border-color:#3182f6!important;background:#fff}
-/* 어드민 회원 테이블 청첩장 썸네일 — 스크롤 미리보기, 클릭=새 창 */
-.cez-inv-thumb{width:96px;height:150px;overflow-y:auto;overflow-x:hidden;background:#faf9f6;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.14);flex:0 0 auto}
-.cez-inv-thumb-in{width:380px;zoom:.2526;pointer-events:none}
-/* v4.5 로그아웃 홈 — Figma 스펙(380 기준 1:1) */
-.cez-home{min-height:100vh;min-height:100dvh;background:#F7F7F6;display:flex;flex-direction:column;align-items:center;position:relative}
-.cez-home-store{position:absolute;top:30px;right:22px;color:#000;line-height:0;padding:6px}
-.cez-home-store:hover{opacity:.7}
-.cez-home-logo{width:134px;height:134px;object-fit:contain;filter:drop-shadow(0 1px 0 rgba(0,0,0,.22));margin-top:clamp(96px,16.5vh,138px)}
-.cez-home-title{font-family:var(--mono);font-size:13px;font-weight:700;line-height:1.3;color:#000;margin-top:30px;text-align:center}
-.cez-home-sub{font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.5;color:#000;margin-top:14px;text-align:center}
-.cez-home-sample{width:284px;max-width:calc(100vw - 96px);height:50px;background:#fff;color:#000;border:1px solid #F0F0F0;border-radius:6px!important;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--sans);margin-top:clamp(90px,16.5vh,136px)}
-.cez-home-sample:hover{background:#fafafa}
-.cez-home-naver{width:284px;max-width:calc(100vw - 96px);height:50px;background:#B9D9FF;color:#111;border:0;border-radius:6px!important;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--sans);margin-top:10px}
-.cez-home-naver:hover{background:#a6cdff}
-.cez-home-tos{margin-top:14px;font-size:11px;line-height:2;color:#8B95A1;font-family:var(--sans);text-align:center}
-.cez-home-tos a{color:inherit;text-decoration:underline}
-.cez-home-biz{margin:26px 0 22px;text-align:center;font-family:var(--sans);font-size:10.5px;color:#b6b5af;line-height:1.9}
-.cez-home-biz a{color:#8B95A1;text-decoration:underline;font-size:11.5px}
-</style>
-<title>CEZ ㅣ Mobile Invitation</title>
+<title>모바일 청첩장</title>
 <link rel="stylesheet" as="style" crossorigin
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <meta property="og:type" content="website">
@@ -1479,7 +1446,7 @@
 
 </style>
 <script>
-window.CEZ_IMG_FALLBACK='data:image/svg+xml;charset=utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2080%2080%22%3E%3Crect%20width=%2280%22%20height=%2280%22%20fill=%22%23f0f2f4%22/%3E%3Ctext%20x=%2250%25%22%20y=%2255%25%22%20text-anchor=%22middle%22%20font-family=%22sans-serif%22%20font-size=%2210%22%20fill=%22%2399a%22%3ECEZ%3C/text%3E%3C/svg%3E';
+window.CEZ_IMG_FALLBACK='data:image/svg+xml;charset=utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2080%2080%22%3E%3Crect%20width=%2280%22%20height=%2280%22%20fill=%22%23f0f2f4%22/%3E%3C/svg%3E';
 function cezFallback(img){img.onerror=null;img.src=window.CEZ_IMG_FALLBACK;}
 </script>
 </head>
@@ -1495,68 +1462,13 @@ function today(){const d=new Date();d.setHours(0,0,0,0);return d;}
 function parseDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function pad(n){return String(n).padStart(2,'0');}
 function fmtDate(s){if(!s)return'';const d=parseDate(s);return d.getFullYear()+'. '+pad(d.getMonth()+1)+'. '+pad(d.getDate())+'.';}
-function fmtDObj(d){return d.getFullYear()+'. '+pad(d.getMonth()+1)+'. '+pad(d.getDate())+'.';}
 function todayStr(){const d=today();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-function daysBetween(a,b){return Math.round((b-a)/DAY);}
 const WEEK=['일','월','화','수','목','금','토'];
 const MONTH_EN=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
 function timeLabel(t){if(!t)return'';let[h,m]=t.split(':').map(Number);const ap=h<12?'오전':'오후';let hh=h%12;if(hh===0)hh=12;return ap+' '+hh+'시'+(m?' '+m+'분':'');}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function hexToRgb(h){h=String(h||'#000').replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return [(n>>16)&255,(n>>8)&255,n&255];}
-function rgba(hex,a){const[r,g,b]=hexToRgb(hex);return 'rgba('+r+','+g+','+b+','+a+')';}
-function isDarkHex(hex){const[r,g,b]=hexToRgb(hex);return (0.299*r+0.587*g+0.114*b)<128;}
 
-/* ---- time gate: 결혼식 50일 전 ~ 결혼식 +7일 (concrete dates, simple words) ---- */
-/* v4.3 보관 정책: 예식일+3개월=ARCHIVE(본인·관리자 열람), +6개월=ADMIN_ARCHIVE(관리자만). 데이터 삭제 없음 */
-function cezArchState(d,published){
-  try{
-    if(!d||!d.date) return {state:published?'PUBLISHED':'DRAFT',days:null};
-    var w=parseDate(d.date); w.setHours(0,0,0,0);
-    var now=new Date(); now.setHours(0,0,0,0);
-    var DAY=24*60*60*1000;
-    var aa=new Date(w.getTime()+180*DAY);
-    var days=Math.max(0,Math.round((aa-now)/DAY));
-    if(now.getTime()>=aa.getTime()) return {state:'ADMIN_ARCHIVE',days:0};
-    if(now.getTime()>=w.getTime()+90*DAY) return {state:'ARCHIVE',days:days};
-    return {state:published?'PUBLISHED':'DRAFT',days:days};
-  }catch(e){ return {state:published?'PUBLISHED':'DRAFT',days:null}; }
-}
-function gate(weddingStr){
-  if(!weddingStr)return{state:'none',label:'-',detail:'',cls:'',openStr:'',closeStr:''};
-  const w=parseDate(weddingStr);w.setHours(0,0,0,0);
-  const open=new Date(w.getTime()-50*DAY), close=new Date(w.getTime()+7*DAY), t=today();
-  const openStr=fmtDObj(open), closeStr=fmtDObj(close);
-  if(t<open){return{state:'wait',cls:'wait',days:daysBetween(t,open),openStr,closeStr,label:'공개 전',detail:''};}
-  if(t>close){return{state:'ended',cls:'ended',openStr,closeStr,label:'공개 종료',detail:openStr+' ~ '+closeStr};}
-  return{state:'open',cls:'open',days:daysBetween(t,w),openStr,closeStr,label:'공개 중',detail:openStr+' ~ '+closeStr};
-}
 
-function ddLabel(g){return g.days>0?('D-'+g.days):(g.days===0?'D-DAY':'D+'+Math.abs(g.days));}
-function calendarBlock(d,sk){
-  if(!d||d.showCalendar===false)return '';
-  if(!d.date)return '';
-  var w;try{w=parseDate(d.date);}catch(e){return '';}
-  if(!w||isNaN(w.getTime()))return '';
-  var y=w.getFullYear(),m=w.getMonth(),wd=w.getDate();
-  var first=new Date(y,m,1);
-  var startDow=first.getDay();
-  var lastDay=new Date(y,m+1,0).getDate();
-  var cells='';
-  for(var i=0;i<startDow;i++){cells+='<span class="ic-cell empty"></span>';}
-  for(var j=1;j<=lastDay;j++){
-    var dow=(startDow+j-1)%7;
-    var cls='ic-cell';
-    if(j===wd)cls+=' wedding';
-    if(dow===0)cls+=' sun';
-    if(dow===6)cls+=' sat';
-    cells+='<span class="'+cls+'">'+j+'</span>';
-  }
-  return '<div class="inv-cal" style="border-color:'+sk.border+'">'
-    +'<div class="ic-month" style="color:'+sk.accent+'">'+y+'년 '+(m+1)+'월</div>'
-    +'<div class="ic-week" style="color:'+sk.sub+'"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>'
-    +'<div class="ic-grid" style="color:'+sk.text+'">'+cells+'</div>'
-  +'</div>';
-}
 
 /* ---- templates (visible flag; custom = uploaded via Figma) ---- */
 /* v4.4: 템플릿 2종 — Lemon/Cotton Archive (렌더 코드 보존, 기존 청첩장 계속 렌더) */
@@ -1585,8 +1497,6 @@ function defaultUsers(){return[
 ];}
 
 let DB,session,prevWidth=390,editId=null,adminTab='users';
-/* v4.4 P4: RSVP 잠금 스위치 — true면 하객 렌더·에디터 UI에서 숨김(코드·데이터·RPC 보존, false로 복구) */
-window.CEZ_RSVP_DISABLED=false;
 const SECTION_DEFS=[
   {id:'cover',      label:'표지 문구'},
   {id:'invitation', label:'인사말'},
@@ -1643,7 +1553,6 @@ function val(id){const e=document.getElementById(id);return e?e.value:'';}
 /* ================================================================
    INVITATION RENDERER (skin system: built-in + Figma custom)
    ================================================================ */
-function spaceKo(s){return String(s||'').trim().split('').join(' ');}
 /* 원격 이미지를 크기 변환 URL로 바꿔 전송량 절감(Pro 기능).
    로컬 에셋·dataURL·외부 URL·이미 변환된 것은 그대로 반환. */
 var CEZ_COVER_W=1920, CEZ_COVER_Q=90;   /* 표지(첫 화면) 서빙 화질 — 갤러리는 기본값(72) 유지 */
@@ -1658,7 +1567,6 @@ function cezImg(url,w,q){
   return base+(base.indexOf('?')>=0?'&':'?')+'width='+(w||600)+'&quality='+(q||72)+'&resize=contain';
 }
 function parentLine(f,fd,m,md,rel){var ps=[];if(f&&f.trim())ps.push((fd?'故 ':'')+f.trim());if(m&&m.trim())ps.push((md?'故 ':'')+m.trim());var s=ps.join(' · ');if(rel&&rel.trim())s+=(s?' 의 ':'')+rel.trim();return s;}
-function titleCase(s){return s?s.charAt(0)+s.slice(1).toLowerCase():'';}
 function invParts(d){
   d=d||{};
   const o={gKo:d.groomKo||'신랑',bKo:d.brideKo||'신부',gEn:d.groomEn||'Groom',bEn:d.brideEn||'Bride',
@@ -1676,145 +1584,14 @@ function invParts(d){
   return o;
 }
 
-function skinFor(tplId){
-  const t=DB.templates.find(x=>x.id===tplId);
-  if(t&&t.custom){const c=t.custom;return{id:t.id,bg:c.bg,text:c.text,sub:rgba(c.text,.6),accent:c.accent,label:c.accent,rule:c.accent,
-    border:rgba(c.text,.14),header:'standard',dark:isDarkHex(c.bg),amp:'&amp;'};}
-  if(tplId==='romantic')return{id:'romantic',bg:'#fbf2ee',text:'#5b463f',sub:'#a98b82',accent:'#c08c84',label:'#c08c84',rule:'#e6c9c0',border:'#f0ddd6',header:'romantic',dark:false,amp:'&#10084;'};
-  if(tplId==='dark')return{id:'dark',bg:'#16211b',text:'#e7e1d3',sub:'#9aa093',accent:'#c7a86b',label:'#c7a86b',rule:'#c7a86b',border:'#28342c',header:'standard',dark:true,amp:'&amp;'};
-  return{id:'minimal',bg:'#fbfaf7',text:'#2b2b27',sub:'#8d897d',accent:'#c4bfb2',label:'#9a968a',rule:'#c4bfb2',border:'#ece9df',header:'standard',dark:false,amp:'&amp;'};
-}
 
-function coverHero(p,sk){
-  if(p.cover)return '<img src="'+esc(p.cover)+'" alt="cover" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;cursor:zoom-in" onclick="openLightbox(this.src)" oncontextmenu="return false" draggable="false">';
-  return '<div style="width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:'+(sk.dark?rgba(sk.text,.08):'#efece4')+';color:'+sk.sub+';font-family:var(--serif);letter-spacing:.34em;font-size:12px">SAVE&nbsp;&nbsp;THE&nbsp;&nbsp;DATE</div>';
-}
-function sect(label,sk,inner,pvId){return '<div'+(pvId?(' data-pv-sec="'+pvId+'"'):'')+' style="padding:96px 30px 72px;border-top:1px solid '+sk.border+';text-align:center"><div class="sect-label" style="color:'+sk.label+'">'+label+'</div><div class="rule" style="background:'+sk.rule+'"></div><div style="margin-top:14px">'+inner+'</div></div>';}
-function galleryGrid(p){return '<div class="inv-gallery">'+p.gallery.map(function(src,i){return '<img src="'+esc(src)+'" alt="" loading="lazy" decoding="async" onclick="openGalleryCarousel('+i+')" oncontextmenu="return false" draggable="false" style="cursor:zoom-in">';}).join('')+'</div>';}
-function mapBlock(p,accent){
-  if(!p.mapq)return '';
-  const q=encodeURIComponent(p.mapq);
-  return '<iframe class="inv-map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q='+q+'&output=embed" title="지도"></iframe>'
-   +'<div class="map-btns" style="color:'+accent+'">'
-   +'<a class="map-btn" href="https://map.naver.com/p/search/'+q+'" target="_blank" rel="noopener">네이버 길찾기</a>'
-   +'<a class="map-btn" href="https://map.kakao.com/?q='+q+'" target="_blank" rel="noopener">카카오 길찾기</a>'
-   +'<a class="map-btn" href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank" rel="noopener">Google</a></div>';
-}
-function diamond(c){return '<svg width="14" height="14" viewBox="0 0 14 14" style="margin:0 auto"><path d="M7 0l7 7-7 7-7-7z" fill="none" stroke="'+c+'"/></svg>';}
-function sprig(c){return '<svg width="40" height="22" viewBox="0 0 40 22" style="margin:14px auto;display:block" fill="none" stroke="'+c+'" stroke-width="1"><path d="M20 21V4"/><path d="M20 9c-4 0-7-2-8-5M20 9c4 0 7-2 8-5M20 14c-4 0-6-2-7-4M20 14c4 0 6-2 7-4"/><circle cx="20" cy="3" r="2" fill="'+c+'" stroke="none"/></svg>';}
-
-function headerBlock(d,sk){
-  const p=invParts(d);
-  if(sk.header==='romantic'){
-    return '<div style="padding:40px 30px 40px;background:radial-gradient(120% 50% at 50% 0,#f6e3dc,'+sk.bg+' 75%)">'
-      +sprig(sk.accent)
-      +'<div class="eyebrow" style="color:'+sk.accent+'">'+esc((d&&d.eyebrow)||'The Wedding of')+'</div>'
-      +'<div class="names-en" style="font-size:38px;margin-top:16px;color:'+sk.text+'">'+esc(p.gEn)+'<br><span style="font-size:22px;color:'+sk.accent+'">and</span><br>'+esc(p.bEn)+'</div>'
-      +'<div style="margin-top:18px;letter-spacing:.46em;font-size:15px;color:'+sk.sub+'">'+esc(spaceKo(d&&d.groomKo))+' · '+esc(spaceKo(d&&d.brideKo))+'</div>'
-      +'<div style="margin-top:22px;font-family:var(--serif);font-style:italic;font-size:20px;color:'+sk.accent+'">'+p.dotted+'</div></div>';
-  }
-  const decor=sk.dark?('<div style="margin:22px auto 0">'+diamond(sk.accent)+'</div>'):('<div class="rule" style="background:'+sk.accent+';margin-top:18px"></div>');
-  return '<div style="padding:'+(p.cover?'40px':'56px')+' 30px 8px;text-align:center">'
-    +'<div class="eyebrow" style="color:'+sk.sub+'">'+esc((d&&d.eyebrow)||'SAVE THE DATE')+'</div>'+decor
-    +'<div class="names-en" style="font-size:36px;margin-top:20px;color:'+sk.text+'">'+esc(p.gEn)+' <span style="color:'+sk.accent+'">&amp;</span> '+esc(p.bEn)+'</div>'
-    +'<div style="margin-top:10px;letter-spacing:.5em;font-size:14px;color:'+sk.sub+'">'+esc(spaceKo(d&&d.groomKo))+' · '+esc(spaceKo(d&&d.brideKo))+'</div>'
-    +'<div style="margin-top:22px;font-family:var(--serif);letter-spacing:.28em;font-size:15px;color:'+sk.text+'">'+p.dotted+' '+p.wdEn+'</div>'
-  +'</div>';
-}
-function coupleBlock(p,sk){
-  return '<div class="couple"><div><div class="nm" style="color:'+sk.text+'">'+esc(p.gKo)+'</div><div class="par" style="color:'+sk.sub+'">'+esc(p.gPar)+'</div></div>'
-    +'<div class="amp" style="color:'+sk.accent+'">'+sk.amp+'</div>'
-    +'<div><div class="nm" style="color:'+sk.text+'">'+esc(p.bKo)+'</div><div class="par" style="color:'+sk.sub+'">'+esc(p.bPar)+'</div></div></div>';
-}
-function acctSection(p,sk){
-  const a=p.accounts||{};
-  const fmt=(role,v)=> (v&&v.number)?
-    '<div class="acc-stack-row" style="border-color:'+sk.border+'">'
-      +'<div class="acc-stack-grid">'
-        +'<span class="acc-cell-role" style="color:'+sk.text+'">'+role+'</span>'
-        +'<span class="acc-cell-holder" style="color:'+sk.sub+'">'+esc(v.holder||'')+'</span>'
-        +'<span class="acc-cell-bank">'+bankChip(v.bank,16)+'<span style="color:'+sk.text+'">'+esc(v.bank||'')+'</span></span>'
-        +'<span class="acc-cell-num" style="color:'+sk.text+'">'+esc(v.number)+'</span>'
-      +'</div>'
-      +'<button type="button" class="acc-copy" onclick="copyAcct(\''+esc(v.number)+'\')">복사</button>'
-    +'</div>'
-  :'';
-  const g=[fmt('신랑',a.groom),fmt('신랑 아버지',a.groomFather),fmt('신랑 어머니',a.groomMother)].join('');
-  const b=[fmt('신부',a.bride),fmt('신부 아버지',a.brideFather),fmt('신부 어머니',a.brideMother)].join('');
-  if(!g&&!b)return '';
-  const inner='<div class="inv-acct" style="color:'+sk.text+'"><details><summary style="color:'+sk.accent+'">계좌번호 보기 ▾</summary>'
-    +(g?'<div class="acc-grp" style="color:'+sk.accent+'">신랑측</div>'+g:'')
-    +(b?'<div class="acc-grp" style="color:'+sk.accent+'">신부측</div>'+b:'')
-    +'</details></div>';
-  return '<div data-pv-sec="accounts">'+sect('마음 전하실 곳',sk,inner)+'</div>';
-}
 function invFooter(sk,d){
   d=d||{};
-  /* 레몬(luce) 전용: 어두운 스킨 여부만으로 로고·문구 색 결정 */
-  const logoSrc=(sk.dark)?'cez-logo-white.png':'cez-logo.png';
-  const logoSz=38;
-  const logoImg='<img src="'+logoSrc+'" onerror="cezFallback(this)" alt="CEZ" style="width:'+logoSz+'px;height:'+logoSz+'px;display:block;margin:0 auto">';
-  /* 로고 클릭 시 모바일 청첩장 홈으로 (이미지·디자인은 그대로) */
-  const logo='<a href="#/" title="세즈 모바일 청첩장" style="display:block;text-decoration:none;cursor:pointer">'+logoImg+'</a>';
-  const watermark=''; /* v4.5: 체험판 배너 제거 — 결제·승인 없이는 배포 자체가 불가 */
-  const txtColor=(sk.dark?'#fff':'#000');
-  const txtOpacity='.49';
-  return watermark+'<div style="padding:32px 0 12px;text-align:center">'+logo
-    +'<div style="margin-top:7px;font-family:var(--mono);font-weight:400;font-size:10px;line-height:150%;color:'+txtColor+';opacity:'+txtOpacity+'">curated by CEZ<br>all rights reserved.</div></div>';
+  return '<div style="padding:32px 0 12px;text-align:center">'
+    +'<div style="margin-top:7px;font-family:var(--mono);font-weight:400;font-size:10px;line-height:150%;color:'+(sk.dark?'#fff':'#000')+';opacity:.49">♡ 우리의 결혼 소식을 전해드립니다</div></div>';
 }
 
-/* ---- 4) Lighting Lifetime (CEZ flagship card) ---- */
-function tplLifetime(d){
-  const p=invParts(d);
-  const pageBg='#f3efe8', card='#fafaf6', border='#e2ddd0', ink='#1a1a17', sub='#7a7a72';
-  const overlay='rgba(15,15,12,.42)', textOn='rgba(245,243,232,.96)';
-  let dateStr='';
-  if(d.date){const x=parseDate(d.date);dateStr=x.getFullYear()+' . '+pad(x.getMonth()+1)+' . '+pad(x.getDate());}
-  const photoCSS=p.cover?('background:url('+esc(p.cover)+') center/cover'):'background:#2a2a25';
-  const title=(d.lifetimeTitle&&d.lifetimeTitle.trim())?d.lifetimeTitle:'Lighting Lifetime';
-  let parentLineRow='';
-  if(p.gPar||p.gKo) parentLineRow += (p.gPar?esc(p.gPar):'')+' '+esc(p.gKo);
-  if((p.gPar||p.gKo)&&(p.bPar||p.bKo)) parentLineRow += '<br>';
-  if(p.bPar||p.bKo) parentLineRow += (p.bPar?esc(p.bPar):'')+' '+esc(p.bKo);
-  const venueLine=(d.date||d.time||p.venue)?('<div style="font-size:11px;line-height:1.85;margin-top:14px;letter-spacing:.02em">'+esc(p.full)+(p.time?' '+esc(p.time):'')+(p.venue?'<br>'+esc(p.venue):'')+'</div>'):'';
-
-  let html='<div class="inv" style="background:'+pageBg+';color:'+ink+';padding:0 0 10px;font-family:var(--sans);text-align:left">';
-  html+='<div style="padding:30px 18px 12px">'
-     +'<div style="background:'+card+';border:1px solid '+border+';padding:26px 22px 20px">'
-       +'<div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;font-size:14px;letter-spacing:.04em;margin-bottom:22px">'
-         +'<div style="text-align:left">'+esc(p.gEn)+'</div>'
-         +'<div style="width:6px;height:6px;border-radius:50%;background:'+ink+';justify-self:center"></div>'
-         +'<div style="text-align:right">'+esc(p.bEn)+'</div>'
-       +'</div>'
-       +'<div style="position:relative;width:100%;aspect-ratio:1/1;'+photoCSS+';overflow:hidden">'
-         +'<div style="position:absolute;inset:0;background:'+overlay+'"></div>'
-         +'<div style="position:absolute;inset:0;padding:26px 20px;color:'+textOn+';display:flex;flex-direction:column;justify-content:center;text-align:center">'
-           +'<div style="font-size:12.5px;line-height:1.95;letter-spacing:.01em;white-space:pre-line;margin-bottom:16px">'+esc(p.greet)+'</div>'
-           +(parentLineRow?'<div style="font-size:11px;line-height:1.85;opacity:.92">'+parentLineRow+'</div>':'')
-           +venueLine
-         +'</div>'
-       +'</div>'
-       +'<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-top:18px">'
-         +'<span style="font-family:var(--serif);font-style:italic;letter-spacing:.02em">'+esc(title)+'</span>'
-         +'<span style="letter-spacing:.06em;font-size:12px">'+esc(dateStr)+'</span>'
-       +'</div>'
-     +'</div>'
-   +'</div>';
-  /* preview-sync stub markers for sections merged into the header */
-  html+='<div data-pv-sec="invitation" style="height:0;overflow:hidden"></div><div data-pv-sec="couple" style="height:0;overflow:hidden"></div><div data-pv-sec="when" style="height:0;overflow:hidden"></div>';
-  const sk={bg:pageBg,text:ink,sub:sub,accent:ink,label:ink,rule:border,border:border,dark:false};
-  const sections=getSections(d);
-  for(const sec of sections){
-    if(!sec.show)continue;
-    if(sec.id==='invitation'||sec.id==='couple'||sec.id==='when')continue;
-    html+=renderSection(sec.id,d,sk,p);
-  }
-  html+=invFooter(sk,d);
-  html+='</div>';
-  return html;
-}
-
-/* ===== Luce (Minimal Modern) — 노란 종이 · IBM Plex Mono(영문) · Pretendard(한글) · 초록 필름 (Figma) ===== */
+/* 레몬(luce) 전용 한글 폰트 스택 */
 var LUCE_KO="'Pretendard Variable','Pretendard','Malgun Gothic',sans-serif";
 function luceDateDot(d){ if(!d||!d.date)return ''; try{var x=parseDate(d.date);var t=d.time?timeLabel(d.time):'';var _dow=['일','월','화','수','목','금','토'][x.getDay()];return x.getFullYear()+'.'+String(x.getMonth()+1).padStart(2,'0')+'.'+String(x.getDate()).padStart(2,'0')+' ('+_dow+')'+(t?' '+t:'');}catch(e){return '';} }
 /* v4.4 갤러리: 대표 3장(폴라로이드 프레임+크롭) + 일반 그리드(3열·6장+더보기·라이트박스) */
@@ -1861,57 +1638,14 @@ function luceMap(p,d){
      다지점 오인의 원인이라 더 이상 사용하지 않는다 */
   var _addr=(p.addr||'').replace(/\n/g,' ').trim();
   var query=(_addr||(d&&d.venueName)||'').trim();
-  if(!query)return '<div style="height:150px;background:#dbdbdb;display:flex;align-items:center;justify-content:center;margin-top:18px;border-radius:5px;font-family:'+LUCE_KO+';color:rgba(0,0,0,.28);font-size:16px;letter-spacing:.06em">MAP</div>';
+  if(!query)return '';
   var q=encodeURIComponent(query);
-  return '<div class="cez-nmap" data-addr="'+esc(query)+'" style="width:100%;height:150px;margin-top:18px;border-radius:5px;overflow:hidden;background:#e7e7e2;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,.28);font-family:'+LUCE_KO+';font-size:14px;letter-spacing:.06em">MAP</div>'
-    +'<div style="display:flex;justify-content:space-between;margin-top:16px;font-family:'+LUCE_KO+';font-size:13px;font-weight:500">'
+  return '<div style="display:flex;justify-content:space-between;margin-top:16px;font-family:'+LUCE_KO+';font-size:13px;font-weight:500">'
       +'<a href="https://map.naver.com/p/search/'+q+'" target="_blank" rel="noopener" style="color:#000;text-decoration:underline">네이버지도↗</a>'
       +'<a href="https://map.kakao.com/?q='+q+'" onclick="return cezOpenKakao(this.href,\''+q+'\')" rel="noopener" style="color:#000;text-decoration:underline">카카오맵↗</a>'
       +'<a href="tmap://search?name='+q+'" onclick="return cezOpenTmap(this.href)" rel="noopener" style="color:#000;text-decoration:underline">티맵↗</a>'
     +'</div>';
 }
-/* ── 네이버 지도(NCP) — 주소를 클라이언트 지오코딩 후 마커 표시 ── */
-window.CEZ_NMAP_KEY='u0k4b8dydm';
-function cezLoadNaverMaps(cb){
-  if(window.naver&&window.naver.maps&&window.naver.maps.Service){ cb(); return; }
-  window._nmapCbs=window._nmapCbs||[]; window._nmapCbs.push(cb);
-  if(window._nmapLoading)return; window._nmapLoading=true;
-  var s=document.createElement('script');
-  s.src='https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='+encodeURIComponent(CEZ_NMAP_KEY)+'&submodules=geocoder';
-  s.onload=function(){ (window._nmapCbs||[]).forEach(function(f){try{f();}catch(e){}}); window._nmapCbs=[]; };
-  s.onerror=function(){ window._nmapFailed=true; };
-  document.head.appendChild(s);
-}
-function cezInitNaverMaps(){
-  var els=document.querySelectorAll('.cez-nmap:not([data-nmap-init])');
-  if(!els.length)return;
-  cezLoadNaverMaps(function(){
-    if(!(window.naver&&window.naver.maps&&window.naver.maps.Service))return;
-    document.querySelectorAll('.cez-nmap:not([data-nmap-init])').forEach(function(el){
-      el.setAttribute('data-nmap-init','1');
-      var addr=el.getAttribute('data-addr')||''; if(!addr)return;
-      try{
-        naver.maps.Service.geocode({query:addr},function(status,resp){
-          try{
-            if(status!==naver.maps.Service.Status.OK){ return; }
-            var list=(resp&&resp.v2&&resp.v2.addresses)||[];
-            if(!list.length){ return; }
-            var it=list[0];
-            var pos=new naver.maps.LatLng(parseFloat(it.y),parseFloat(it.x));
-            el.textContent='';
-            var map=new naver.maps.Map(el,{center:pos,zoom:16,draggable:false,pinchZoom:false,scrollWheel:false,disableDoubleClickZoom:true,disableDoubleTapZoom:true,logoControl:true,mapDataControl:false,scaleControl:false,zoomControl:false});
-            new naver.maps.Marker({position:pos,map:map});
-          }catch(e){}
-        });
-      }catch(e){}
-    });
-  });
-}
-(function(){
-  var t=null; function kick(){ clearTimeout(t); t=setTimeout(cezInitNaverMaps,180); }
-  function start(){ try{ new MutationObserver(kick).observe(document.body,{childList:true,subtree:true}); }catch(e){} kick(); }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
-})();
 /* v4.3 #6: 계좌 관계 자유 입력 — d.acctOrder=[{key,label}], 기본 1개·최대 6개.
    레거시(고정 신랑/신부 키) 데이터는 최초 접근 시 acctOrder로 이관(하위호환). */
 function getAcctOrder(d){
@@ -2106,7 +1840,6 @@ function tplLuce(d){
     },
     cover:function(){ return ''; }, /* 실제 표지는 상단 luce-coverwrap(data-pv-sec=cover)이 담당 */
     rsvp:function(prev){
-      if(window.CEZ_RSVP_DISABLED) return '<div data-pv-sec="rsvp" style="height:1px"></div>';
       return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="rsvp">'
         +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">참석 의사 전달하기<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
         +'<div style="background:#fff;padding:14px 20px 16px;font-family:'+KO+'">'+rsvpHTML(d,sk)+'</div>'
@@ -2144,7 +1877,7 @@ function tplLuce(d){
       html+='</div></div>';
       _prevSec=run[run.length-1].id; _i=_j-1; continue;
     }
-    var chunk= REN[sec.id]? REN[sec.id](_prevSec) : renderSection(sec.id,d,sk,p);
+    var chunk= REN[sec.id]? REN[sec.id](_prevSec) : '';
     if(chunk && chunk.indexOf('height:1px')<0){ /* 빈 stub 앞엔 접힘선 생략 */
       if(!JOINED[(_prevSec||'')+'|'+sec.id]) html+='<div class="luce-fold"></div>';
       html+=chunk; _prevSec=sec.id;
@@ -2163,20 +1896,7 @@ function tplLuce(d){
 
 function renderInvitation(d){
   d=d||{};
-  if(d.template==='lifetime')return tplLifetime(d);
-  if(d.template==='luce')return tplLuce(d);
-  const sk=skinFor(d.template), p=invParts(d);
-  let html='<div class="inv" style="background:'+sk.bg+';color:'+sk.text+';padding:0 0 10px">';
-  html+=coverHero(p,sk);
-  html+=headerBlock(d,sk);
-  const sections=getSections(d);
-  for(const sec of sections){
-    if(!sec.show)continue;
-    html+=renderSection(sec.id,d,sk,p);
-  }
-  html+=invFooter(sk,d);
-  html+='</div>';
-  return html;
+  return tplLuce(d);
 }
 </script>
 <script>
@@ -2185,56 +1905,8 @@ function renderInvitation(d){
    ================================================================ */
 /* ===== additive helpers: banks, address search, preview overlay, naver pay, viz, figma, RSVP, share, NStore ===== */
 
-let _npPlan='스탠다드';
-const ICON={
- users:'<svg viewBox="0 0 24 24" fill="none" stroke="#6b6a62" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M16 5.6a3 3 0 010 5.4M21 19c0-2.3-1.6-4.1-4-4.7"/></svg>',
- crown:'<svg viewBox="0 0 24 24" fill="none" stroke="#9a7b3f" stroke-width="1.7"><path d="M4 8l4 3.5L12 5l4 6.5L20 8l-1.6 9.5H5.6z"/></svg>',
- user:'<svg viewBox="0 0 24 24" fill="none" stroke="#6b6a62" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>',
- clock:'<svg viewBox="0 0 24 24" fill="none" stroke="#a8584b" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.4 2"/></svg>',
- eye:'<svg viewBox="0 0 24 24" fill="none" stroke="#3d6b87" stroke-width="1.7"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>',
- calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="#3d6b87" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>',
- lock:'<svg viewBox="0 0 24 24" fill="none" stroke="#3d6b87" stroke-width="1.7"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></svg>',
- won:'<svg viewBox="0 0 24 24" fill="none" stroke="#9a7b3f" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M7.5 9l2 6 2.5-6 2.5 6 2-6"/></svg>'
-};
-const BANKS=[
- {n:'국민은행',c:'#6a5b46',s:'KB'},{n:'신한은행',c:'#0046ad',s:'신한'},{n:'우리은행',c:'#0067ac',s:'우리'},
- {n:'하나은행',c:'#008b85',s:'하나'},{n:'NH농협은행',c:'#0a8c3b',s:'NH'},{n:'IBK기업은행',c:'#0033a0',s:'IBK'},
- {n:'카카오뱅크',c:'#ffe300',s:'k',dark:true},{n:'토스뱅크',c:'#0064ff',s:'t'},{n:'케이뱅크',c:'#1a1a2e',s:'K'},
- {n:'SC제일은행',c:'#0f7d3b',s:'SC'},{n:'씨티은행',c:'#003b70',s:'Ci'},{n:'KDB산업은행',c:'#003d7c',s:'KDB'},
- {n:'수협은행',c:'#0082ca',s:'Sh'},{n:'새마을금고',c:'#e60012',s:'MG'},{n:'신협',c:'#0086cb',s:'CU'},
- {n:'우체국예금',c:'#e4002b',s:'우'},{n:'부산은행',c:'#00529b',s:'BN'},{n:'iM뱅크(대구)',c:'#00a0e2',s:'iM'},
- {n:'광주은행',c:'#00a19c',s:'GJ'},{n:'전북은행',c:'#003876',s:'JB'},{n:'경남은행',c:'#e4002b',s:'KN'},
- {n:'제주은행',c:'#0067ac',s:'JJ'},{n:'산림조합',c:'#2e7d32',s:'SR'},{n:'저축은행',c:'#5a4fcf',s:'SB'}
-];
-function bankByName(n){return BANKS.find(b=>b.n===n);}
-function bankChip(name,size){var b=bankByName(name);var sz=size||18;var c=b?b.c:'#cfccc4';var t=b?(b.dark?'#3a2e0a':'#fff'):'#fff';var label=b?b.s:'·';var fs=label.length>=3?sz*0.30:(label.length===2?sz*0.40:sz*0.5);
- return '<span style="display:inline-flex;align-items:center;justify-content:center;width:'+sz+'px;height:'+sz+'px;border-radius:5px;background:'+c+';color:'+t+';font-size:'+fs+'px;font-weight:700;flex:0 0 auto;font-family:var(--sans);line-height:1">'+label+'</span>';}
-function bankDropdown(slot,current){var cur=bankByName(current);
- return '<div class="bankdd" data-slot="'+slot+'"><button type="button" class="bankdd-btn" onclick="toggleBankDD(\''+slot+'\')">'
-  +(cur?(bankChip(cur.n,18)+'<span class="bn">'+esc(cur.n)+'</span>'):(current?('<span class="bn">'+esc(current)+'</span>'):'<span class="bn ph">은행 선택</span>'))
-  +'<svg class="bd-chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="bankdd-menu" id="bd-'+slot+'">'
-  +'<button type="button" class="bankdd-opt" onclick="selectBank(\''+slot+'\',\'\')"><span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:1px dashed #c0bcb0;border-radius:5px;color:#a0998d;font-size:11px;line-height:1">—</span><span style="color:var(--muted)">선택 없음</span></button>'+BANKS.map(function(b){return '<button type="button" class="bankdd-opt" onclick="selectBank(\''+slot+'\',\''+b.n+'\')">'+bankChip(b.n,18)+'<span>'+esc(b.n)+'</span></button>';}).join('')
-  +'</div></div>';}
-function toggleBankDD(slot){var m=document.getElementById('bd-'+slot);var willOpen=m&&!m.classList.contains('open');closeAllBankDD();if(willOpen)m.classList.add('open');}
-function closeAllBankDD(){document.querySelectorAll('.bankdd-menu.open').forEach(function(m){m.classList.remove('open');});}
-function selectBank(slot,name){var u=editTarget();u.data.accounts=u.data.accounts||{};u.data.accounts[slot]=u.data.accounts[slot]||{bank:'',number:'',holder:''};u.data.accounts[slot].bank=name;closeAllBankDD();var dd=document.querySelector('.bankdd[data-slot="'+slot+'"]');if(dd){var btn=dd.querySelector('.bankdd-btn');if(btn){var cur=bankByName(name);btn.innerHTML=(cur?(bankChip(cur.n,18)+'<span class="bn">'+esc(cur.n)+'</span>'):(name?'<span class="bn">'+esc(name)+'</span>':'<span class="bn ph">은행 선택</span>'))+'<span class="caret">▾</span>';}}updateAcctCheck(slot);refreshPreviewDebounced();updateProgress();}
-document.addEventListener('click',function(e){var t=e.target;if(!(t&&t.closest&&t.closest('.bankdd')))closeAllBankDD();});
-
 /* address search via Daum postcode (no key) */
-function loadPostcode(cb){if(window.daum&&window.daum.Postcode){cb();return;}var s=document.createElement('script');s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';s.onload=cb;s.onerror=function(){toast('주소 검색을 불러오지 못했어요. 직접 입력해 주세요.');};document.head.appendChild(s);}
-function openPostcode(){loadPostcode(function(){try{new daum.Postcode({oncomplete:function(data){var addr=data.roadAddress||data.address;if(data.buildingName)addr+=' ('+data.buildingName+')';editTarget().data.venueAddr=addr;var inp=document.getElementById('f-venueAddr');if(inp)inp.value=addr;refreshPreview();toast('주소가 입력되었습니다');}}).open();}catch(e){toast('주소 검색을 사용할 수 없어요. 직접 입력해 주세요.');}});}
-
 /* preview overlay (narrow screens) */
-function openPreviewOverlay(){
- var o=document.getElementById('pv-overlay');if(!o)return;
- var d=editTarget().data;
- o.innerHTML='<div class="pv-ov-stage"><div class="pv-ov-phone phone" style="width:380px"><div class="scroll">'+renderInvitation(d)+'</div></div><div class="pv-ov-actions"><button type="button" class="btn-secondary" onclick="copyURL()">URL 복사</button><button type="button" class="btn-primary" onclick="closePreviewOverlay()">닫기</button></div></div>';
- o.classList.add('open');
-}
-
-function closePreviewOverlay(){var o=document.getElementById('pv-overlay');if(o){o.classList.remove('open');o.innerHTML='';}}
-
-/* figma uploads (thumbnail + file) */
 /* RSVP */
 function userSlugForData(d){
   var u=DB.users.find(function(x){return x.data===d;});
@@ -2262,11 +1934,6 @@ function shareLink(slug){trackShare(slug,'link');navigator.clipboard&&navigator.
 
 
 /* required-field progress + acct check */
-function progressInfo(u){if(!u||!u.data)return{total:8,done:0,pct:0};var d=u.data;var fields=[d.groomKo,d.brideKo,d.date,d.time,d.venueName,d.venueAddr,d.greeting,u.slug];var done=fields.filter(function(v){return v&&String(v).trim();}).length;return{total:fields.length,done:done,pct:Math.round(done/fields.length*100)};}
-function updateProgress(){var u=editTarget();if(!u)return;var p=progressInfo(u);var bar=document.querySelector('.prog-bar');if(bar)bar.style.width=p.pct+'%';var lbl=document.querySelector('.prog-label');if(lbl)lbl.innerHTML='<span>필수 입력 진행</span><span><span class="prog-pct">'+p.done+'/'+p.total+'</span> · '+p.pct+'%</span>';}
-function updateAcctCheck(slot){var d=editTarget().data;var v=(d.accounts&&d.accounts[slot])||{};var filled=!!(v.bank||v.number||v.holder);var dd=document.querySelector('.bankdd[data-slot="'+slot+'"]');if(!dd)return;var acct=dd.closest('.acct');if(!acct)return;var role=acct.querySelector('.role');if(!role)return;var existing=role.querySelector('.acct-active');if(filled&&!existing){role.innerHTML+=' <span class="acct-active">✓</span>';}else if(!filled&&existing){existing.remove();}}
-
-/* ===== NEW: section system + lightbox + QR + defaults ===== */
 function getSections(d){
   if(!d)return defaultSectionsList();
   if(!d.sections||!d.sections.length||!Array.isArray(d.sections)){d.sections=defaultSectionsList();return d.sections;}
@@ -2276,7 +1943,6 @@ function getSections(d){
   d.sections = d.sections.filter(function(x){ return x && typeof x === 'object' && x.id; });
   if(!d.sections.length){ d.sections=defaultSectionsList(); return d.sections; }
   // Migrate: ensure any new section in SECTION_DEFS but missing from d.sections is appended
-  if(window.CEZ_RSVP_DISABLED) d.sections=d.sections.filter(x=>x.id!=='rsvp'); /* RSVP 비활성 시에만 제거 */
   d.sections.forEach(function(x){ if(x.id==='invitation'||x.id==='couple') x.show=true; }); /* invitation/couple만 항상 표시. where/when은 뮤트 가능 */
   const ids=d.sections.map(x=>x.id);
   SECTION_DEFS.forEach(function(def){
@@ -2294,18 +1960,18 @@ function getSections(d){
   }
   if(!d._secV4){
     var _ci=d.sections.findIndex(x=>x.id==='cover'); if(_ci>0){ var _c=d.sections.splice(_ci,1)[0]; d.sections.unshift(_c); }
-    if(!window.CEZ_RSVP_DISABLED){ var _ri=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri>=0){ var _r=d.sections.splice(_ri,1)[0]; var _si=d.sections.findIndex(x=>x.id==='share'); if(_si<0)_si=d.sections.length; d.sections.splice(_si,0,_r); } }
+    { var _ri=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri>=0){ var _r=d.sections.splice(_ri,1)[0]; var _si=d.sections.findIndex(x=>x.id==='share'); if(_si<0)_si=d.sections.length; d.sections.splice(_si,0,_r); } }
     if(d.coverIntro==null) d.coverIntro='Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.';
     d._secV4=1;
   }
   if(!d._secV5){
-    if(!window.CEZ_RSVP_DISABLED){ var _ri5=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri5>=0){ var _r5=d.sections.splice(_ri5,1)[0]; var _ai5=d.sections.findIndex(x=>x.id==='accounts'); if(_ai5<0)_ai5=d.sections.length; d.sections.splice(_ai5,0,_r5); } }
+    { var _ri5=d.sections.findIndex(x=>x.id==='rsvp'); if(_ri5>=0){ var _r5=d.sections.splice(_ri5,1)[0]; var _ai5=d.sections.findIndex(x=>x.id==='accounts'); if(_ai5<0)_ai5=d.sections.length; d.sections.splice(_ai5,0,_r5); } }
     d._secV5=1;
   }
   if(!d._secV6){ var _rs6=d.sections.find(x=>x.id==='rsvp'); if(_rs6 && !_rs6.userOff && !_rs6.userOn) _rs6.show=false; d._secV6=1; }
   /* v7: 과거 append 버그로 rsvp/accounts가 공유 뒤 등 엉뚱한 위치에 저장된 경우 정규화 —
      하단 묶음을 항상 rsvp→accounts→share 순서(공유 맨 끝)로. 각 섹션의 show/userOff 상태는 보존 */
-  if(!d._secV7 && !window.CEZ_RSVP_DISABLED){
+  if(!d._secV7){
     var _bundle=['rsvp','accounts','share'], _saved={};
     _bundle.forEach(function(id){ var i=d.sections.findIndex(function(x){return x.id===id;}); if(i>=0)_saved[id]=d.sections.splice(i,1)[0]; });
     _bundle.forEach(function(id){ if(_saved[id])d.sections.push(_saved[id]); });
@@ -2323,20 +1989,6 @@ const DEFAULT_SEC_LABELS={invitation:'INVITATION',couple:'THE COUPLE',gallery:'G
 function sectionLabel(id){const f=SECTION_DEFS.find(x=>x.id===id);return f?f.label:id;}
 function getSecLabel(d,id){var sl=d&&d.sectionLabels||{};return sl[id]||DEFAULT_SEC_LABELS[id]||id;}
 function setSecLabel(id,v){var d=editTarget().data;d.sectionLabels=d.sectionLabels||{};d.sectionLabels[id]=v;refreshPreviewDebounced();}
-function renderSection(id,d,sk,p){
-  if(id==='invitation') return sect(getSecLabel(d,'invitation'),sk,(sk.header==='romantic'?'':'<div class="names-en" style="font-size:22px;margin-bottom:18px;color:'+sk.text+'">Dear our friends</div>')+'<div class="greet" style="color:'+(sk.dark?'#cfcabb':sk.sub)+'">'+esc(p.greet)+'</div>','invitation');
-  if(id==='couple') return sect(getSecLabel(d,'couple'),sk,coupleBlock(p,sk),'couple');
-  if(id==='gallery') return p.gallery.length?sect(getSecLabel(d,'gallery'),sk,galleryGrid(p),'gallery'):'<div data-pv-sec="gallery" style="height:1px"></div>';
-  if(id==='when') return sect(getSecLabel(d,'when'),sk,'<div class="names-en" style="font-size:20px;margin-bottom:10px;color:'+sk.text+'">'+(p.monthEn?titleCase(p.monthEn)+' '+p.y:'')+'</div><div class="info-line">'+p.full+'</div><div class="info-line" style="color:'+sk.sub+'">'+p.time+'</div>'+calendarBlock(d,sk),'when');
-  if(id==='where') return sect(getSecLabel(d,'where'),sk,'<div class="info-line" style="font-weight:600">'+esc(p.venue)+'</div>'+(d.floorHall?'<div class="info-line" style="font-weight:500">'+esc(d.floorHall)+'</div>':'')+'<div class="info-line" style="color:'+sk.sub+';margin-bottom:6px">'+esc(p.addr)+'</div>'+mapBlock(p,sk.accent),'where');
-  if(id==='accounts') return '<div data-pv-sec="accounts">'+acctSection(p,sk)+'</div>';
-  if(id==='rsvp') return window.CEZ_RSVP_DISABLED?'<div data-pv-sec="rsvp" style="height:1px"></div>':sect(getSecLabel(d,'rsvp'),sk,rsvpHTML(d,sk),'rsvp');
-  if(id==='notice') return p.notice?sect(getSecLabel(d,'notice'),sk,'<div class="greet" style="color:'+sk.sub+'">'+esc(p.notice)+'</div>','notice'):'<div data-pv-sec="notice" style="height:1px"></div>';
-  if(id==='share') return sect(getSecLabel(d,'share'),sk,shareHTML(d,sk),'share');
-  return '';
-}
-
-/* lightbox */
 function openLightbox(src){
   closeLightbox();
   var html='<div class="lightbox" id="lightbox" onclick="closeLightbox()" oncontextmenu="return false">'
@@ -2379,13 +2031,6 @@ function closeLightbox(){var l=document.getElementById('lightbox');if(l)l.remove
 
 
 /* section toggle + drag-reorder */
-let _secDrag=null;
-function toggleSection(idx,on){var u=editTarget();u.data.sections=u.data.sections||defaultSectionsList();if(u.data.sections[idx]){u.data.sections[idx].show=on;softRender();}}
-function secDragStart(e,i){_secDrag=i;document.body.classList.add('dragging-sec');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',String(i));}catch(_){};var pill=document.getElementById('pill-'+i);if(pill)pill.classList.add('dragging');}
-function secDragOver(e,i){e.preventDefault();e.dataTransfer.dropEffect='move';if(e.currentTarget&&e.currentTarget.classList)e.currentTarget.classList.add('drag-over');}
-function secDragLeave(e){if(e.currentTarget&&e.currentTarget.classList)e.currentTarget.classList.remove('drag-over');}
-function secDragEnd(e){document.body.classList.remove('dragging-sec');document.querySelectorAll('.sect-item.drag-over,.etl-drop.drag-over,.etl-pill.dragging,.etl-pill.drop-target').forEach(function(x){x.classList.remove('drag-over');x.classList.remove('dragging');x.classList.remove('drop-target');});}
-function secDrop(e,i){e.preventDefault();if(e.currentTarget&&e.currentTarget.classList)e.currentTarget.classList.remove('drag-over');var u=editTarget();u.data.sections=u.data.sections||defaultSectionsList();if(_secDrag===null||_secDrag===i){_secDrag=null;return;}var arr=u.data.sections;var item=arr.splice(_secDrag,1)[0];arr.splice(i,0,item);_secDrag=null;softRender();}
 
 /* ===== RSVP fields + music + calendar + stats + QR upgrades ===== */
 const RSVP_FIELD_DEFS=[
@@ -2582,27 +2227,6 @@ function _musicSyncIcon(){var a=document.getElementById('inv-audio');var pi=docu
 })();
 
 /* Calendar save (Google Calendar + ICS) */
-function downloadICS(){
-  var u=editTarget&&editTarget()?editTarget():null;
-  /* When called from public invitation, fallback to current rendered data via DOM context */
-  var d=u?u.data:null;
-  if(!d){var slug=(location.hash||'').replace('#/i/','');var x=DB.users.find(function(x){return x.slug===slug;});if(x)d=x.data;}
-  if(!d||!d.date){toast('예식 정보가 없습니다');return;}
-  var dt=parseDate(d.date);
-  var h=parseInt((d.time||'14:00').split(':')[0],10), mn=parseInt((d.time||'14:00').split(':')[1]||0,10);
-  var start=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),h,mn);
-  var end=new Date(start.getTime()+120*60*1000);
-  function pad2(n){return String(n).padStart(2,'0');}
-  function fmt(x){return x.getUTCFullYear()+pad2(x.getUTCMonth()+1)+pad2(x.getUTCDate())+'T'+pad2(x.getUTCHours())+pad2(x.getUTCMinutes())+'00Z';}
-  var title=(d.groomKo||'신랑')+' · '+(d.brideKo||'신부')+' 결혼식';
-  var ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//CEZ//mocheong//KR\r\nBEGIN:VEVENT\r\nUID:'+Date.now()+'@cez\r\nDTSTAMP:'+fmt(new Date())+'\r\nDTSTART:'+fmt(start)+'\r\nDTEND:'+fmt(end)+'\r\nSUMMARY:'+title+'\r\nLOCATION:'+((d.venueName||'')+' '+(d.venueAddr||''))+'\r\nDESCRIPTION:CEZ 모바일 청첩장\r\nEND:VEVENT\r\nEND:VCALENDAR';
-  var b=new Blob([ics],{type:'text/calendar'});
-  var url=URL.createObjectURL(b);
-  var a=document.createElement('a');a.href=url;a.download='wedding.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  toast('iCal 파일을 저장했습니다');
-}
-
-/* View + share tracking */
 function trackView(slug){
   if(!slug||slug==='_preview')return;
   DB.stats=DB.stats||{};
@@ -2625,41 +2249,14 @@ function trackShare(slug,channel){
 function viewPublished(slug){
   const u=DB.users.find(x=>x.slug===slug&&x.role!=='admin');
   trackView(slug);
-  if(!u||!u.data)return gateBlock('NOT FOUND','존재하지 않는 청첩장 주소입니다.<br>주소를 다시 확인해 주세요.');
+  if(!u||!u.data)return '';
   return '<div class="pub-wrap"><div class="pub-paper">'+renderInvitation(u.data)+'</div></div>'+musicPlayerHTML(u.data);
 }
-function gateBlock(title,msg){
-  return '<div class="gate-block">'
-    +'<img src="logo.jpg" onerror="cezFallback(this)" alt="CEZ" style="height:30px;margin:0 auto 24px;opacity:.6">'
-    +'<div class="display">'+title+'</div><p>'+msg+'</p>'
-    +'</div>';
-}
-/* 서버 templates 테이블에서 로드 → DB.templates 교체 (이름/공개/삭제 영속화).
-   렌더 코드(skinFor/tplLuce 등)는 그대로, 이 테이블은 메타 관리만. */
-/* ===== FAQ (유저 공개 · 어드민 편집) — 서버(faqs) 우선, 실패 시 내장 기본 ===== */
-window.CEZ_FAQ_DEFAULT=[
- {category:'제작·수정',question:'결제(공개) 후에도 내용을 수정할 수 있나요?',answer:"네, 물론이에요. 결제 후는 물론 공개 중에도 내용은 횟수 제한 없이 수정하실 수 있고, 저장되는 즉시 청첩장에 반영됩니다. 다만 공개 주소(URL)만은 공개 중에 변경할 수 없어요.",sort_order:10,visible:true},
- {category:'제작·수정',question:'신랑측용·신부측용을 따로 만들 수 있나요?',answer:'가능합니다. 다만 계정(네이버 로그인) 하나당 청첩장 한 개를 제작할 수 있어서, 인사말이나 계좌 안내를 다르게 담은 두 버전이 필요하시면 각각의 계정으로 결제·제작해 주시면 됩니다.',sort_order:20,visible:true},
- {category:'제작·수정',question:'제작 중인데 저장이 안 돼요.',answer:"공개 주소가 다른 분과 겹치면 저장되지 않아요. 공개 설정의 주소 입력창 아래에 '이미 사용 중인 주소예요'라고 표시되면 다른 주소로 바꿔 주세요. 로그인 세션이 만료되었을 수도 있으니, 새로고침 후 다시 로그인해서 시도해 보시기를 권해 드려요.",sort_order:30,visible:true},
- {category:'제작·수정',question:'사진을 올렸는데 일부가 빈칸으로 보여요.',answer:'사진은 자동으로 용량을 줄여 업로드되지만, 네트워크가 불안정하면 일부가 누락될 수 있어요. 빈칸으로 보이는 사진을 삭제하신 뒤 1~5장씩 나누어 올려 주시고, 저장 후 청첩장 링크에서 정상적으로 보이는지 확인하면서 나머지도 같은 방식으로 추가해 주세요.',sort_order:40,visible:true},
- {category:'제작·수정',question:'템플릿(디자인)을 바꾸면 입력한 내용은 어떻게 되나요?',answer:'그대로 유지됩니다. 편집 화면의 템플릿 [변경]을 누르면 디자인 썸네일이 나오고, 선택하면 내용은 그대로 둔 채 디자인만 바뀌어요. [완료]를 누르면 닫힙니다.',sort_order:50,visible:true},
- {category:'제작·수정',question:'종이 청첩장에 넣을 QR 코드는 어떻게 받나요?',answer:'편집 화면 상단의 QR 버튼에서 언제든 고해상도 이미지(인쇄용)로 내려받으실 수 있어요. QR 코드는 청첩장 고유 주소로 만들어지기 때문에 내용을 수정하셔도 코드는 그대로 유지됩니다. 인쇄하신 후에도 안심하고 수정하세요.',sort_order:60,visible:true},
- {category:'공개·소장',question:'청첩장은 언제부터, 언제까지 공개되나요?',answer:'공개 설정에서 [바로 공개하기]를 누르면 그 순간부터 하객에게 공개돼요. 공개하려면 예식일이 입력되어 있어야 해요(공개는 예식일까지 유지되기 때문이에요). 예식일 이후에는 감사 인사 화면으로 바뀌고, 예식일로부터 3개월까지 소장 상태로 보관됩니다. 공개 설정 카드에서 공개 기간과 소장 기간을 바로 확인하실 수 있어요.',sort_order:70,visible:true},
- {category:'공개·소장',question:'공개가 끝난 뒤에는 어떻게 되나요?',answer:"하객에게는 감사 인사 화면이 보이고, 본인은 소장 기간(예식일로부터 3개월) 동안 로그인해서 언제든 추억으로 다시 열람하실 수 있습니다. 예식일로부터 6개월이 지나면 관리자 보관 상태로 전환되어 직접 열람은 어려워지지만, 데이터는 삭제되지 않으니 필요하실 때 문의해 주세요.",sort_order:80,visible:true},
- {category:'공개·소장',question:'공개가 끝난 청첩장을 다시 공개(연장)할 수 있나요?',answer:'소장 상태에서는 직접 다시 공개하실 수 없어요. 연장이 필요하시면 네이버 톡톡으로 문의해 주시면 확인 후 도와드리겠습니다.',sort_order:90,visible:true},
- {category:'공개·소장',question:'청첩장 주소(URL)를 바꾸고 싶어요.',answer:'공개 중에는 주소를 변경할 수 없어요. QR 코드와 이미 전달된 링크가 모두 이 주소를 기준으로 하기 때문이에요. 공개 전에는 자유롭게 바꾸실 수 있고, 입력하면 사용 가능한 주소인지 바로 알려드립니다.',sort_order:100,visible:true},
- {category:'공개·소장',question:'비공개했는데 카카오톡에는 사진이 계속 보여요.',answer:'카카오톡 등 메신저는 링크가 공유될 때 사진과 제목을 자체 서버에 잠시 저장(캐시)해 두는 특성이 있어요. 그래서 청첩장을 비공개해도 이미 공유된 채팅방의 미리보기는 일정 기간 남아 있을 수 있습니다. 새로 공유되는 링크부터는 보이지 않으니 안심하세요.',sort_order:110,visible:true},
- {category:'결제·환불',question:'가격이 어떻게 되나요?',answer:'모바일 청첩장 1건에 29,900원이에요. 이벤트 코드가 있으시면 결제 화면에 입력해 19,900원에, 세즈 종이 청첩장을 구매하신 고객은 주문번호를 입력해 9,900원에 이용하실 수 있어요. 쿠폰 코드를 받으셨다면 같은 입력창에 넣어 주세요.',sort_order:120,visible:true},
- {category:'결제·환불',question:'결제하면 바로 공개되나요?',answer:'결제하면 공개 권한이 열려요. 공개는 원하실 때 직접 하시면 됩니다 — 공개 설정에서 [바로 공개하기]를 누르면 그 순간부터 하객에게 보여요. 결제만 미리 해두고 나중에 공개해도 괜찮아요(단, 공개하려면 예식일이 입력되어 있어야 해요).',sort_order:130,visible:true},
- {category:'결제·환불',question:'환불 규정이 궁금해요.',answer:'결제 후 공개 전에는 전액 환불이 가능해요. 공개가 시작된 뒤에는 고유 주소 생성과 호스팅 서비스가 이미 제공된 상태라 환불이 어려운 점 양해 부탁드립니다. 문의는 네이버 톡톡 또는 thecezhouse@naver.com으로 주세요.',sort_order:140,visible:true}
-];
-window.cezGetFaqs=function(){ return (DB&&DB.faqs&&DB.faqs.length)?DB.faqs:window.CEZ_FAQ_DEFAULT; };
 function render(){
   app().innerHTML=viewPublished('sample01');
   if(window._preserveScrollY==null)window.scrollTo(0,0);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCezModal&&closeCezModal();closeFigmaModal&&closeFigmaModal();}});
-window._edTouched=window._edTouched||{};document.addEventListener('click',function(e){var t=e.target;if(!t)return;var h2=(t.tagName==='H2')?t:(t.closest&&t.closest('h2'));if(h2&&!h2.classList.contains('h2-plain')&&h2.parentElement&&h2.parentElement.classList&&h2.parentElement.classList.contains('ed-section')){var sec=h2.parentElement.dataset.sec;if(sec){window._edTouched[sec]=true;}h2.parentElement.classList.toggle('collapsed');}});
 window.addEventListener('hashchange',render);
 window.addEventListener('DOMContentLoaded',render);
 render();

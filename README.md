@@ -6,9 +6,8 @@ CEZ 모바일 청첩장 클론에서 **외부 서버(Supabase) 의존을 모두 
 ## 구성
 
 - `index.html` — 청첩장 전체 (스타일 + 렌더러 + 초대장 데이터 포함)
-- `assets/` — 초대장 사진 11장 (`img1.jpg`~`img11.jpg`)
-- `luce-gallery.jpg` — 템플릿 기본 갤러리 이미지
-- `*.png` / `*.jpg` — 폴라로이드 프레임, 종이 질감, 아이콘
+- `pictures/` — **신랑·신부 커플 사진** (`img1.jpg`~`img11.jpg`) — 커스텀 시 이 폴더의 사진을 교체
+- `assets/` — 청첩장 디자인 구성 리소스 (폴라로이드 프레임, 종이 질감, 아이콘, OG 이미지 등)
 
 ## 실행 방법
 
@@ -31,12 +30,12 @@ python -m http.server 8787
 - `groomFather`/`groomMother`/`brideFather`/`brideMother` — 혼주 성함
 - `date`/`time` — 예식 일시 (예: `'2026-10-20'`, `'12:00'`)
 - `venueName`/`venueAddr`/`mapQuery` — 예식 장소
-- `cover`/`gallery`/`featuredGallery` — 사진 경로 (`assets/` 안의 이미지)
+- `cover`/`gallery`/`featuredGallery` — 사진 경로 (`pictures/` 안의 이미지)
 - `accounts`/`acctOrder` — 계좌 정보
 - `greeting`/`notice`/`coverIntro` — 문구
 - `sections` — 섹션 표시/숨김
 
-사진을 바꾸려면 `assets/`에 파일을 넣고 경로만 수정하면 됩니다.
+사진을 바꾸려면 `pictures/`에 파일을 넣고 경로만 수정하면 됩니다.
 
 ## 동작 범위 (로컬 전용)
 

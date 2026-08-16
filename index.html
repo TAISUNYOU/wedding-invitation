@@ -47,7 +47,7 @@ if(!location.hash || location.hash === '#/'){ location.replace('#/i/sample01'); 
 <meta property="og:type" content="website">
 <meta property="og:title" content="소중한 날에 초대합니다">
 <meta property="og:description" content="자세한 내용을 확인해보세요.">
-<meta property="og:image" content="/og-default.jpg?v=1">
+<meta property="og:image" content="/assets/og-default.jpg?v=1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="600">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -299,9 +299,9 @@ if(!location.hash || location.hash === '#/'){ location.replace('#/i/sample01'); 
   .luce-rel{color:#b9b4a5}
   .luce-subwin{position:relative;width:240px;max-width:63%;height:151px;margin:0 auto;overflow:hidden}
   .luce-subwin img{width:100%;height:100%;object-fit:cover;transform-origin:center;display:block}
-  .luce-fold{height:120px;background:url(/paper-fold-lemon.png) center/100% auto no-repeat;margin:10px 0}
-  .inv.luce.cotton .luce-fold{background-image:url(/paper-fold-cotton.png)}
-  .inv.luce.kakao .luce-fold{background-image:url(/paper-fold-kakao.png?v=4)}
+  .luce-fold{height:120px;background:url(/assets/paper-fold-lemon.png) center/100% auto no-repeat;margin:10px 0}
+  .inv.luce.cotton .luce-fold{background-image:url(/assets/paper-fold-cotton.png)}
+  .inv.luce.kakao .luce-fold{background-image:url(/assets/paper-fold-kakao.png?v=4)}
   .inv.luce.kakao .luce-rel{color:#c9bfae!important}
   .luce-acct summary{list-style:none!important}
   .luce-acct summary::-webkit-details-marker,.luce-acct summary::marker{display:none!important;content:''}
@@ -1574,23 +1574,40 @@ function defaultTemplates(){return[
 ];}
 
 function defaultUsers(){return[
-  {id:'sample01',name:'샘플',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sample01',slugLocked:true,joinedAt:'2026-01-01',
-   data:{template:'luce',groomKo:'도윤',brideKo:'서아',groomEn:'Doyoon',brideEn:'Seoah',
-     groomFather:'김민석',groomFatherDec:false,groomMother:'유미령',groomMotherDec:false,groomRelation:'아들',
-     brideFather:'박순철',brideFatherDec:true,brideMother:'이경애',brideMotherDec:false,brideRelation:'딸',
-     date:'2026-10-20',time:'12:00',venueName:'더채플 커티지홀',venueAddr:'서울특별시 강남구 선릉로 757',
+  {id:'sesang',name:'온세상',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sesang',slugLocked:true,joinedAt:'2026-01-01',
+   data:{template:'luce',groomKo:'태선',brideKo:'세상',groomEn:'Taisun',brideEn:'Sesang',
+     groomFather:'유인근',groomFatherDec:false,groomMother:'정지은',groomMotherDec:false,groomRelation:'아들',
+     brideFather:'박병일',brideFatherDec:false,brideMother:'성서경',brideMotherDec:false,brideRelation:'딸',
+     date:'2027-02-21',time:'14:00',venueName:'노블발렌티 대치',venueAddr:'서울특별시 강남구 영동대로 325',
      floorHall:'',showMap:true,mapQuery:'더채플 커티지홀',showCalendar:true,
-     cover:'assets/img1.jpg',
-     coverIntro:'Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.',
-     gallery:['assets/img2.jpg','assets/img3.jpg','assets/img4.jpg','assets/img5.jpg','assets/img6.jpg','assets/img7.jpg','assets/img8.jpg'],
-     featuredGallery:[{s:1,x:0,y:0,src:'assets/img9.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'assets/img10.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'assets/img11.jpg',frameOrientation:'landscape'}],
+     cover:'pictures/img1.jpg',
+     coverIntro:'멋진 문구 넣기',
+     gallery:['pictures/img2.jpg','pictures/img3.jpg','pictures/img4.jpg','pictures/img5.jpg','pictures/img6.jpg','pictures/img7.jpg','pictures/img8.jpg'],
+     featuredGallery:[{s:1,x:0,y:0,src:'pictures/img9.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img10.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img11.jpg',frameOrientation:'landscape'}],
      accounts:{ac1:{bank:'국민',holder:'김도윤',number:'123456-04-123456'},ac2:{bank:'우리',holder:'박서아',number:'110-123-456789'}},
      acctOrder:[{key:'ac1',label:'신랑'},{key:'ac2',label:'신부'}],
      notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
      greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
      sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'rsvp',show:true},{id:'accounts',show:true},{id:'share',show:true}],
      music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
-     coverCrop:{s:1,x:0,y:0,src:'assets/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
+     coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
+  {id:'sample01',name:'샘플',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sample01',slugLocked:true,joinedAt:'2026-01-01',
+   data:{template:'luce',groomKo:'태선',brideKo:'세상',groomEn:'Taisun',brideEn:'Sesang',
+     groomFather:'유인근',groomFatherDec:false,groomMother:'정지은',groomMotherDec:false,groomRelation:'아들',
+     brideFather:'박병일',brideFatherDec:false,brideMother:'성서경',brideMotherDec:false,brideRelation:'딸',
+     date:'2027-02-21',time:'14:00',venueName:'노블발렌티 대치',venueAddr:'서울특별시 강남구 영동대로 325',
+     floorHall:'',showMap:true,mapQuery:'더채플 커티지홀',showCalendar:true,
+     cover:'pictures/img1.jpg',
+     coverIntro:'멋진 문구 넣기',
+     gallery:['pictures/img2.jpg','pictures/img3.jpg','pictures/img4.jpg','pictures/img5.jpg','pictures/img6.jpg','pictures/img7.jpg','pictures/img8.jpg'],
+     featuredGallery:[{s:1,x:0,y:0,src:'pictures/img9.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img10.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img11.jpg',frameOrientation:'landscape'}],
+     accounts:{ac1:{bank:'국민',holder:'김도윤',number:'123456-04-123456'},ac2:{bank:'우리',holder:'박서아',number:'110-123-456789'}},
+     acctOrder:[{key:'ac1',label:'신랑'},{key:'ac2',label:'신부'}],
+     notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
+     greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
+     sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'rsvp',show:true},{id:'accounts',show:true},{id:'share',show:true}],
+     music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
+     coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
   {id:'admin',name:'지해',email:'admin@cez.kr',pw:'admin1234',role:'admin',tier:'PAID',plan:'',paidAt:'',slug:'',slugLocked:false,joinedAt:'2026-01-01',data:null},
   {id:'minji',name:'박서하',email:'minji@test.com',pw:'1234',role:'user',tier:'PAID',plan:'',paidAt:'2026-03-15',payMethod:'네이버페이',payOrderId:'NP-2026-0315',naverId:'minji_lee',slug:'minji',slugLocked:true,joinedAt:'2026-03-10',
    data:{template:'lifetime',groomKo:'김도윤',brideKo:'박서하',groomEn:'Doyoon Kim',brideEn:'Seoha Park',
@@ -1875,10 +1892,10 @@ function luceFeatured(d){
       : 'transform:translate('+((it.x||0))+'%,'+((it.y||0))+'%) scale('+(it.s||1)+')';
     /* 대표(폴라로이드) 이미지는 저장 원본을 그대로 서빙했음 → 업로드 2048 상향 시 egress 급증. cezImg(1440)로 변환 서빙해 화질(레티나 크리스프)은 유지하고 용량은 캡 */
     var img='<img src="'+esc(cezImg(it.src||'feat1.png',1440,82))+'" alt="" draggable="false" oncontextmenu="return false" style="'+tf+'">'
-      +(it.grain?'<div style="position:absolute;inset:0;background:url(/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'');
+      +(it.grain?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'');
     /* 세로 = 기존 PNG 프레임을 90° 회전(같은 질감·그림자·비율). 없으면 기존 가로(바이트 동일) */
     var portrait=(it.frameOrientation==='portrait');
-    return '<div class="luce-pola'+(portrait?' is-portrait':'')+'" data-feat-i="'+i+'"><div class="luce-pola-win">'+img+'</div><img class="luce-pola-frame" src="/polaroid.png" alt="" draggable="false"></div>';
+    return '<div class="luce-pola'+(portrait?' is-portrait':'')+'" data-feat-i="'+i+'"><div class="luce-pola-win">'+img+'</div><img class="luce-pola-frame" src="/assets/polaroid.png" alt="" draggable="false"></div>';
   }).join('')+'</div>';
 }
 function luceGallery(d){
@@ -2025,7 +2042,7 @@ function luceAcctRows(p,d){
 }
 function luceShare(d,prev){
   var slug=userSlugForData(d)||'';
-  var icon='<img src="/icon-share.png" alt="" style="width:12px;height:auto">';
+  var icon='<img src="/assets/icon-share.png" alt="" style="width:12px;height:auto">';
   return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="share">'
     +'<button type="button" onclick="cezShare(\''+esc(slug)+'\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 '+icon+'</button>'
   +'</div></div>';
@@ -2052,7 +2069,7 @@ function tplLuce(d){
 
   const isCotton=(d.template==='cotton');
   const isKakao=(d.template==='kakao');
-  const pageBg=isKakao?'#362724 url(/paper-mid-kakao.jpg?v=5) top center/100% auto repeat-y':isCotton?'#F5F5F5 url(/paper-mid-cotton.png) top center/100% auto repeat-y':'#f1e8a1 url(/paper-mid-lemon.png) top center/100% auto repeat-y';
+  const pageBg=isKakao?'#362724 url(/assets/paper-mid-kakao.jpg?v=5) top center/100% auto repeat-y':isCotton?'#F5F5F5 url(/assets/paper-mid-cotton.png) top center/100% auto repeat-y':'#f1e8a1 url(/assets/paper-mid-lemon.png) top center/100% auto repeat-y';
   /* 갈색 페이지 위 요소(상단 데코·영문 이름줄)는 밝게 — 본문 흰 카드는 자체 color:#000 유지 */
   const pageInk=isKakao?'#f3ece2':ink;
   let html='<div class="inv luce'+(isCotton?' cotton':'')+(isKakao?' kakao':'')+'" style="background:'+pageBg+';color:'+pageInk+';font-family:'+KO+';text-align:center;padding:0 0 48px">';
@@ -2060,7 +2077,7 @@ function tplLuce(d){
   var _cc=d.coverCrop||{};
   html+='<div class="luce-coverwrap" data-pv-sec="cover" style="position:relative;width:100%;aspect-ratio:380/500;overflow:hidden;background:#cfc9b0">'
     +'<img class="luce-coverimg" src="'+esc(cezImg(d.cover||'luce-cover.jpg?v=4',CEZ_COVER_W,CEZ_COVER_Q))+'" alt="" draggable="false" onerror="if(!this._f){this._f=1;this.src=\''+esc(d.cover||'luce-cover.jpg?v=4')+'\';}else if(this.src.indexOf(\'luce-cover.jpg?v=4\')<0){this.src=\'luce-cover.jpg?v=4\';}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;'+cezCoverCropStyle(_cc)+'">'
-    +((d.coverGrainEnabled!==false)?'<div style="position:absolute;inset:0;background:url(/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
+    +((d.coverGrainEnabled!==false)?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
     +'<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,18,.1),transparent 40%,rgba(20,26,18,.5))"></div>'
     +(((((d.sections||[]).find(function(_x){return _x.id==='cover';})||{show:true}).show!==false)
       ? '<div style="position:absolute;left:26px;right:26px;bottom:28px;text-align:left;color:#fff;font-family:'+MONO+'">'
@@ -2075,8 +2092,8 @@ function tplLuce(d){
   +'</div></div>';
   html+='<div class="luce-fold"></div>';
   var _sc2=d.subCoverCrop||{};
-  html+='<div style="padding:0 0 4px"><div class="luce-subwin"><img class="luce-subcover" src="'+esc(d.subCoverImage||'luce-gallery.jpg?v=3')+'" alt="" draggable="false" style="transform:translate('+(_sc2.x||0)+'%,'+(_sc2.y||0)+'%) scale('+(_sc2.s||1)+')">'
-    +(d.subCoverGrainEnabled?'<div style="position:absolute;inset:0;background:url(/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
+  html+='<div style="padding:0 0 4px"><div class="luce-subwin"><img class="luce-subcover" src="'+esc(d.subCoverImage||'/assets/luce-gallery.jpg')+'" alt="" draggable="false" style="transform:translate('+(_sc2.x||0)+'%,'+(_sc2.y||0)+'%) scale('+(_sc2.s||1)+')">'
+    +(d.subCoverGrainEnabled?'<div style="position:absolute;inset:0;background:url(/assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>':'')
   +'</div></div>';
 
   /* ── 섹션 루프: d.sections 순서 그대로 (Preview=Sidebar=DB 단일 소스) ── */
@@ -2086,7 +2103,7 @@ function tplLuce(d){
       /* Figma Group 31: 센터 정렬 카드 — 데코·이름·인사말·혼주·일시 */
       function famLine(f,fd,m,md,rel,defRel,nameKo){
         /* v4.5: 고인은 이름 앞 국화 이미지, 자녀 이름은 성 포함 전체 이름 */
-        var MUM='<img src="/deceased-flower.png" alt="故" draggable="false" style="display:inline-block;height:1.2em;vertical-align:-0.25em;margin-right:2px">';
+        var MUM='<img src="/assets/deceased-flower.png" alt="故" draggable="false" style="display:inline-block;height:1.2em;vertical-align:-0.25em;margin-right:2px">';
         var ps=[]; if(f&&f.trim())ps.push((fd?MUM:'')+esc(f.trim())); if(m&&m.trim())ps.push((md?MUM:'')+esc(m.trim()));
         if(!ps.length)return '';
         return '<div>'+ps.join(' · ')+' 의 <span class="luce-rel" style="color:#b9b4a5">'+esc((rel&&rel.trim())||defRel)+'</span> '+esc((nameKo||'').trim())+'</div>';
@@ -2135,7 +2152,7 @@ function tplLuce(d){
       var rows=luceAcctRows(p,d);
       if(!rows) return '<div data-pv-sec="accounts" style="height:1px"></div>'; /* 계좌 미입력 시 배포 화면에서 숨김(에디터는 placeholder) */
       return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="accounts">'
-        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">'+esc(getSecLabel(d,'accounts')||'마음 전하실 곳')+'<img src="/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
+        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">'+esc(getSecLabel(d,'accounts')||'마음 전하실 곳')+'<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
         +'<div style="background:#fff;padding:2px 20px 16px">'+rows+'</div>'
         +'</details>'
       +'</div></div>';
@@ -2151,7 +2168,7 @@ function tplLuce(d){
     rsvp:function(prev){
       if(window.CEZ_RSVP_DISABLED) return '<div data-pv-sec="rsvp" style="height:1px"></div>';
       return '<div style="padding:'+((prev==='rsvp'||prev==='accounts')?'15px':'0')+' 48px 0"><div data-pv-sec="rsvp">'
-        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">참석 의사 전달하기<img src="/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
+        +'<details class="luce-acct"><summary style="list-style:none;display:flex;align-items:center;justify-content:space-between;background:#B9D9FF;padding:15px 20px;cursor:pointer;font-family:'+KO+';font-size:13px;font-weight:500;color:#000">참석 의사 전달하기<img src="/assets/icon-acct.png" alt="" style="width:12px;height:auto"></summary>'
         +'<div style="background:#fff;padding:14px 20px 16px;font-family:'+KO+'">'+rsvpHTML(d,sk)+'</div>'
         +'</details>'
       +'</div></div>';

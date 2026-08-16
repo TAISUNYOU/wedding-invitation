@@ -57,7 +57,7 @@
   .btn-line{background:transparent;border:1px solid var(--line);color:var(--ink-soft)}.btn-line:hover{border-color:var(--accent);color:var(--ink)}
   .btn-sm{padding:7px 12px;font-size:12px;border-radius:7px;font-weight:500}
 
-  /* ---------- LANDING (faithful to original CEZ index.html) ---------- */
+  /* ---------- LANDING (원본 index.html 기반) ---------- */
   .stage{position:relative;min-height:100vh;padding:34px 0 34px 30px;background:#F7F7F7}
   .mark{position:absolute;width:7px;height:7px;background:#111}
   .mark.tl{top:22px;left:22px}.mark.tr{top:22px;right:10px}
@@ -1056,7 +1056,7 @@
     .etl-grp-label{font-size:10px}
   }
   /* ===================================================================
-     CEZ Design System — Soft Minimalism · Calm Luxury · Editorial
+     /* 디자인 시스템 — Soft Minimalism · Calm Luxury · Editorial */
      ================================================================ */
   :root{
     /* Background / Surface (Toss-inspired bluish gradient) */
@@ -1455,7 +1455,7 @@ function cezFallback(img){img.onerror=null;img.src=window.CEZ_IMG_FALLBACK;}
   <div class="toast" id="toast"></div>
 <script>
 /* ================================================================
-   CEZ — brand home + mobile invitation platform (single file)
+   /* 브랜드 홈 + 모바일 청첩장 플랫폼 (단일 파일) */
    ================================================================ */
 const DAY=86400000;
 function today(){const d=new Date();d.setHours(0,0,0,0);return d;}
@@ -1526,7 +1526,7 @@ function defaultDefaults(){return{
     smartStore:'',
     smartStoreName:'스마트 스토어',
     brandHome:'',
-    brandHomeName:'CEZ 브랜드 홈'
+    brandHomeName:''
   }
 };}
 function defaultSectionsList(){return SECTION_DEFS.map(x=>({id:x.id,show:x.id!=='rsvp'}));}
@@ -2256,7 +2256,7 @@ function render(){
   app().innerHTML=viewPublished('sample01');
   if(window._preserveScrollY==null)window.scrollTo(0,0);
 }
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCezModal&&closeCezModal();closeFigmaModal&&closeFigmaModal();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeFigmaModal&&closeFigmaModal();}});
 window.addEventListener('hashchange',render);
 window.addEventListener('DOMContentLoaded',render);
 render();

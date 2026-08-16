@@ -296,9 +296,6 @@
   .luce-subwin{position:relative;width:240px;max-width:63%;height:151px;margin:0 auto;overflow:hidden}
   .luce-subwin img{width:100%;height:100%;object-fit:cover;transform-origin:center;display:block}
   .luce-fold{height:120px;background:url(/assets/paper-fold-lemon.png) center/100% auto no-repeat;margin:10px 0}
-  .inv.luce.cotton .luce-fold{background-image:url(/assets/paper-fold-cotton.png)}
-  .inv.luce.kakao .luce-fold{background-image:url(/assets/paper-fold-kakao.png?v=4)}
-  .inv.luce.kakao .luce-rel{color:#c9bfae!important}
   .luce-acct summary{list-style:none!important}
   .luce-acct summary::-webkit-details-marker,.luce-acct summary::marker{display:none!important;content:''}
   .luce-acct[open] summary>span:last-child{transform:rotate(90deg)}
@@ -1565,8 +1562,6 @@ function calendarBlock(d,sk){
 /* v4.4: 템플릿 2종 — Lemon/Cotton Archive (렌더 코드 보존, 기존 청첩장 계속 렌더) */
 function defaultTemplates(){return[
   {id:'luce',   name:'Lemon Archive',  desc:'연노랑 종이 · 폴라로이드 · 모노', swatch:'linear-gradient(135deg,#f4ecbe,#e8dca0)',visible:true},
-  {id:'cotton', name:'Cotton Archive', desc:'흰 종이 · 폴라로이드 · 모노',     swatch:'linear-gradient(135deg,#ffffff,#ececec)',visible:true},
-  {id:'kakao',  name:'Cacao Archive', desc:'갈색 종이 · 폴라로이드 · 모노',   swatch:'linear-gradient(135deg,#4a352c,#2b1f19)',visible:true},
 ];}
 
 function defaultUsers(){return[
@@ -1755,21 +1750,17 @@ function acctSection(p,sk){
 }
 function invFooter(sk,d){
   d=d||{};
-  const isKakao=(d.template==='kakao');
-  let u=null;try{u=DB.users.find(x=>x.data===d);}catch(e){}
-  const paid=u&&u.tier==='PAID';
-  /* 카카오(갈색 종이): 문구는 plus-darker, 로고는 emboss가 이미 구워진 전용 PNG(그대로 표시). 그 외: 기존대로 */
-  const blend=isKakao?'mix-blend-mode:plus-darker;':'';
-  const logoSrc=isKakao?'cez-logo-kakao.png?v=10':((sk.dark)?'cez-logo-white.png':'cez-logo.png');
-  const logoSz=isKakao?32:38;
+  /* 레몬(luce) 전용: 어두운 스킨 여부만으로 로고·문구 색 결정 */
+  const logoSrc=(sk.dark)?'cez-logo-white.png':'cez-logo.png';
+  const logoSz=38;
   const logoImg='<img src="'+logoSrc+'" onerror="cezFallback(this)" alt="CEZ" style="width:'+logoSz+'px;height:'+logoSz+'px;display:block;margin:0 auto">';
   /* 로고 클릭 시 모바일 청첩장 홈으로 (이미지·디자인은 그대로) */
   const logo='<a href="#/" title="세즈 모바일 청첩장" style="display:block;text-decoration:none;cursor:pointer">'+logoImg+'</a>';
   const watermark=''; /* v4.5: 체험판 배너 제거 — 결제·승인 없이는 배포 자체가 불가 */
-  const txtColor=isKakao?'#000':(sk.dark?'#fff':'#000');
-  const txtOpacity=isKakao?'.55':'.49';
+  const txtColor=(sk.dark?'#fff':'#000');
+  const txtOpacity='.49';
   return watermark+'<div style="padding:32px 0 12px;text-align:center">'+logo
-    +'<div style="margin-top:7px;font-family:var(--mono);font-weight:400;font-size:10px;line-height:150%;color:'+txtColor+';opacity:'+txtOpacity+';'+blend+'">curated by CEZ<br>all rights reserved.</div></div>';
+    +'<div style="margin-top:7px;font-family:var(--mono);font-weight:400;font-size:10px;line-height:150%;color:'+txtColor+';opacity:'+txtOpacity+'">curated by CEZ<br>all rights reserved.</div></div>';
 }
 
 /* ---- 4) Lighting Lifetime (CEZ flagship card) ---- */
@@ -2018,13 +2009,10 @@ function tplLuce(d){
   const MONO="var(--mono)", KO=LUCE_KO, ink='#141414', sub='#6f6a58';
   const gEn=esc(p.gEn), bEn=esc(p.bEn);
 
-
-  const isCotton=(d.template==='cotton');
-  const isKakao=(d.template==='kakao');
-  const pageBg=isKakao?'#362724 url(/assets/paper-mid-kakao.jpg?v=5) top center/100% auto repeat-y':isCotton?'#F5F5F5 url(/assets/paper-mid-cotton.png) top center/100% auto repeat-y':'#f1e8a1 url(/assets/paper-mid-lemon.png) top center/100% auto repeat-y';
-  /* 갈색 페이지 위 요소(상단 데코·영문 이름줄)는 밝게 — 본문 흰 카드는 자체 color:#000 유지 */
-  const pageInk=isKakao?'#f3ece2':ink;
-  let html='<div class="inv luce'+(isCotton?' cotton':'')+(isKakao?' kakao':'')+'" style="background:'+pageBg+';color:'+pageInk+';font-family:'+KO+';text-align:center;padding:0 0 48px">';
+  /* 레몬(luce) 전용 배경 — 연노랑 종이 */
+  const pageBg='#f1e8a1 url(/assets/paper-mid-lemon.png) top center/100% auto repeat-y';
+  const pageInk=ink;
+  let html='<div class="inv luce" style="background:'+pageBg+';color:'+pageInk+';font-family:'+KO+';text-align:center;padding:0 0 48px">';
   /* ── 고정 헤더: 커버 + 데코 + 이름 행 + 고정 가로 사진 ── */
   var _cc=d.coverCrop||{};
   html+='<div class="luce-coverwrap" data-pv-sec="cover" style="position:relative;width:100%;aspect-ratio:380/500;overflow:hidden;background:#cfc9b0">'
@@ -2176,7 +2164,7 @@ function tplLuce(d){
 function renderInvitation(d){
   d=d||{};
   if(d.template==='lifetime')return tplLifetime(d);
-  if(d.template==='luce'||d.template==='cotton'||d.template==='kakao')return tplLuce(d);
+  if(d.template==='luce')return tplLuce(d);
   const sk=skinFor(d.template), p=invParts(d);
   let html='<div class="inv" style="background:'+sk.bg+';color:'+sk.text+';padding:0 0 10px">';
   html+=coverHero(p,sk);

@@ -3,10 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script>
-/* 로컬 클론: 랜딩(index) 없이 샘플 초대장으로 바로 진입 */
-if(!location.hash || location.hash === '#/'){ location.replace('#/i/sample01'); }
-</script>
 <style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
 <style id="cez-flat">
 /* v4.5 flat: 시스템 UI(어드민·에디터·모달) R=0 + 선 대신 면. 청첩장 렌더(.inv·.pub-paper)는 제외 */
@@ -1574,23 +1570,6 @@ function defaultTemplates(){return[
 ];}
 
 function defaultUsers(){return[
-  {id:'sesang',name:'온세상',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sesang',slugLocked:true,joinedAt:'2026-01-01',
-   data:{template:'luce',groomKo:'태선',brideKo:'세상',groomEn:'Taisun',brideEn:'Sesang',
-     groomFather:'유인근',groomFatherDec:false,groomMother:'정지은',groomMotherDec:false,groomRelation:'아들',
-     brideFather:'박병일',brideFatherDec:false,brideMother:'성서경',brideMotherDec:false,brideRelation:'딸',
-     date:'2027-02-21',time:'14:00',venueName:'노블발렌티 대치',venueAddr:'서울특별시 강남구 영동대로 325',
-     floorHall:'',showMap:true,mapQuery:'더채플 커티지홀',showCalendar:true,
-     cover:'pictures/img1.jpg',
-     coverIntro:'멋진 문구 넣기',
-     gallery:['pictures/img2.jpg','pictures/img3.jpg','pictures/img4.jpg','pictures/img5.jpg','pictures/img6.jpg','pictures/img7.jpg','pictures/img8.jpg'],
-     featuredGallery:[{s:1,x:0,y:0,src:'pictures/img9.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img10.jpg',frameOrientation:'landscape'},{s:1,x:0,y:0,src:'pictures/img11.jpg',frameOrientation:'landscape'}],
-     accounts:{ac1:{bank:'국민',holder:'김도윤',number:'123456-04-123456'},ac2:{bank:'우리',holder:'박서아',number:'110-123-456789'}},
-     acctOrder:[{key:'ac1',label:'신랑'},{key:'ac2',label:'신부'}],
-     notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
-     greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.',
-     sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'rsvp',show:true},{id:'accounts',show:true},{id:'share',show:true}],
-     music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
-     coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
   {id:'sample01',name:'샘플',email:'sample@local',pw:'',role:'user',tier:'PAID',plan:'',paidAt:'',slug:'sample01',slugLocked:true,joinedAt:'2026-01-01',
    data:{template:'luce',groomKo:'태선',brideKo:'세상',groomEn:'Taisun',brideEn:'Sesang',
      groomFather:'유인근',groomFatherDec:false,groomMother:'정지은',groomMotherDec:false,groomRelation:'아들',
@@ -1608,33 +1587,6 @@ function defaultUsers(){return[
      sections:[{id:'cover',show:true},{id:'invitation',show:true},{id:'couple',show:true},{id:'gallery',show:true},{id:'when',show:true},{id:'notice',show:true},{id:'where',show:true},{id:'rsvp',show:true},{id:'accounts',show:true},{id:'share',show:true}],
      music:{enabled:true,kind:'preset',presetIdx:0,url:'',loop:true},rsvpFields:null,shareChannels:{kakao:true,sms:true,insta:true},sectionLabels:{},
      coverCrop:{s:1,x:0,y:0,src:'pictures/img1.jpg'},coverGrainEnabled:true,_secV2:1,_secV3:1,_secV4:1,_secV5:1,_secV6:1,_secV7:1}},
-  {id:'admin',name:'지해',email:'admin@cez.kr',pw:'admin1234',role:'admin',tier:'PAID',plan:'',paidAt:'',slug:'',slugLocked:false,joinedAt:'2026-01-01',data:null},
-  {id:'minji',name:'박서하',email:'minji@test.com',pw:'1234',role:'user',tier:'PAID',plan:'',paidAt:'2026-03-15',payMethod:'네이버페이',payOrderId:'NP-2026-0315',naverId:'minji_lee',slug:'minji',slugLocked:true,joinedAt:'2026-03-10',
-   data:{template:'lifetime',groomKo:'김도윤',brideKo:'박서하',groomEn:'Doyoon Kim',brideEn:'Seoha Park',
-     groomFather:'박영호',groomFatherDec:true,groomMother:'이미경',groomMotherDec:false,groomRelation:'장남',
-     brideFather:'이상준',brideFatherDec:false,brideMother:'정수영',brideMotherDec:false,brideRelation:'차녀',
-     date:'2026-06-30',time:'14:00',venueName:'더채플앳청담 1F 채플홀',venueAddr:'서울 강남구 선릉로 757',
-     showMap:true,mapQuery:'더채플앳청담',cover:'05.jpg',gallery:['02.jpg','03.jpg','04.jpg','06.jpg'],
-     accounts:{groom:{bank:'신한',number:'110-123-456789',holder:'김도윤'},bride:{bank:'국민',number:'123-45-6789012',holder:'박서하'},
-       groomMother:{bank:'우리',number:'1002-345-678901',holder:'이미경'},brideFather:{bank:'하나',number:'333-910111-22',holder:'이상준'}},
-     notice:'신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.',
-     greeting:'두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n서로 아껴주고 위해주며 살아갈\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.'}},
-  {id:'jihae',name:'김지해',email:'jihae@test.com',pw:'1234',role:'user',tier:'PAID',plan:'',paidAt:'2026-05-01',payMethod:'네이버페이',payOrderId:'NP-2026-0501',naverId:'jihae_kim',slug:'jihae',slugLocked:false,joinedAt:'2026-04-25',
-   data:{template:'romantic',groomKo:'정우진',brideKo:'김지해',groomEn:'Woojin Jung',brideEn:'Jihae Kim',
-     groomFather:'정대현',groomFatherDec:false,groomMother:'한소연',groomMotherDec:false,groomRelation:'장남',
-     brideFather:'김재호',brideFatherDec:false,brideMother:'윤서연',brideMotherDec:false,brideRelation:'외동딸',
-     date:'2026-10-10',time:'12:00',venueName:'라움 아트센터 페이스룸',venueAddr:'서울 강남구 언주로 564',
-     showMap:true,mapQuery:'',cover:'',gallery:[],accounts:{},notice:'',
-     greeting:'가을의 문턱에서\n저희 두 사람이 사랑으로 하나가 됩니다.\n\n오셔서 따뜻한 축복으로\n앞날을 열어 주시면 감사하겠습니다.'}},
-  {id:'past',name:'박은영',email:'past@test.com',pw:'1234',role:'user',tier:'PAID',plan:'',paidAt:'2026-01-10',payMethod:'네이버페이',payOrderId:'NP-2026-0110',naverId:'eunyoungpark',slug:'eunyoung',slugLocked:false,joinedAt:'2025-12-05',
-   data:{template:'dark',groomKo:'이준혁',brideKo:'박은영',groomEn:'Junhyuk Lee',brideEn:'Eunyoung Park',
-     groomFather:'이성민',groomFatherDec:false,groomMother:'최지은',groomMotherDec:false,groomRelation:'차남',
-     brideFather:'박상우',brideFatherDec:true,brideMother:'김혜정',brideMotherDec:false,brideRelation:'장녀',
-     date:'2026-04-01',time:'17:00',venueName:'그랜드 발룸, 시그니엘 서울',venueAddr:'서울 송파구 올림픽로 300',
-     showMap:true,mapQuery:'시그니엘 서울',cover:'',gallery:[],accounts:{},notice:'',
-     greeting:'서로 다른 길을 걷던 두 사람이\n이제 한 길을 함께 걸어가려 합니다.\n\n저희의 새로운 시작을\n축복해 주시면 감사하겠습니다.'}},
-  {id:'newpaid',name:'홍서연',email:'seoyeon@naver.com',pw:'1234',role:'user',tier:'PAID',plan:'',paidAt:'2026-06-20',payMethod:'네이버페이',payOrderId:'NP-2026-0620X',naverId:'seoyeonhong',slug:'',slugLocked:false,joinedAt:'2026-06-20',data:null},
-  {id:'free',name:'임지호',email:'jiho@test.com',pw:'1234',role:'user',tier:'UNPAID',plan:'',paidAt:'',slug:'',slugLocked:false,joinedAt:'2026-06-22',data:null},
 ];}
 
 let DB,session,prevWidth=390,editId=null,adminTab='users';
@@ -2714,18 +2666,9 @@ window.CEZ_FAQ_DEFAULT=[
  {category:'결제·환불',question:'환불 규정이 궁금해요.',answer:'결제 후 공개 전에는 전액 환불이 가능해요. 공개가 시작된 뒤에는 고유 주소 생성과 호스팅 서비스가 이미 제공된 상태라 환불이 어려운 점 양해 부탁드립니다. 문의는 네이버 톡톡 또는 thecezhouse@naver.com으로 주세요.',sort_order:140,visible:true}
 ];
 window.cezGetFaqs=function(){ return (DB&&DB.faqs&&DB.faqs.length)?DB.faqs:window.CEZ_FAQ_DEFAULT; };
-var _cezLastHash=null;
 function render(){
-  const h=location.hash||'#/i/sample01';
-  /* 같은 화면을 다시 그릴 때는 스크롤을 유지, 새 화면 진입 시에만 맨 위로.
-     (클릭할 때마다 최상단으로 튀던 버그 방지) */
-  var _sp=(h===_cezLastHash)?(window.scrollY||document.documentElement.scrollTop||0):0;
-  _cezLastHash=h;
-  var _sc=function(){ if(window._preserveScrollY==null)window.scrollTo(0,_sp); };
-  var slug='sample01';
-  if(h.indexOf('#/i/')===0){ var s=decodeURIComponent(h.slice(4)).trim(); if(s) slug=s; }
-  app().innerHTML=viewPublished(slug);
-  _sc();
+  app().innerHTML=viewPublished('sample01');
+  if(window._preserveScrollY==null)window.scrollTo(0,0);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCezModal&&closeCezModal();closeFigmaModal&&closeFigmaModal();}});
 window._edTouched=window._edTouched||{};document.addEventListener('click',function(e){var t=e.target;if(!t)return;var h2=(t.tagName==='H2')?t:(t.closest&&t.closest('h2'));if(h2&&!h2.classList.contains('h2-plain')&&h2.parentElement&&h2.parentElement.classList&&h2.parentElement.classList.contains('ed-section')){var sec=h2.parentElement.dataset.sec;if(sec){window._edTouched[sec]=true;}h2.parentElement.classList.toggle('collapsed');}});

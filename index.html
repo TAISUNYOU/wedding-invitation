@@ -33,6 +33,11 @@
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <link rel="stylesheet" href="assets/style.css" />
+    <script
+      charset="UTF-8"
+      class="daum_roughmap_loader_script"
+      src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"
+    ></script>
   </head>
   <body>
     <div id="app"></div>
@@ -886,8 +891,34 @@
           musicPlayerHTML(u.data)
         );
       }
+      function initKakaoMap() {
+        var el = document.getElementById("daumRoughmapContainer1786935611762");
+        // 문서 파싱 중 첫 렌더는 컨테이너가 곧 교체되므로 스킵 (중복 렌더 방지)
+        if (!el || document.readyState === "loading") return;
+        if (
+          !window.daum ||
+          !window.daum.roughmap ||
+          !window.daum.roughmap.Lander
+        ) {
+          var n = parseInt(el.getAttribute("data-retries") || "0", 10) + 1;
+          el.setAttribute("data-retries", String(n));
+          if (n <= 80) setTimeout(initKakaoMap, 120);
+          else el.setAttribute("data-rendered", "1");
+          return;
+        }
+        el.setAttribute("data-rendered", "1");
+        var wrap = el.parentElement;
+        var width = wrap && wrap.clientWidth > 0 ? wrap.clientWidth : 640;
+        new window.daum.roughmap.Lander({
+          timestamp: "1786935611762",
+          key: "t4vfkrt5ttj",
+          mapWidth: String(width),
+          mapHeight: String(Math.round((width * 360) / 640)),
+        }).render();
+      }
       function render() {
         app().innerHTML = viewPublished("sample01");
+        initKakaoMap();
         if (window._preserveScrollY == null) window.scrollTo(0, 0);
       }
       document.addEventListener("keydown", function (e) {

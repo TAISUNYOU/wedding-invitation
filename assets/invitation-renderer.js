@@ -214,52 +214,27 @@ function luceGallery(d) {
     "</div>"
   );
 }
-/* ===== 7. 지도 표시: 네이버지도 비주얼(핀) + 길찾기 버튼 ===== */
-var NMAP_PIN_SVG =
-  '<svg viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg"><ellipse cx="20" cy="47" rx="11" ry="3.4" fill="#3c8ae0" opacity=".35"/><path d="M20 2C12 2 6 8.6 6 16.4 6 25 20 42 20 42s14-17 14-25.6C34 8.6 28 2 20 2z" fill="#3c8ae0"/><circle cx="20" cy="16" r="6.2" fill="#fff"/></svg>';
-var TMAP_ICON =
-  '<svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6" fill="#1898ea"/><path d="M6.5 8h11M12 8v9.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>';
-var KAKAO_NAVI_ICON =
-  '<svg viewBox="0 0 24 24"><path d="M12 2.5C6.9 2.5 2.8 6.2 2.8 10.7c0 2.9 1.7 5.5 4.4 7L6.4 21l4.6-2.7c.3 0 .7.1 1 .1 5.1 0 9.2-3.7 9.2-8.2S17.1 2.5 12 2.5z" fill="#ffe812" stroke="#3b1e1e" stroke-width="1.3"/></svg>';
-var NAVER_MAP_ICON =
-  '<svg viewBox="0 0 24 24"><path d="M12 1.5C8.1 1.5 5 4.6 5 8.5c0 5.4 7 14 7 14s7-8.6 7-14c0-3.9-3.1-7-7-7z" fill="#03c75a"/><circle cx="12" cy="8.5" r="3.2" fill="#fff"/></svg>';
+/* ===== 7. 지도 링크 (네이버·카카오·티맵) ===== */
 function luceMap(p) {
   var query = (p.mapq || "").replace(/\n/g, " ").trim();
   if (!query) return "";
   var q = encodeURIComponent(query);
-  var label = p.venue && p.venue !== "예식장" ? p.venue : query;
   return (
-    '<a class="inv-nmap" href="https://map.naver.com/p/search/' +
+    '<div id="daumRoughmapContainer1786935611762" class="root_daum_roughmap root_daum_roughmap_landing inv-kakao-map"></div>' +
+    '<div style="display:flex;justify-content:space-between;margin-top:16px;font-family:' +
+    LUCE_KO +
+    ';font-size:13px;font-weight:500">' +
+    '<a href="https://map.naver.com/p/search/' +
     q +
-    '" target="_blank" rel="noopener">' +
-    '<i class="inv-nmap-tiles"></i>' +
-    '<span class="inv-nmap-pin">' +
-    NMAP_PIN_SVG +
-    "</span>" +
-    '<span class="inv-nmap-label">' +
-    esc(label) +
-    "</span>" +
-    '<span class="inv-nmap-credit">© NAVER Corp.</span>' +
-    '<span class="inv-nmap-brand">NAVER</span>' +
-    "</a>" +
-    '<div class="inv-map-btns">' +
-    '<button type="button" class="inv-map-btn" onclick="return ytsOpenTmap(\'tmap://search?name=' +
+    '" target="_blank" rel="noopener" style="color:#000;text-decoration:underline">네이버지도↗</a>' +
+    '<a href="https://map.kakao.com/?q=' +
     q +
-    "')\">" +
-    TMAP_ICON +
-    "티맵</button>" +
-    '<button type="button" class="inv-map-btn" onclick="return ytsOpenKakao(\'https://map.kakao.com/?q=' +
+    '" onclick="return ytsOpenKakao(this.href,\'' +
     q +
-    "','" +
+    '\')" rel="noopener" style="color:#000;text-decoration:underline">카카오맵↗</a>' +
+    '<a href="tmap://search?name=' +
     q +
-    "')\">" +
-    KAKAO_NAVI_ICON +
-    "카카오내비</button>" +
-    '<a class="inv-map-btn" href="https://map.naver.com/p/search/' +
-    q +
-    '" target="_blank" rel="noopener">' +
-    NAVER_MAP_ICON +
-    "네이버지도</a>" +
+    '" onclick="return ytsOpenTmap(this.href)" rel="noopener" style="color:#000;text-decoration:underline">티맵↗</a>' +
     "</div>"
   );
 }

@@ -44,12 +44,7 @@
     <div class="toast" id="toast"></div>
     <script>
       /* ===== 1. 공통 유틸: 날짜·시간 변환, HTML 이스케이프 ===== */
-      const DAY = 86400000;
-      function today() {
-        const d = new Date();
-        d.setHours(0, 0, 0, 0);
-        return d;
-      }
+
       function parseDate(s) {
         const [y, m, d] = s.split("-").map(Number);
         return new Date(y, m - 1, d);
@@ -57,24 +52,7 @@
       function pad(n) {
         return String(n).padStart(2, "0");
       }
-      function fmtDate(s) {
-        if (!s) return "";
-        const d = parseDate(s);
-        return (
-          d.getFullYear() +
-          ". " +
-          pad(d.getMonth() + 1) +
-          ". " +
-          pad(d.getDate()) +
-          "."
-        );
-      }
-      function todayStr() {
-        const d = today();
-        return (
-          d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
-        );
-      }
+
       const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
       const MONTH_EN = [
         "JANUARY",
@@ -267,21 +245,11 @@
             "두 사람이 사랑으로 만나\n진실과 이해로써 하나가 되려 합니다.\n\n저희의 작은 시작을\n귀한 걸음으로 축복해 주시면\n더없는 기쁨으로 간직하겠습니다.",
           notice:
             "신부 대기실은 1층 로비에 마련되어 있습니다.\n예식장 건물 지하 주차 2시간 무료입니다.",
-          thankYouTitle: "THANK YOU",
-          thankYouMessage:
-            "결혼식에 참석하여 자리를 빛내주셔서\n진심으로 감사드립니다.\n\n축복해 주신 만큼 그 고마운 마음,\n가슴속에 간직하고 행복하게 살겠습니다.",
           musicPresets: [
             { name: "잔잔한 피아노", url: "" },
             { name: "서정적인 현악", url: "" },
             { name: "경쾌한 어쿠스틱", url: "" },
           ],
-          coverSamples: [],
-          externalLinks: {
-            smartStore: "",
-            smartStoreName: "스마트 스토어",
-            brandHome: "",
-            brandHomeName: "",
-          },
         };
       }
       function defaultSectionsList() {
@@ -292,82 +260,12 @@
         DB = {
           users: defaultUsers(),
           templates: defaultTemplates(),
-          customIdx: 0,
-          nstoreIdx: 0,
           stats: {},
-          adminFilter: null,
           defaults: defaultDefaults(),
         };
         session = null;
       }
       resetDB();
-      function tplName(id) {
-        const t = DB.templates.find((x) => x.id === id);
-        return t ? t.name : "-";
-      }
-      function defaultDateStr() {
-        var d = new Date();
-        d.setDate(d.getDate() + 90);
-        return d.toISOString().slice(0, 10);
-      }
-      function blankData() {
-        const D = (DB && DB.defaults) || defaultDefaults();
-        return {
-          template: (
-            DB.templates.find((t) => t.visible !== false) || DB.templates[0]
-          ).id,
-          groomKo: "",
-          brideKo: "",
-          groomEn: "",
-          brideEn: "",
-          groomFather: "",
-          groomFatherDec: false,
-          groomMother: "",
-          groomMotherDec: false,
-          groomRelation: "",
-          brideFather: "",
-          brideFatherDec: false,
-          brideMother: "",
-          brideMotherDec: false,
-          brideRelation: "",
-          date: "",
-          time: "",
-          venueName: "",
-          venueAddr: "",
-          floorHall: "",
-          showMap: true,
-          cover: "luce-cover.jpg?v=4",
-          gallery: [],
-          publishStart: (function () {
-            return new Date().toLocaleDateString("sv");
-          })(),
-          publishEnd: (function () {
-            try {
-              var w = parseDate(defaultDateStr());
-              w.setHours(0, 0, 0, 0);
-              return new Date(w.getTime() + 90 * DAY).toLocaleDateString("sv");
-            } catch (e) {
-              return "";
-            }
-          })(),
-          accounts: {},
-          notice: D.notice || "",
-          greeting: D.greeting || "",
-          thankYouTitle: D.thankYouTitle || "THANK YOU",
-          thankYouMessage: D.thankYouMessage || "",
-          sections: defaultSectionsList(),
-          music: {
-            enabled: true,
-            kind: "preset",
-            presetIdx: 0,
-            url: "",
-            loop: true,
-          },
-          shareChannels: { kakao: true, sms: true, insta: true },
-          sectionLabels: {},
-          showCalendar: true,
-        };
-      }
 
       /* ===== 6. UI 헬퍼: 앱 컨테이너·토스트 알림·해시 이동 ===== */
       const app = () => document.getElementById("app");
@@ -377,13 +275,6 @@
         t.classList.add("show");
         clearTimeout(t._t);
         t._t = setTimeout(() => t.classList.remove("show"), 2100);
-      }
-      function go(hash) {
-        location.hash = hash;
-      }
-      function val(id) {
-        const e = document.getElementById(id);
-        return e ? e.value : "";
       }
     </script>
     <!-- ===== 초대장 렌더러 (디자인·테마 코드) — assets/invitation-renderer.js ===== -->
@@ -408,19 +299,7 @@
       function shareURL(slug) {
         return location.href.split("#")[0] + "#/i/" + (slug || "");
       }
-      function shareHTML(d, sk) {
-        var slug = userSlugForData(d) || "";
 
-        return (
-          '<div style="display:flex;justify-content:center"><button type="button" onclick="shareLink(\'' +
-          esc(slug) +
-          '\')" style="border:1px solid ' +
-          sk.text +
-          ";background:transparent;color:" +
-          sk.text +
-          ';font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 30px;cursor:pointer">LINK 복사</button></div>'
-        );
-      }
       function ytsShare(slug) {
         var url = shareURL(slug);
         if (navigator.share) {
@@ -537,32 +416,14 @@
         notice: "안내 사항",
         share: "SHARE",
       };
-      function sectionLabel(id) {
-        const f = SECTION_DEFS.find((x) => x.id === id);
-        return f ? f.label : id;
-      }
+
       function getSecLabel(d, id) {
         var sl = (d && d.sectionLabels) || {};
         return sl[id] || DEFAULT_SEC_LABELS[id] || id;
       }
-      function setSecLabel(id, v) {
-        var d = editTarget().data;
-        d.sectionLabels = d.sectionLabels || {};
-        d.sectionLabels[id] = v;
-        refreshPreviewDebounced();
-      }
+
       /* ===== 3. 이미지 라이트박스·갤러리 캐러셀 ===== */
-      function openLightbox(src) {
-        closeLightbox();
-        var html =
-          '<div class="lightbox" id="lightbox" onclick="closeLightbox()" oncontextmenu="return false">' +
-          '<button type="button" class="lightbox-close" onclick="closeLightbox()" oncontextmenu="return false">&times;</button>' +
-          '<img class="lightbox-img" src="' +
-          esc(src) +
-          '" oncontextmenu="return false" draggable="false" onclick="event.stopPropagation()">' +
-          "</div>";
-        document.body.insertAdjacentHTML("beforeend", html);
-      }
+
       var _gcIdx = 0,
         _gcImgs = [];
       function openGalleryCarousel(idx, cellEl) {
@@ -583,25 +444,9 @@
           imgs = [];
         }
         if (!imgs.length) {
-          try {
-            var u = editTarget && editTarget();
-            var d = u && u.data;
-            if (d && d.gallery && d.gallery.length) {
-              imgs = d.gallery.slice();
-            } else {
-              document
-                .querySelectorAll(".inv-gallery img")
-                .forEach(function (im) {
-                  imgs.push(im.src);
-                });
-            }
-          } catch (e) {
-            document
-              .querySelectorAll(".inv-gallery img")
-              .forEach(function (im) {
-                imgs.push(im.src);
-              });
-          }
+          document.querySelectorAll(".inv-gallery img").forEach(function (im) {
+            imgs.push(im.src);
+          });
         }
         if (!imgs.length) return;
         _gcImgs = imgs;
@@ -921,11 +766,7 @@
         initKakaoMap();
         if (window._preserveScrollY == null) window.scrollTo(0, 0);
       }
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          closeFigmaModal && closeFigmaModal();
-        }
-      });
+
       window.addEventListener("hashchange", render);
       window.addEventListener("DOMContentLoaded", render);
       render();

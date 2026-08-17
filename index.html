@@ -40,6 +40,7 @@
       class="daum_roughmap_loader_script"
       src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"
     ></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
@@ -268,6 +269,10 @@
         session = null;
       }
       resetDB();
+      try {
+        if (window.Kakao && !Kakao.isInitialized())
+          Kakao.init("31b1e92da8b68b3655b8111c0acfa0c8");
+      } catch (e) {}
 
       /* ===== 6. UI 헬퍼: 앱 컨테이너·토스트 알림·해시 이동 ===== */
       const app = () => document.getElementById("app");
@@ -302,14 +307,53 @@
         return location.href.split("#")[0] + "#/i/" + (slug || "");
       }
 
+      function shareDataFor(slug) {
+        var users = (typeof DB !== "undefined" && DB.users) || [];
+        var u =
+          users.find(function (x) {
+            return x.slug === slug;
+          }) ||
+          (slug ? null : users[0]);
+        return (u && u.data) || null;
+      }
+      function cardTitle(d) {
+        var g = (d && d.groomEn) || "",
+          b = (d && d.brideEn) || "";
+        return g || b
+          ? (g ? g + " & " : "") + b + " 결혼식에 초대합니다"
+          : "모바일 청첩장";
+      }
+      function cardDesc(d) {
+        var parts = [];
+        if (typeof luceDateDot === "function") {
+          var dt = luceDateDot(d);
+          if (dt) parts.push(dt);
+        }
+        if (d && d.venueName) parts.push(d.venueName);
+        return parts.length ? parts.join(" · ") : "모바일 청첩장을 열어보세요";
+      }
       function ytsShare(slug) {
         var url = shareURL(slug);
-        if (navigator.share) {
-          trackShare(slug, "link");
-          navigator
-            .share({ title: "모바일 청첩장", url: url })
-            .catch(function () {});
-          return;
+        if (window.Kakao && Kakao.isInitialized()) {
+          try {
+            trackShare(slug, "kakao");
+            Kakao.Share.sendDefault({
+              objectType: "feed",
+              content: {
+                title: cardTitle(shareDataFor(slug)),
+                description: cardDesc(shareDataFor(slug)),
+                imageUrl: location.href.split("#")[0] + "pictures/img10.jpg",
+                link: { mobileWebUrl: url, webUrl: url },
+              },
+              buttons: [
+                {
+                  title: "모바일 청첩장 확인하기",
+                  link: { mobileWebUrl: url, webUrl: url },
+                },
+              ],
+            });
+            return;
+          } catch (e) {}
         }
         shareLink(slug);
       }

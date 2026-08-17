@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nanum+Myeongjo:wght@400;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Nanum+Myeongjo:wght@400;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -52,25 +52,6 @@
         const [y, m, d] = s.split("-").map(Number);
         return new Date(y, m - 1, d);
       }
-      function pad(n) {
-        return String(n).padStart(2, "0");
-      }
-
-      const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-      const MONTH_EN = [
-        "JANUARY",
-        "FEBRUARY",
-        "MARCH",
-        "APRIL",
-        "MAY",
-        "JUNE",
-        "JULY",
-        "AUGUST",
-        "SEPTEMBER",
-        "OCTOBER",
-        "NOVEMBER",
-        "DECEMBER",
-      ];
       function timeLabel(t) {
         if (!t) return "";
         let [h, m] = t.split(":").map(Number);
@@ -84,19 +65,6 @@
           /[&<>"]/g,
           (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
         );
-      }
-
-      /* ===== 2. 청첩장 템플릿 목록 (레몬 테마 단일) ===== */
-      function defaultTemplates() {
-        return [
-          {
-            id: "luce",
-            name: "Lemon Archive",
-            desc: "연노랑 종이 · 폴라로이드 · 모노",
-            swatch: "linear-gradient(135deg,#f4ecbe,#e8dca0)",
-            visible: true,
-          },
-        ];
       }
 
       /* ===== 3. 샘플 계정 데이터 — 실제 청첩장 내용은 여기서 수정 ===== */
@@ -226,11 +194,7 @@
       }
 
       /* ===== 4. 초대장 섹션 정의 (순서·표시 여부) ===== */
-      let DB,
-        session,
-        prevWidth = 390,
-        editId = null,
-        adminTab = "users";
+      let DB;
       const SECTION_DEFS = [
         { id: "cover", label: "표지 문구" },
         { id: "invitation", label: "인사말" },
@@ -262,7 +226,6 @@
       function resetDB() {
         DB = {
           users: defaultUsers(),
-          templates: defaultTemplates(),
           stats: {},
           defaults: defaultDefaults(),
         };
@@ -389,18 +352,17 @@
               d.sections.splice(Math.min(wi + off, d.sections.length), 0, it);
             }
           });
-          d._secV2 = 1;
           d._secV3 = 1;
         }
+        if (d.coverIntro == null)
+          d.coverIntro =
+            "Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.";
         if (!d._secV4) {
           var _ci = d.sections.findIndex((x) => x.id === "cover");
           if (_ci > 0) {
             var _c = d.sections.splice(_ci, 1)[0];
             d.sections.unshift(_c);
           }
-          if (d.coverIntro == null)
-            d.coverIntro =
-              "Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.";
           d._secV4 = 1;
         }
 
@@ -464,11 +426,6 @@
           }
         } catch (e) {
           imgs = [];
-        }
-        if (!imgs.length) {
-          document.querySelectorAll(".inv-gallery img").forEach(function (im) {
-            imgs.push(im.src);
-          });
         }
         if (!imgs.length) return;
         _gcImgs = imgs;
@@ -786,7 +743,7 @@
       function render() {
         app().innerHTML = viewPublished("sample01");
         initKakaoMap();
-        if (window._preserveScrollY == null) window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
       }
 
       window.addEventListener("hashchange", render);

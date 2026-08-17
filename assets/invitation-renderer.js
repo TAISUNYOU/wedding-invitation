@@ -1,12 +1,3 @@
-/* ===== 1. 초대장 렌더러 — 레몬 테마 디자인 코드 ===== */
-function parentLine(f, fd, m, md, rel) {
-  var ps = [];
-  if (f && f.trim()) ps.push((fd ? "故 " : "") + f.trim());
-  if (m && m.trim()) ps.push((md ? "故 " : "") + m.trim());
-  var s = ps.join(" · ");
-  if (rel && rel.trim()) s += (s ? " 의 " : "") + rel.trim();
-  return s;
-}
 /* ===== 2. 청첩장 데이터 파싱: 신랑·신부·일시·장소·갤러리 ===== */
 function invParts(d) {
   d = d || {};
@@ -15,73 +6,24 @@ function invParts(d) {
     bKo: d.brideKo || "신부",
     gEn: d.groomEn || "Groom",
     bEn: d.brideEn || "Bride",
-    gPar: parentLine(
-      d.groomFather,
-      d.groomFatherDec,
-      d.groomMother,
-      d.groomMotherDec,
-      d.groomRelation,
-    ),
-    bPar: parentLine(
-      d.brideFather,
-      d.brideFatherDec,
-      d.brideMother,
-      d.brideMotherDec,
-      d.brideRelation,
-    ),
     venue: d.venueName || "예식장",
     addr: d.venueAddr || "",
     greet: d.greeting || "",
     notice: d.notice || "",
-    cover: d.cover || "",
-    gallery: d.gallery || [],
     accounts: d.accounts || {},
-    showMap: d.showMap !== false,
   };
   o.mapq =
     d.mapQuery && d.mapQuery.trim()
       ? d.mapQuery.trim()
       : ((d.venueName || "") + " " + (d.venueAddr || "")).trim();
-  if (d.date) {
-    const x = parseDate(d.date),
-      wd = x.getDay();
-    o.y = x.getFullYear();
-    o.dotted =
-      pad(x.getMonth() + 1) +
-      " . " +
-      pad(x.getDate()) +
-      " . " +
-      x.getFullYear();
-    o.wdEn = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][wd];
-    o.monthEn = MONTH_EN[x.getMonth()];
-    o.full =
-      x.getFullYear() +
-      "년 " +
-      (x.getMonth() + 1) +
-      "월 " +
-      x.getDate() +
-      "일 " +
-      WEEK[wd] +
-      "요일";
-  } else {
-    o.y = "";
-    o.dotted = "YYYY . MM . DD";
-    o.wdEn = "";
-    o.monthEn = "";
-    o.full = "날짜 미정";
-  }
-  o.time = d.time ? timeLabel(d.time) : "";
   return o;
 }
 
 /* ===== 3. 하단 푸터 문구 ===== */
-function invFooter(sk, d) {
-  d = d || {};
+function invFooter() {
   return (
     '<div style="padding:32px 0 12px;text-align:center">' +
-    '<div style="margin-top:7px;font-family:var(--sans);font-weight:400;font-size:10px;line-height:150%;color:' +
-    (sk.dark ? "#fff" : "#000") +
-    ';opacity:.49">♡ 우리의 결혼 소식을 전해드립니다</div></div>'
+    '<div style="margin-top:7px;font-family:var(--sans);font-weight:400;font-size:10px;line-height:150%;color:#000;opacity:.49">♡ 우리의 결혼 소식을 전해드립니다</div></div>'
   );
 }
 
@@ -112,11 +54,7 @@ function luceDateDot(d) {
 /* ===== 5. 대표 사진 3장: 폴라로이드 프레임·크롭 ===== */
 function getFeaturedGallery(d) {
   if (!Array.isArray(d.featuredGallery) || d.featuredGallery.length !== 3) {
-    d.featuredGallery = [
-      { src: "feat1.png?v=3", s: 1, x: 0, y: 0 },
-      { src: "feat2.png?v=3", s: 1, x: 0, y: 0 },
-      { src: "feat3.png?v=3", s: 1, x: 0, y: 0 },
-    ];
+    d.featuredGallery = [];
   }
   return d.featuredGallery;
 }
@@ -146,7 +84,7 @@ function luceFeatured(d) {
 
         var img =
           '<img src="' +
-          esc(it.src || "feat1.png") +
+          esc(it.src || "assets/luce-gallery.jpg") +
           '" alt="" draggable="false" oncontextmenu="return false" style="' +
           tf +
           '">' +
@@ -484,8 +422,7 @@ function tplLuce(d) {
   const p = invParts(d);
   const MONO = "var(--mono)",
     KO = LUCE_KO,
-    ink = "#141414",
-    sub = "#6f6a58";
+    ink = "#141414";
   const gEn = esc(p.gEn),
     bEn = esc(p.bEn);
 
@@ -501,25 +438,32 @@ function tplLuce(d) {
     KO +
     ';text-align:center;padding:0 0 48px">';
 
+  const sections = getSections(d);
+  const secShow = function (id) {
+    return (
+      sections.find(function (x) {
+        return x.id === id;
+      }) || { show: true }
+    ).show !== false;
+  };
   var _cc = d.coverCrop || {};
+  var _coverSrc = esc(d.cover || "luce-cover.jpg?v=4");
+  var _introRaw = d.coverIntro || "";
+  var _introShow = _introRaw.trim();
   html +=
     '<div class="luce-coverwrap" data-pv-sec="cover" style="position:relative;width:100%;aspect-ratio:380/500;overflow:hidden;background:#cfc9b0">' +
     '<img class="luce-coverimg" src="' +
-    esc(d.cover || "luce-cover.jpg?v=4") +
+    _coverSrc +
     '" alt="" draggable="false" onerror="if(!this._f){this._f=1;this.src=\'' +
-    esc(d.cover || "luce-cover.jpg?v=4") +
-    "';}else if(this.src.indexOf('luce-cover.jpg?v=4')<0){this.src='luce-cover.jpg?v=4';}\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;" +
+    _coverSrc +
+    "'}\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;" +
     ytsCoverCropStyle(_cc) +
     '">' +
     (d.coverGrainEnabled !== false
       ? '<div style="position:absolute;inset:0;background:url(assets/grain.png) center/cover;mix-blend-mode:overlay;opacity:.5;pointer-events:none"></div>'
       : "") +
     '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,18,.1),transparent 40%,rgba(20,26,18,.5))"></div>' +
-    ((
-      (d.sections || []).find(function (_x) {
-        return _x.id === "cover";
-      }) || { show: true }
-    ).show !== false
+    (secShow("cover")
       ? '<div style="position:absolute;left:26px;right:26px;bottom:28px;text-align:left;color:#fff;font-family:var(--sans)">' +
         (d.coverNames !== false
           ? '<div style="font-size:13px;letter-spacing:.02em">' +
@@ -528,16 +472,9 @@ function tplLuce(d) {
             esc(luceGivenEn(p.bEn)) +
             "</div>"
           : "") +
-        ((d.coverIntro != null
-          ? d.coverIntro
-          : "Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories."
-        ).trim()
+        (_introShow
           ? '<div style="font-size:13px;line-height:1.55;margin-top:14px">' +
-            esc(
-              d.coverIntro != null
-                ? d.coverIntro
-                : "Every love story is beautiful, but ours is just beginning. Join us as we promise each other a lifetime of love, laughter, and endless memories.",
-            ) +
+            esc(_introRaw) +
             "</div>"
           : "") +
         "</div>"
@@ -572,16 +509,6 @@ function tplLuce(d) {
       : "") +
     "</div></div>";
 
-  const sk = {
-    bg: "transparent",
-    text: ink,
-    sub: sub,
-    accent: ink,
-    label: ink,
-    rule: "#d9cf93",
-    border: "#d9cf93",
-    dark: false,
-  };
   const REN = {
     invitation: function () {
       function famLine(f, fd, m, md, rel, defRel, nameKo) {
@@ -642,26 +569,26 @@ function tplLuce(d) {
             (_vn ? "<div>" + esc(_vn) + "</div>" : "") +
             "</div>"
           : "";
-      var _hdr =
-        d.greetingHeader !== false
-          ? '<div style="font-family:' +
-            MONO +
-            ';font-size:13px;letter-spacing:.06em">₊˚⊹⋆</div>' +
-            '<div style="font-family:' +
-            KO +
-            ';font-size:14px;line-height:2;margin-top:14px;color:#000">' +
-            esc(luceGivenName(p.gKo)) +
-            " ‧ " +
-            esc(luceGivenName(p.bKo)) +
-            "</div>"
-          : "";
+      var _gh = d.greetingHeader !== false;
+      var _hdr = _gh
+        ? '<div style="font-family:' +
+          MONO +
+          ';font-size:13px;letter-spacing:.06em">₊˚⊹⋆</div>' +
+          '<div style="font-family:' +
+          KO +
+          ';font-size:14px;line-height:2;margin-top:14px;color:#000">' +
+          esc(luceGivenName(p.gKo)) +
+          " ‧ " +
+          esc(luceGivenName(p.bKo)) +
+          "</div>"
+        : "";
       return (
         '<div style="padding:18px 25px 0"><div data-pv-sec="invitation" style="background:#fff;color:#141414;padding:38px 30px 42px;text-align:center">' +
         _hdr +
         '<div class="greet" style="font-family:' +
         KO +
         ";font-size:14px;font-weight:400;line-height:1.8;white-space:pre-line;color:#000;margin-top:" +
-        (d.greetingHeader !== false ? "22" : "0") +
+        (_gh ? "22" : "0") +
         'px;max-width:284px;margin-left:auto;margin-right:auto">' +
         esc(p.greet) +
         "</div>" +
@@ -742,14 +669,10 @@ function tplLuce(d) {
         "</div>"
       );
     },
-    cover: function () {
-      return "";
-    },
     share: function (prev) {
       return luceShare(d, prev);
     },
   };
-  const sections = getSections(d);
   let _prevSec = null;
   const JOINED = {
     "when|where": 1,
@@ -806,20 +729,19 @@ function tplLuce(d) {
       continue;
     }
     var chunk = REN[sec.id] ? REN[sec.id](_prevSec) : "";
-    if (chunk && chunk.indexOf("height:1px") < 0) {
-      if (!JOINED[(_prevSec || "") + "|" + sec.id])
-        html += '<div class="luce-fold"></div>';
+    var emptyish = !chunk || chunk.indexOf("height:1px") >= 0;
+    if (sec.id !== "accounts" && emptyish) {
       html += chunk;
       _prevSec = sec.id;
-    } else {
-      if (sec.id === "accounts" && !JOINED[(_prevSec || "") + "|" + sec.id])
-        html += '<div class="luce-fold"></div>';
-      html += chunk;
-      _prevSec = sec.id;
+      continue;
     }
+    if (!JOINED[(_prevSec || "") + "|" + sec.id])
+      html += '<div class="luce-fold"></div>';
+    html += chunk;
+    _prevSec = sec.id;
   }
   html += '<div class="luce-fold"></div>';
-  html += invFooter(sk, d);
+  html += invFooter();
   html += "</div>";
   return html;
 }

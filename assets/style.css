@@ -1,23 +1,10 @@
 /* ===== 1. 디자인 토큰: 색상·폰트·간격 변수 ===== */
 :root {
-  --paper: #f7f7f7;
-  --paper-2: #ffffff;
   --ink: #111;
-  --ink-soft: #4a4a4a;
-  --muted: #9a9a96;
-  --faint: #d8d8d4;
-  --line: #e8e8e5;
-  --accent: #111;
-  --accent-deep: #555;
-  --green: #7d8a6f;
-  --green-bg: #e8ece1;
-  --red: #b06a5e;
-  --serif: "Cormorant Garamond", "Nanum Myeongjo", serif;
   --serif-ko: "Nanum Myeongjo", serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     sans-serif;
-  --shadow: 0 18px 50px rgba(40, 36, 30, 0.1);
 }
 
 *,
@@ -58,56 +45,7 @@ button {
   cursor: pointer;
 }
 
-input,
-textarea,
-select {
-  font-family: inherit;
-}
-
-/* ===== 7. 관리자 페이지: 통계·탭·사용자 테이블 ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 18px 22px;
-  font-size: 14px;
-  vertical-align: middle;
-}
-
-thead th {
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  font-weight: 600;
-  border-bottom: 1px solid var(--line);
-}
-
-tbody tr {
-  border-bottom: 1px solid var(--line);
-}
-
-tbody tr:last-child {
-  border-bottom: 0;
-}
-
-/* ===== 10. 모바일 미리보기 프레임 ===== */
-.phone {
-  width: 380px;
-  max-width: 100%;
-  border: 10px solid #1d1e1a;
-  border-radius: 42px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: var(--shadow);
-  transition: width 0.2s;
-}
-
-/* ===== 11. 초대장 본문 (레몬 테마) ===== */
+/* ===== 3. 초대장 본문 (레몬 테마) ===== */
 .inv {
   font-family: var(--serif-ko);
   text-align: center;
@@ -116,10 +54,6 @@ tbody tr:last-child {
 .inv.luce .greet,
 .inv.luce .info-line {
   font-family: "Pretendard Variable", "Pretendard", sans-serif;
-}
-
-.inv.luce .inv-gallery img {
-  border-radius: 0 !important;
 }
 
 .luce-featured {
@@ -235,14 +169,6 @@ tbody tr:last-child {
   content: "";
 }
 
-.luce-acct[open] summary > span:last-child {
-  transform: rotate(90deg);
-}
-
-.luce-acct summary > span:last-child {
-  transition: transform 0.15s;
-}
-
 .inv .greet {
   font-size: 15px;
   line-height: 2.2;
@@ -255,33 +181,7 @@ tbody tr:last-child {
   line-height: 1.9;
 }
 
-.inv-gallery {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  scroll-snap-type: x mandatory !important;
-  gap: 12px !important;
-  padding: 4px 20px 20px !important;
-  box-sizing: border-box !important;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.inv-gallery::-webkit-scrollbar {
-  display: none !important;
-}
-
-.inv-gallery img {
-  flex: 0 0 82% !important;
-  scroll-snap-align: center !important;
-  aspect-ratio: 1/1 !important;
-  object-fit: cover !important;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* ===== 12. 발행 뷰·게이트·토스트 알림 ===== */
+/* ===== 4. 발행 뷰·토스트 알림 ===== */
 .pub-wrap {
   min-height: 100vh;
   background: #e9e6df;
@@ -319,18 +219,7 @@ tbody tr:last-child {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ===== 13. 반응형 미디어쿼리 ===== */
-@media (max-width: 760px) {
-  table {
-    font-size: 13px;
-  }
-
-  th,
-  td {
-    padding: 13px 12px;
-  }
-}
-/* ===== 16. 통계 시각화·관리 보조 UI ===== */
+/* ===== 5. 이미지 라이트박스·갤러리 캐러셀 ===== */
 .luce-acct summary img {
   transition: transform 0.25s;
 }
@@ -389,15 +278,6 @@ tbody tr:last-child {
   -webkit-touch-callout: none;
 }
 
-:root {
-  --sky: #5bb6ff;
-  --sky-deep: #2196f3;
-  --sky-tint: #e8f4ff;
-  --sky-bg: #f4faff;
-  --soft-red: #ff6b6b;
-  --soft-red-bg: #ffeeee;
-}
-
 .inv-music {
   position: fixed;
   bottom: 18px;
@@ -443,11 +323,6 @@ tbody tr:last-child {
 }
 
 .lightbox.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  inset: 0;
   background: rgba(0, 0, 0, 0.94);
   z-index: 10000;
   padding: 60px 70px 80px;
@@ -463,9 +338,7 @@ tbody tr:last-child {
 }
 
 .lightbox.carousel .lightbox-img {
-  max-width: 100%;
   max-height: calc(100vh - 140px);
-  object-fit: contain;
 }
 
 .lightbox.carousel .lb-nav {
@@ -547,77 +420,13 @@ tbody tr:last-child {
     right: 6px;
   }
 }
-@keyframes ed-flash {
-  0% {
-    box-shadow:
-      0 0 0 4px var(--ds-primary-light),
-      var(--sh-card);
-  }
-  100% {
-    box-shadow: var(--sh-card);
-  }
-}
 
 :root {
-  --ds-bg: #f6f8fb;
   --ds-bg-grad: linear-gradient(to bottom, #f2f5f8 0%, #fafcfe 100%);
-  --ds-surface: #ffffff;
-
   --ds-text: #191f28;
-  --ds-text-2: #4e5968;
-  --ds-text-muted: #8b95a1;
-  --ds-text-disabled: #b0b8c1;
-
-  --ds-primary: #0064ff;
-  --ds-primary-hover: #0050d0;
-  --ds-primary-light: #e5efff;
-  --ds-primary-sel: #d6e5ff;
-
-  --ds-cta: #0f2042;
-  --ds-cta-hover: #1a2d55;
-  --ds-cta-secondary: #f2f4f6;
-  --ds-cta-secondary-hover: #e5e8eb;
-
-  --ds-success: #2ecc71;
-  --ds-warning: #f5a623;
-  --ds-danger: #ff4b4b;
-
-  --ds-line: #e5e8eb;
-  --ds-line-strong: #d7dbe1;
-
-  --r-card: 0;
-  --r-card-sm: 16px;
-  --r-input: 0;
-  --r-btn: 0;
-  --r-pill: 0;
-
-  --sh-card: 0 4px 24px rgba(0, 0, 0, 0.02), 0 8px 40px rgba(0, 0, 0, 0.03);
-  --sh-card-hover: 0 6px 28px rgba(0, 0, 0, 0.04),
-    0 12px 48px rgba(0, 0, 0, 0.05);
-  --sh-popup: 0 20px 60px rgba(0, 0, 0, 0.1);
-  --sh-pill: 0 1px 2px rgba(0, 0, 0, 0.03);
-
   --ease-out: cubic-bezier(0.16, 0.84, 0.44, 1);
   --t-fast: 120ms var(--ease-out);
-  --t: 180ms var(--ease-out);
-
-  --paper: var(--ds-bg);
-  --paper-2: var(--ds-surface);
   --ink: var(--ds-text);
-  --ink-soft: var(--ds-text-2);
-  --muted: var(--ds-text-muted);
-  --line: var(--ds-line);
-  --accent: var(--ds-primary);
-  --accent-deep: var(--ds-primary-hover);
-  --sky: var(--ds-primary);
-  --sky-deep: var(--ds-primary-hover);
-  --sky-tint: var(--ds-primary-light);
-  --sky-bg: var(--ds-primary-sel);
-  --soft-red: var(--ds-danger);
-  --soft-red-bg: #ffeeee;
-  --green: #2e8b57;
-  --green-bg: #e6f3e6;
-  --red: var(--ds-danger);
 }
 
 body {
@@ -629,90 +438,11 @@ body {
 }
 
 body,
-input,
-button,
-select,
-textarea {
+button {
   letter-spacing: -0.02em;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="time"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="url"] {
-  border: 1px solid var(--ds-line) !important;
-  border-radius: var(--r-input) !important;
-  background: #fff !important;
-  color: var(--ds-text);
-  font-family: var(--sans);
-  font-size: 14px;
-  padding: 14px 14px !important;
-  min-height: 50px;
-  transition:
-    border-color var(--t-fast),
-    box-shadow var(--t-fast);
-  letter-spacing: -0.02em;
-}
-
-textarea::placeholder,
-input::placeholder {
-  color: var(--ds-text-muted);
-  font-weight: 400;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none !important;
-  border-color: var(--ds-primary) !important;
-  box-shadow: 0 0 0 4px var(--ds-primary-light) !important;
-}
-
-table {
-  font-family: var(--sans);
-}
-
-th {
-  font-size: 11.5px !important;
-  color: var(--ds-text-muted) !important;
-  letter-spacing: -0.01em !important;
-  font-weight: 600 !important;
-  text-transform: none !important;
-  border-bottom: 1px solid var(--ds-line) !important;
-  padding: 14px 18px !important;
-}
-
-td {
-  padding: 18px !important;
-  color: var(--ds-text);
-  font-size: 13.5px;
-  border-bottom: 1px solid #f1f3f5 !important;
-}
-
-tbody tr:hover {
-  background: #fafbfc;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid var(--ds-line);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  letter-spacing: -0.02em;
-  color: var(--ds-text);
-  font-family: var(--sans);
-  font-weight: 700;
-}
-
-/* ===== 17. 이미지 라이트박스 ===== */
+/* ===== 6. 이미지 라이트박스 (다크 배경) ===== */
 .lightbox {
   background: rgba(15, 23, 42, 0.92) !important;
 }

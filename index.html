@@ -287,7 +287,7 @@
     <!-- ===== 초대장 렌더러 (디자인·테마 코드) — assets/invitation-renderer.js ===== -->
     <script src="assets/invitation-renderer.js"></script>
     <script>
-      /* ===== 1. 공유 기능: 링크 복사·네이티브 공유 ===== */
+      /* ===== 1. 공유 기능: 카카오 카드 발송·링크 복사 폴백 ===== */
       function userSlugForData(d) {
         var u = DB.users.find(function (x) {
           return x.data === d;
@@ -303,45 +303,21 @@
         return "";
       }
 
-      function shareURL(slug) {
-        return location.href.split("#")[0] + "#/i/" + (slug || "");
+      function shareURL() {
+        return location.href.split("#")[0];
       }
 
-      function shareDataFor(slug) {
-        var users = (typeof DB !== "undefined" && DB.users) || [];
-        var u =
-          users.find(function (x) {
-            return x.slug === slug;
-          }) ||
-          (slug ? null : users[0]);
-        return (u && u.data) || null;
-      }
-      function cardTitle(d) {
-        var g = (d && d.groomEn) || "",
-          b = (d && d.brideEn) || "";
-        return g || b
-          ? (g ? g + " & " : "") + b + " 결혼식에 초대합니다"
-          : "모바일 청첩장";
-      }
-      function cardDesc(d) {
-        var parts = [];
-        if (typeof luceDateDot === "function") {
-          var dt = luceDateDot(d);
-          if (dt) parts.push(dt);
-        }
-        if (d && d.venueName) parts.push(d.venueName);
-        return parts.length ? parts.join(" · ") : "모바일 청첩장을 열어보세요";
-      }
       function ytsShare(slug) {
-        var url = shareURL(slug);
+        var url = shareURL();
         if (window.Kakao && Kakao.isInitialized()) {
           try {
             trackShare(slug, "kakao");
             Kakao.Share.sendDefault({
               objectType: "feed",
               content: {
-                title: cardTitle(shareDataFor(slug)),
-                description: cardDesc(shareDataFor(slug)),
+                /* 카드 문구: defaultUsers 데이터와 별개로 직접 관리 */
+                title: "유태선 ❤️ 온세상 결혼합니다.",
+                description: "2027. 02. 21 (일) 오후 2시\n노블발렌티 대치",
                 imageUrl: location.href.split("#")[0] + "pictures/img10.jpg",
                 link: { mobileWebUrl: url, webUrl: url },
               },

@@ -443,6 +443,23 @@ function luceShare(d, prev) {
   );
 }
 
+/* ===== 11-2. 캘린더 저장 버튼 ===== */
+function luceCalendar(d, prev) {
+  var slug = userSlugForData(d) || "";
+  var icon = '<span style="font-size:14px;line-height:1">📅</span>';
+  return (
+    '<div style="padding:' +
+    (prev === "accounts" ? "15px" : "0") +
+    ' 48px 0"><div data-pv-sec="calendar">' +
+    '<button type="button" onclick="calendarSave(\'' +
+    esc(slug) +
+    '\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">캘린더 저장하기 ' +
+    icon +
+    "</button>" +
+    "</div></div>"
+  );
+}
+
 /* ===== 12. 이름 헬퍼: 영문 이름·한글 성 제외 ===== */
 function luceGivenEn(n) {
   n = (n || "").trim();
@@ -749,6 +766,9 @@ function tplLuce(d) {
     cover: function () {
       return "";
     },
+    calendar: function (prev) {
+      return luceCalendar(d, prev);
+    },
     share: function (prev) {
       return luceShare(d, prev);
     },
@@ -763,6 +783,8 @@ function tplLuce(d) {
     "notice|when": 1,
     "when|notice": 1,
     "accounts|share": 1,
+    "accounts|calendar": 1,
+    "calendar|share": 1,
   };
   const VGROUP = { when: 1, where: 1, notice: 1 };
 

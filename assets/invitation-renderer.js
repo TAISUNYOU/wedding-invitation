@@ -79,7 +79,7 @@ function invFooter(sk, d) {
   d = d || {};
   return (
     '<div style="padding:32px 0 12px;text-align:center">' +
-    '<div style="margin-top:7px;font-family:var(--mono);font-weight:400;font-size:10px;line-height:150%;color:' +
+    '<div style="margin-top:7px;font-family:var(--sans);font-weight:400;font-size:10px;line-height:150%;color:' +
     (sk.dark ? "#fff" : "#000") +
     ';opacity:.49">♡ 우리의 결혼 소식을 전해드립니다</div></div>'
   );
@@ -436,7 +436,7 @@ function luceShare(d, prev) {
     ' 48px 0"><div data-pv-sec="share">' +
     '<button type="button" onclick="ytsShare(\'' +
     esc(slug) +
-    '\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:500;color:#000">공유하기 ' +
+    '\')" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:0;padding:15px 20px;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;color:#000">공유하기 ' +
     icon +
     "</button>" +
     "</div></div>"
@@ -520,9 +520,7 @@ function tplLuce(d) {
         return _x.id === "cover";
       }) || { show: true }
     ).show !== false
-      ? '<div style="position:absolute;left:26px;right:26px;bottom:28px;text-align:left;color:#fff;font-family:' +
-        MONO +
-        '">' +
+      ? '<div style="position:absolute;left:26px;right:26px;bottom:28px;text-align:left;color:#fff;font-family:var(--sans)">' +
         (d.coverNames !== false
           ? '<div style="font-size:13px;letter-spacing:.02em">' +
             esc(luceGivenEn(p.gEn)) +
@@ -550,9 +548,7 @@ function tplLuce(d) {
     MONO +
     ';font-size:14px;letter-spacing:.06em">₊˚⊹⋆</div>';
   html +=
-    '<div style="padding:24px 20px 4px"><div style="display:flex;justify-content:space-between;align-items:center;max-width:250px;margin:0 auto;font-family:' +
-    MONO +
-    ';font-size:14px;font-weight:500">' +
+    '<div style="padding:24px 20px 4px"><div style="display:flex;justify-content:space-between;align-items:center;max-width:250px;margin:0 auto;font-family:var(--sans);font-size:14px;font-weight:500">' +
     "<span>" +
     esc(luceGivenEn(p.gEn)) +
     "</span><span>&amp;</span><span>" +

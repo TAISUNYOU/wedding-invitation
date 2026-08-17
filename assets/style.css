@@ -438,6 +438,10 @@ tbody tr:last-child {
   display: none;
 }
 
+.inv-kakao-map .wrap_controllers {
+  display: none;
+}
+
 .lightbox.carousel {
   display: flex;
   align-items: center;

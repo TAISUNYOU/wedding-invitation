@@ -1280,12 +1280,114 @@ tbody tr:last-child {
   border-radius: 14px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
-.inv-map {
+/* 네이버지도 비주얼(키 없음) — 카드 폭에 맞춰 그리드·도로·공원·강을 표현 */
+.inv-nmap {
+  position: relative;
+  display: block;
   width: 100%;
-  height: 200px;
-  border: 0;
+  height: 260px;
+  overflow: hidden;
   border-radius: 8px;
   margin-top: 6px;
+  text-decoration: none;
+}
+.inv-nmap-tiles {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-color: #dde1e6;
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0 26px,
+      #f7f8fa 26px 29px
+    ),
+    repeating-linear-gradient(90deg, transparent 0 26px, #f7f8fa 26px 29px),
+    linear-gradient(72deg, transparent 46%, #f7f8fa 46% 49%, transparent 49%),
+    radial-gradient(52px 44px at 15% 25%, #cfe3c0 60%, transparent 61%),
+    radial-gradient(60px 50px at 85% 72%, #cfe3c0 60%, transparent 61%),
+    linear-gradient(78deg, transparent 55%, #c2dcf2 55% 58%, transparent 58%);
+}
+.inv-nmap-pin {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 2;
+  width: 40px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+.inv-nmap-pin svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.inv-nmap-label {
+  position: absolute;
+  left: 50%;
+  top: 63%;
+  z-index: 2;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 4px #fff,
+    0 0 2px #fff;
+}
+.inv-nmap-credit {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  z-index: 2;
+  font-size: 9px;
+  color: #8b9298;
+}
+.inv-nmap-brand {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  z-index: 2;
+  font-size: 10px;
+  font-weight: 700;
+  color: #03c75a;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+/* 길찾기 버튼 행 (티맵·카카오내비·네이버지도) */
+.inv-map-btns {
+  display: flex;
+  margin-top: 8px;
+  border: 1px solid #e6e8ea;
+  border-radius: 8px;
+  background: #fff;
+}
+.inv-map-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 9px 0 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #333;
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.inv-map-btn + .inv-map-btn {
+  border-left: 1px solid #f0f1f3;
+}
+.inv-map-btn svg {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 .map-btns {
   display: flex;
